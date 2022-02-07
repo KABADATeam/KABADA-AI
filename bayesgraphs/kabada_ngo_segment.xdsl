@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in trial version of GeNIe, which can be used for evaluation purposes only -->
+<smile version="1.0" id="Network2" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="is_added">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>1 0</probabilities>
+		</cpt>
+		<cpt id="type_international">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.1 0.9 0 1</probabilities>
+		</cpt>
+		<cpt id="type_national">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.4 0.6 0 1</probabilities>
+		</cpt>
+		<cpt id="type_municipality">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.1 0.9 0 1</probabilities>
+		</cpt>
+		<cpt id="type_ngo">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.1 0.9 0 1</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.2 EVALUATION" name="kabada_ngo_segment">
+			<node id="type_international">
+				<name>type_international</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>145 136 344 176</position>
+			</node>
+			<node id="type_national">
+				<name>type_national</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>137 185 336 225</position>
+			</node>
+			<node id="type_municipality">
+				<name>type_municipality</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>128 229 327 269</position>
+			</node>
+			<node id="type_ngo">
+				<name>type_ngo</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>124 273 323 313</position>
+			</node>
+			<node id="is_added">
+				<name>is_added</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>88 56 203 103</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>

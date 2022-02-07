@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in trial version of GeNIe, which can be used for evaluation purposes only -->
+<smile version="1.0" id="Network1" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="is_added">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>1 0</probabilities>
+		</cpt>
+		<cpt id="type_goods">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.5 0.5 0 1</probabilities>
+		</cpt>
+		<cpt id="type_services">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.5 0.5 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_foreign_rural">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_foreign_urban">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_domestic_rural">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_domestic_urban">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<noisymax id="company_size_small">
+			<state id="yes" />
+			<state id="no" />
+			<parents>geo_location_foreign_rural geo_location_foreign_urban geo_location_domestic_rural geo_location_domestic_urban is_added</parents>
+			<strengths>0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.2 0.8 0 1 0.8 0.2 0 1 0.2 0.8 0 1 0.8 0.2 0 1 0 1 0 1 0.329755859375 0.670244140625</parameters>
+		</noisymax>
+		<noisymax id="company_size_medium">
+			<state id="yes" />
+			<state id="no" />
+			<parents>geo_location_foreign_rural geo_location_foreign_urban geo_location_domestic_rural geo_location_domestic_urban is_added</parents>
+			<strengths>0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.4 0.6 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.6 0.4 0 1 0 1 0 1 0.329755859375 0.670244140625</parameters>
+		</noisymax>
+		<noisymax id="company_size_large">
+			<state id="yes" />
+			<state id="no" />
+			<parents>geo_location_foreign_rural geo_location_foreign_urban geo_location_domestic_rural geo_location_domestic_urban is_added</parents>
+			<strengths>0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0 1 0 1 0.329755859375 0.670244140625</parameters>
+		</noisymax>
+		<cpt id="geo_location_domestic">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_transnational">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_foreign">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.2 EVALUATION" name="kabada_business">
+			<node id="type_goods">
+				<name>type_goods</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>468 58 595 98</position>
+			</node>
+			<node id="type_services">
+				<name>type_services</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>472 100 599 140</position>
+			</node>
+			<node id="company_size_small">
+				<name>company_size_small</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>58 289 238 329</position>
+			</node>
+			<node id="company_size_medium">
+				<name>company_size_medium</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>65 362 238 410</position>
+			</node>
+			<node id="company_size_large">
+				<name>company_size_large</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>59 437 245 477</position>
+			</node>
+			<node id="geo_location_domestic">
+				<name>geo_location_domestic</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>396 167 637 212</position>
+			</node>
+			<node id="geo_location_transnational">
+				<name>geo_location_transnational</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>392 212 644 257</position>
+			</node>
+			<node id="geo_location_foreign_rural">
+				<name>geo_location_foreign_rural</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>389 259 647 304</position>
+			</node>
+			<node id="geo_location_foreign_urban">
+				<name>geo_location_foreign_urban</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>395 307 647 352</position>
+			</node>
+			<node id="geo_location_foreign">
+				<name>geo_location_foreign</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>399 358 648 403</position>
+			</node>
+			<node id="geo_location_domestic_rural">
+				<name>geo_location_domestic_rural</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>398 406 655 451</position>
+			</node>
+			<node id="geo_location_domestic_urban">
+				<name>geo_location_domestic_urban</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>402 452 666 497</position>
+			</node>
+			<node id="is_added">
+				<name>is_added</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>9 65 119 112</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>

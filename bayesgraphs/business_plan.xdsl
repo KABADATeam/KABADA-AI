@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in trial version of GeNIe, which can be used for evaluation purposes only -->
+<smile version="1.0" id="Network2" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="nozare">
+			<state id="masinbuve" />
+			<state id="IT" />
+			<state id="edinasana" />
+			<probabilities>0.2 0.5 0.3</probabilities>
+		</cpt>
+		<cpt id="klienti">
+			<state id="uznemumi" />
+			<state id="pateretaji" />
+			<parents>nozare</parents>
+			<probabilities>0.8 0.2 0.4 0.6 0.1 0.9</probabilities>
+		</cpt>
+		<cpt id="finansesana">
+			<state id="kredits" />
+			<state id="investori" />
+			<state id="kapitals" />
+			<parents>nozare</parents>
+			<probabilities>0.8 0.1 0.1 0.1 0.8 0.1 0.2 0.1 0.7</probabilities>
+		</cpt>
+		<cpt id="telpas">
+			<state id="ofiss" />
+			<state id="razosanas_telpas" />
+			<state id="nav" />
+			<parents>nozare</parents>
+			<probabilities>0 1 0 0.3 0.1 0.6 0.1 0.9 0</probabilities>
+		</cpt>
+		<cpt id="ienakumu_veids">
+			<state id="samaksa_par_projektu" />
+			<state id="regulari_pirkumi" />
+			<parents>nozare klienti</parents>
+			<probabilities>0.7499999999999999 0.2500000000000001 0 1 0.7499999999999999 0.2500000000000001 0 1 0.7499999999999999 0.2500000000000001 0 1</probabilities>
+		</cpt>
+		<cpt id="cash_flow">
+			<state id="pozitivs_pec_3_gadiem" />
+			<state id="negativs_pec_3_gadiem" />
+			<parents>finansesana telpas ienakumu_veids</parents>
+			<probabilities>0.6 0.4 0.4 0.6 0.6 0.4 0.4 0.6 0.6 0.4 0.4 0.6 0.6 0.4 0.4 0.6 0.6 0.4 0.4 0.6 0.6 0.4 0.4 0.6 0.6 0.4 0.3 0.7 0.6 0.4 0.4 0.6 0.6 0.4 0.4 0.6</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.2 EVALUATION" name="business_plan">
+			<node id="nozare">
+				<name>nozare</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>239 185 290 216</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="klienti">
+				<name>klienti</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>223 380 268 408</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="finansesana">
+				<name>finansesana</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>637 153 814 260</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="telpas">
+				<name>telpas</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>427 104 566 193</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="ienakumu_veids">
+				<name>ienakumu_veids</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>446 412 534 467</position>
+				<barchart active="true" />
+			</node>
+			<node id="cash_flow">
+				<name>cash_flow</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>620 303 686 344</position>
+				<barchart active="true" />
+			</node>
+		</genie>
+	</extensions>
+</smile>

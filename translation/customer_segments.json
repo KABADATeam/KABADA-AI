@@ -1,0 +1,22 @@
+{
+	"Consumer segments":{
+		"Age group": {
+			"Under 12": [{"age_under_12": "yes"}],
+			"12 - 17": [{"age_12_17":  "yes"}],
+			"18 - 24": [{"age_18_24":  "yes"}],
+			"25 - 34": [{"age_25_34":  "yes"}],
+			"35 - 64": [{"age_35_64":  "yes"}],
+			"65 - 74": [{"age_64_74":  "yes"}],
+			"75 years or older": [{"age_75_over":  "yes"}],
+			"All age groups": [
+				{"age_under_12":  "yes"},
+				{"age_12_17":  "yes"},
+				{"age_18_24":  "yes"},
+				{"age_25_34":  "yes"},
+				{"age_35_64":  "yes"},
+				{"age_65_74":  "yes"},
+				{"age_75_over":  "yes"}
+			]
+		}
+	}
+}

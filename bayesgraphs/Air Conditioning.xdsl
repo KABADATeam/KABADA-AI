@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in trial version of GeNIe, which can be used for evaluation purposes only -->
+<smile version="1.0" id="HeatEquations" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="Season">
+			<state id="Spring" />
+			<state id="Summer" />
+			<state id="Fall" />
+			<state id="Winter" />
+			<probabilities>0.25 0.25 0.25 0.25</probabilities>
+		</cpt>
+		<equation id="Toa">
+			<parents>Season</parents>
+			<definition lower="-10" upper="30">Toa=Choose(Season,Normal(10,5),Normal(25,5),Normal(10,5),Normal(0,5))</definition>
+			<discretization>
+				<interval upper="-5" />
+				<interval upper="0" />
+				<interval upper="5" />
+				<interval upper="10" />
+				<interval upper="15" />
+				<interval upper="20" />
+				<interval upper="25" />
+				<interval upper="30" />
+			</discretization>
+		</equation>
+		<equation id="u_d">
+			<definition lower="0" upper="1">u_d=Bernoulli(0.539)*0.8+0.2</definition>
+			<discretization>
+				<interval upper="0.5" />
+				<interval upper="1" />
+			</discretization>
+		</equation>
+		<equation id="Tra">
+			<definition lower="23.999999" upper="24.000001">Tra=24</definition>
+		</equation>
+		<equation id="Tma">
+			<parents>Toa u_d Tra</parents>
+			<definition lower="10" upper="40">Tma=Toa*u_d+(Tra-Tra*u_d)</definition>
+			<discretization>
+				<interval upper="12" />
+				<interval upper="14" />
+				<interval upper="16" />
+				<interval upper="18" />
+				<interval upper="20" />
+				<interval upper="22" />
+				<interval upper="24" />
+				<interval upper="26" />
+				<interval upper="28" />
+				<interval upper="30" />
+				<interval upper="32" />
+				<interval upper="34" />
+				<interval upper="36" />
+				<interval upper="38" />
+				<interval upper="40" />
+			</discretization>
+		</equation>
+		<equation id="m_flow_ma">
+			<definition lower="4.5599999" upper="4.6700001">m_flow_ma=Bernoulli(0.558)*(4.67-4.56)+4.56</definition>
+			<discretization>
+				<interval upper="4.6" />
+				<interval upper="4.6700001" />
+			</discretization>
+		</equation>
+		<equation id="sp_heat_air">
+			<definition lower="1.00599999" upper="1.00600001">sp_heat_air=1.006</definition>
+		</equation>
+		<equation id="Tsa">
+			<definition lower="14" upper="16">Tsa=Normal(15.0222,0.153957)</definition>
+			<discretization>
+				<interval upper="14.5" />
+				<interval upper="15" />
+				<interval upper="15.5" />
+				<interval upper="16" />
+			</discretization>
+		</equation>
+		<equation id="mdot_cw">
+			<definition lower="0" upper="4">mdot_cw=Normal(2.38722,0.562301)</definition>
+			<discretization>
+				<interval upper="0.4" />
+				<interval upper="0.8" />
+				<interval upper="1.2" />
+				<interval upper="1.6" />
+				<interval upper="2" />
+				<interval upper="2.4" />
+				<interval upper="2.8" />
+				<interval upper="3.2" />
+				<interval upper="3.6" />
+				<interval upper="4" />
+			</discretization>
+		</equation>
+		<equation id="sp_heat_water">
+			<definition lower="4.18699999" upper="4.18700001">sp_heat_water=4.187</definition>
+		</equation>
+		<equation id="T_cw_in">
+			<definition lower="6.6699999" upper="6.6700001">T_cw_in=6.67</definition>
+		</equation>
+		<equation id="T_cw_out">
+			<parents>m_flow_ma sp_heat_air Tsa Tma mdot_cw sp_heat_water T_cw_in</parents>
+			<definition lower="8" upper="17">T_cw_out=m_flow_ma*sp_heat_air*(-Tsa+Tma)/(mdot_cw*sp_heat_water)+T_cw_in</definition>
+			<discretization>
+				<interval upper="9" />
+				<interval upper="10" />
+				<interval upper="11" />
+				<interval upper="12" />
+				<interval upper="13" />
+				<interval upper="14" />
+				<interval upper="15" />
+				<interval upper="16" />
+				<interval upper="17" />
+			</discretization>
+		</equation>
+		<cpt id="Perceived_Temperature">
+			<state id="Hot" />
+			<state id="Warm" />
+			<state id="Cold" />
+			<parents>Toa</parents>
+			<probabilities>0.05 0.5499999999999999 0.4 0.08 0.6200000000000001 0.3 0.1 0.7 0.2 0.15 0.7500000000000001 0.1 0.2 0.75 0.05 0.4 0.59 0.01 0.6 0.4 0 0.8 0.2 0</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.2 EVALUATION" name="Heat Equations Autodiscretized Hybrid">
+			<comment>A model of heating and cooling of buildings based on the following three equations:\n\nAn equation relating temperatures before and after the damper:\n  Tma = Toa*u_d + Tra*(1-u_d)\nIf there is only cooling (u_hc == 0)\n  m_flow_ma*sp_heat_air*(Tsa - Tma) = mdot_cw*sp_heat_water*(T_cw_out - T_cw_in)\nand if there is only heating (u_cc ==0)\n  m_flow_ma*sp_heat_air*(Tsa - Tma) = mdot_hw*sp_heat_water*(T_hw_out - T_hw_in)\nReference:\nBayesFusion, LLC</comment>
+			<node id="Tma">
+				<name>Mixed Air Temperature</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>342 314 465 390</position>
+				<barchart active="true" width="204" height="320" />
+			</node>
+			<node id="Toa">
+				<name>Outside Air Temperature</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>92 322 215 398</position>
+				<barchart active="true" width="171" height="180" />
+			</node>
+			<node id="u_d">
+				<name>Outside Air Damper Control Signal</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>324 32 475 126</position>
+				<barchart active="true" width="203" height="76" />
+			</node>
+			<node id="Tra">
+				<name>Return Air Temperature</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>548 76 671 152</position>
+				<barchart active="true" width="128" height="56" />
+			</node>
+			<node id="m_flow_ma">
+				<name>Mixed Air Flow Rate</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>355 645 479 722</position>
+				<barchart active="true" width="186" height="131" />
+			</node>
+			<node id="sp_heat_air">
+				<name>Specific Heat Air</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>535 490 657 553</position>
+				<comment>This is a constant equal to 1.006 kJ/kg.K (equal to kJ/kg.oC).</comment>
+				<barchart active="true" width="93" height="56" />
+			</node>
+			<node id="Tsa">
+				<name>Supply (Discharge) Air Temperature</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>560 672 726 775</position>
+				<barchart active="true" width="185" height="116" />
+			</node>
+			<node id="mdot_cw">
+				<name>Cold Water Flow Rate</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>575 270 703 350</position>
+				<barchart active="true" width="198" height="220" />
+			</node>
+			<node id="sp_heat_water">
+				<name>Specific Heat Water</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>420 544 544 611</position>
+				<comment>This is a constant equal to 4.187 kJ/kg.K (equal to kJ/kg.oC).</comment>
+				<barchart active="true" width="112" height="56" />
+			</node>
+			<node id="T_cw_out">
+				<name>Cold Water Outlet Temperature</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>798 576 940 664</position>
+				<barchart active="true" width="183" height="216" />
+			</node>
+			<node id="T_cw_in">
+				<name>Cold Water Inlet Temperature</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>780 383 922 471</position>
+				<barchart active="true" width="148" height="56" />
+			</node>
+			<textbox>
+				<caption>A model of heating and cooling of buildings based on the following three equations:\n\nAn equation relating temperatures before and after the damper:\n\n  Tma = Toa*u_d + Tra*(1-u_d)\n\nIf there is only cooling (u_hc == 0)\n\n  m_flow_ma*sp_heat_air*(Tsa - Tma) = mdot_cw*sp_heat_water*(T_cw_out - T_cw_in)\n\nand if there is only heating (u_cc ==0)\n\n  m_flow_ma*sp_heat_air*(Tsa - Tma) = mdot_hw*sp_heat_water*(T_hw_out - T_hw_in)</caption>
+				<font color="000080" name="Arial" size="12" bold="true" />
+				<position>760 9 1416 256</position>
+			</textbox>
+			<node id="Perceived_Temperature">
+				<name>Perceived Temperature</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>96 507 219 583</position>
+				<barchart active="true" width="240" height="80" />
+			</node>
+			<node id="Season">
+				<name>Season</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000080" name="Arial" size="10" bold="true" />
+				<position>120 150 194 196</position>
+				<barchart active="true" width="128" height="100" />
+			</node>
+		</genie>
+	</extensions>
+</smile>

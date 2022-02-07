@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in trial version of GeNIe, which can be used for evaluation purposes only -->
+<smile version="1.0" id="Network2" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="number_of_consumer_segments">
+			<state id="n0" />
+			<state id="n1" />
+			<state id="n2" />
+			<state id="n3" />
+			<state id="n4" />
+			<state id="n5" />
+			<probabilities>0.4 0.5 0.025 0.025 0.025 0.025</probabilities>
+		</cpt>
+		<cpt id="is_added_consumer">
+			<state id="yes" />
+			<state id="no" />
+			<parents>number_of_consumer_segments</parents>
+			<probabilities>0 1 1 0 1 0 1 0 1 0 1 0</probabilities>
+		</cpt>
+		<cpt id="age_under_12">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="age_35_64">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="age_25_34">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="age_18_24">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="age_12_17">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="age_65_74">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="age_75_over">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="gender_male">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.5 0.5 0 1</probabilities>
+		</cpt>
+		<cpt id="gender_female">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.5 0.5 0 1</probabilities>
+		</cpt>
+		<noisymax id="has_children">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over is_added_consumer</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.000244140625 0.999755859375 0 1 0.05000000000000004 0.95 0 1 0.09999999999999998 0.9 0 1 0.4 0.6 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0 1 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="education_primary">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over is_added_consumer</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.5 0.5 0 1 0.7 0.3 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0 1 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="education_secondary">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over is_added_consumer</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.01000000000000001 0.99 0 1 0.3 0.7 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0 1 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="education_higher">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over is_added_consumer</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.01000000000000001 0.99 0 1 0.02000000000000002 0.98 0 1 0.4 0.6 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0 1 0 1 0 1</parameters>
+		</noisymax>
+		<cpt id="geo_location_foreign_rural">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_domestic_rural">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<noisymax id="income_low">
+			<state id="yes" />
+			<state id="no" />
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_foreign_rural geo_location_domestic_rural is_added_consumer</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.95 0.05 0 1 0.8 0.2 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.6 0.4 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0 1 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="income_high">
+			<state id="yes" />
+			<state id="no" />
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural is_added_consumer</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.3 0.7 0 1 0.7 0.3 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.3 0.7 0 1 0.3 0.7 0 1 0 1 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="income_medium">
+			<state id="yes" />
+			<state id="no" />
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural is_added_consumer</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.2 0.8 0 1 0.2 0.8 0 1 0.7 0.3 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0 1 0 1 0 1</parameters>
+		</noisymax>
+		<cpt id="geo_location_domestic">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_foreign_urban">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_foreign">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_domestic_urban">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="geo_location_transnational">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added_consumer</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="number_of_business_segments">
+			<state id="n0" />
+			<state id="n1" />
+			<state id="n2" />
+			<state id="n3" />
+			<state id="n4" />
+			<state id="n5" />
+			<probabilities>0.4 0.5 0.025 0.025 0.025 0.025</probabilities>
+		</cpt>
+		<cpt id="is_added">
+			<state id="yes" />
+			<state id="no" />
+			<parents>number_of_business_segments</parents>
+			<probabilities>0 1 1 0 1 0 1 0 1 0 1 0</probabilities>
+		</cpt>
+		<cpt id="type_goods">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.5 0.5 0 1</probabilities>
+		</cpt>
+		<cpt id="type_services">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.5 0.5 0 1</probabilities>
+		</cpt>
+		<cpt id="Copy_of_geo_location_foreign_rural">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="Copy_of_geo_location_foreign_urban">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="Copy_of_geo_location_domestic_rural">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="Copy_of_geo_location_domestic_urban">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<noisymax id="company_size_small">
+			<state id="yes" />
+			<state id="no" />
+			<parents>Copy_of_geo_location_foreign_rural Copy_of_geo_location_foreign_urban Copy_of_geo_location_domestic_rural Copy_of_geo_location_domestic_urban is_added</parents>
+			<strengths>0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.2 0.8 0 1 0.8 0.2 0 1 0.2 0.8 0 1 0.8 0.2 0 1 0 1 0 1 0.329755859375 0.670244140625</parameters>
+		</noisymax>
+		<noisymax id="company_size_medium">
+			<state id="yes" />
+			<state id="no" />
+			<parents>Copy_of_geo_location_foreign_rural Copy_of_geo_location_foreign_urban Copy_of_geo_location_domestic_rural Copy_of_geo_location_domestic_urban is_added</parents>
+			<strengths>0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.4 0.6 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.6 0.4 0 1 0 1 0 1 0.329755859375 0.670244140625</parameters>
+		</noisymax>
+		<noisymax id="company_size_large">
+			<state id="yes" />
+			<state id="no" />
+			<parents>Copy_of_geo_location_foreign_rural Copy_of_geo_location_foreign_urban Copy_of_geo_location_domestic_rural Copy_of_geo_location_domestic_urban is_added</parents>
+			<strengths>0 1 0 1 0 1 0 1 1 0</strengths>
+			<parameters>0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0 1 0 1 0.329755859375 0.670244140625</parameters>
+		</noisymax>
+		<cpt id="Copy_of_geo_location_domestic">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="Copy_of_geo_location_transnational">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="Copy_of_geo_location_foreign">
+			<state id="yes" />
+			<state id="no" />
+			<parents>is_added</parents>
+			<probabilities>0.14 0.86 0 1</probabilities>
+		</cpt>
+		<cpt id="number_of_npo_segments">
+			<state id="n0" />
+			<state id="n1" />
+			<state id="n2" />
+			<state id="n3" />
+			<state id="n4" />
+			<state id="n5" />
+			<probabilities>0.4 0.5 0.025 0.025 0.025 0.025</probabilities>
+		</cpt>
+		<cpt id="Copy_of_is_added">
+			<state id="yes" />
+			<state id="no" />
+			<parents>number_of_npo_segments</parents>
+			<probabilities>0 1 1 0 1 0 1 0 1 0 1 0</probabilities>
+		</cpt>
+		<cpt id="type_international">
+			<state id="yes" />
+			<state id="no" />
+			<parents>Copy_of_is_added</parents>
+			<probabilities>0.1 0.9 0 1</probabilities>
+		</cpt>
+		<cpt id="type_national">
+			<state id="yes" />
+			<state id="no" />
+			<parents>Copy_of_is_added</parents>
+			<probabilities>0.4 0.6 0 1</probabilities>
+		</cpt>
+		<cpt id="type_municipality">
+			<state id="yes" />
+			<state id="no" />
+			<parents>Copy_of_is_added</parents>
+			<probabilities>0.1 0.9 0 1</probabilities>
+		</cpt>
+		<cpt id="type_ngo">
+			<state id="yes" />
+			<state id="no" />
+			<parents>Copy_of_is_added</parents>
+			<probabilities>0.1 0.9 0 1</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.2 EVALUATION" name="kabada_customer_segments">
+			<submodel id="kabada_consumer_segment">
+				<name>kabada_consumer_segment</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" width="2" />
+				<font color="000000" name="Arial" size="8" />
+				<position>588 121 786 176</position>
+				<node id="age_under_12">
+					<name>age_under_12</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>794 214 931 238</position>
+				</node>
+				<node id="age_35_64">
+					<name>age_35_64</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>815 404 952 428</position>
+				</node>
+				<node id="age_25_34">
+					<name>age_25_34</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>806 355 943 379</position>
+				</node>
+				<node id="age_18_24">
+					<name>age_18_24</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>810 314 947 338</position>
+				</node>
+				<node id="age_12_17">
+					<name>age_12_17</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>800 255 937 279</position>
+				</node>
+				<node id="age_65_74">
+					<name>age_65_74</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>812 450 949 474</position>
+				</node>
+				<node id="age_75_over">
+					<name>age_75_over</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>815 491 952 515</position>
+				</node>
+				<node id="gender_male">
+					<name>gender_male</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>208 302 339 337</position>
+				</node>
+				<node id="gender_female">
+					<name>gender_female</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>199 377 330 412</position>
+				</node>
+				<node id="has_children">
+					<name>has_children</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>1123 357 1263 391</position>
+				</node>
+				<node id="education_primary">
+					<name>education_primary</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>654 28 796 54</position>
+				</node>
+				<node id="education_secondary">
+					<name>education_secondary</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>633 75 794 101</position>
+				</node>
+				<node id="education_higher">
+					<name>education_higher</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>603 124 737 150</position>
+				</node>
+				<node id="income_low">
+					<name>income_low</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>393 292 496 317</position>
+				</node>
+				<node id="income_high">
+					<name>income_high</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>390 419 493 444</position>
+				</node>
+				<node id="income_medium">
+					<name>income_medium</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>381 350 508 375</position>
+				</node>
+				<node id="geo_location_domestic">
+					<name>geo_location_domestic</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>551 582 701 612</position>
+				</node>
+				<node id="geo_location_foreign_rural">
+					<name>geo_location_foreign_rural</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>530 463 738 493</position>
+				</node>
+				<node id="geo_location_foreign_urban">
+					<name>geo_location_foreign_urban</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>524 655 746 685</position>
+				</node>
+				<node id="geo_location_foreign">
+					<name>geo_location_foreign</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>524 624 742 654</position>
+				</node>
+				<node id="geo_location_domestic_rural">
+					<name>geo_location_domestic_rural</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>524 431 741 461</position>
+				</node>
+				<node id="geo_location_domestic_urban">
+					<name>geo_location_domestic_urban</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>521 552 735 582</position>
+				</node>
+				<node id="geo_location_transnational">
+					<name>geo_location_transnational</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>521 522 726 552</position>
+				</node>
+				<node id="is_added_consumer">
+					<name>is_added</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>118 138 256 173</position>
+				</node>
+			</submodel>
+			<node id="number_of_consumer_segments">
+				<name>number_of_consumer_segments</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>323 125 528 177</position>
+			</node>
+			<submodel id="kabada_business_segment">
+				<name>kabada_business_segment</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" width="2" />
+				<font color="000000" name="Arial" size="8" />
+				<position>591 196 785 258</position>
+				<node id="type_goods">
+					<name>type_goods</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>468 58 595 98</position>
+				</node>
+				<node id="type_services">
+					<name>type_services</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>472 100 599 140</position>
+				</node>
+				<node id="company_size_small">
+					<name>company_size_small</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>58 289 238 329</position>
+				</node>
+				<node id="company_size_medium">
+					<name>company_size_medium</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>65 362 238 410</position>
+				</node>
+				<node id="company_size_large">
+					<name>company_size_large</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>59 437 245 477</position>
+				</node>
+				<node id="Copy_of_geo_location_domestic">
+					<name>geo_location_domestic</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>396 167 637 212</position>
+				</node>
+				<node id="Copy_of_geo_location_transnational">
+					<name>geo_location_transnational</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>392 212 644 257</position>
+				</node>
+				<node id="Copy_of_geo_location_foreign_rural">
+					<name>geo_location_foreign_rural</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>389 259 647 304</position>
+				</node>
+				<node id="Copy_of_geo_location_foreign_urban">
+					<name>geo_location_foreign_urban</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>395 307 647 352</position>
+				</node>
+				<node id="Copy_of_geo_location_foreign">
+					<name>geo_location_foreign</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>399 358 648 403</position>
+				</node>
+				<node id="Copy_of_geo_location_domestic_rural">
+					<name>geo_location_domestic_rural</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>398 406 655 451</position>
+				</node>
+				<node id="Copy_of_geo_location_domestic_urban">
+					<name>geo_location_domestic_urban</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>402 452 666 497</position>
+				</node>
+				<node id="is_added">
+					<name>is_added</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>9 65 119 112</position>
+				</node>
+			</submodel>
+			<node id="number_of_business_segments">
+				<name>number_of_business_segments</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>324 202 531 250</position>
+			</node>
+			<submodel id="kabada_npo_segment">
+				<name>kabada_npo_segment</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" width="2" />
+				<font color="000000" name="Arial" size="8" />
+				<position>597 278 790 328</position>
+				<node id="type_international">
+					<name>type_international</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>145 136 344 176</position>
+				</node>
+				<node id="type_national">
+					<name>type_national</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>137 185 336 225</position>
+				</node>
+				<node id="type_municipality">
+					<name>type_municipality</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>128 229 327 269</position>
+				</node>
+				<node id="type_ngo">
+					<name>type_ngo</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>124 273 323 313</position>
+				</node>
+				<node id="Copy_of_is_added">
+					<name>is_added</name>
+					<interior color="e5f6f7" />
+					<outline color="000080" />
+					<font color="000000" name="Arial" size="8" />
+					<position>88 56 203 103</position>
+				</node>
+			</submodel>
+			<node id="number_of_npo_segments">
+				<name>number_of_npo_segments</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>323 278 527 319</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>
