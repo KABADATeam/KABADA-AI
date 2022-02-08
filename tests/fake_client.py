@@ -1,5 +1,8 @@
+import sys
+sys.path.insert(0, "/")
 import json
 import requests
+from os.path import join
 from config import repo_dir
 
 class Action:
@@ -44,7 +47,7 @@ class Predict(Action):
         self.name = "predict"
 
 
-with open(repo_dir + "\\translation\\customer_segments.json", "r") as conn:
+with open(join(repo_dir, "translation", "customer_segments.json"), "r") as conn:
     translation = json.load(conn)
 
 
@@ -60,8 +63,6 @@ actions = [
 ]
 
 for action in actions:
-    # print(action.get_json())
-    # print(action.get_url())
     print("----------------------- " + action.name)
     r = requests.post(action.get_url(), json=action.get_json(), verify=False)
     print(json.loads(r.text))
