@@ -28,6 +28,8 @@ def end_session():
     if content_type == 'application/json':
         json = request.json
         id_session = json['id_session']
+        if id_session not in dict_sessions:
+            return {"status": "failed", "desc": "session doesn't exist"}
         del dict_sessions[id_session]
         return {"status": "success"}
     else:
@@ -40,6 +42,8 @@ def give_evidence():
     if content_type == 'application/json':
         json = request.json
         id_session = json['id_session']
+        if id_session not in dict_sessions:
+            return {"status": "failed", "desc": "session doesn't exist"}
         dict_sessions[id_session].add_evidence(json['bn_name'], json['evidence'])
         return {"status": "success"}
     else:
@@ -52,6 +56,8 @@ def delete_evidence():
     if content_type == 'application/json':
         json = request.json
         id_session = json['id_session']
+        if id_session not in dict_sessions:
+            return {"status": "failed", "desc": "session doesn't exist"}
         dict_sessions[id_session].clear_evidence(json['bn_name'], json['evidence'])
         return {"status": "success"}
     else:
@@ -64,11 +70,13 @@ def predict():
     if content_type == 'application/json':
         json = request.json
         id_session = json['id_session']
+        if id_session not in dict_sessions:
+            return {"status": "failed", "desc": "session doesn't exist"}
         best_val, best_prob = dict_sessions[id_session].predict(json['bn_name'], json['evidence'])
         if best_val is None:
             return {"status": "failed"}
 
-        return {best_val: best_prob, "status": "success"}
+        return {"value": best_val, "status": "success"}
     else:
         return 'Content-Type not supported!'
 

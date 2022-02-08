@@ -14,8 +14,7 @@
 		<cpt id="is_added_consumer">
 			<state id="yes" />
 			<state id="no" />
-			<parents>number_of_consumer_segments</parents>
-			<probabilities>0 1 1 0 1 0 1 0 1 0 1 0</probabilities>
+			<probabilities>0 1</probabilities>
 		</cpt>
 		<cpt id="age_12_17">
 			<state id="yes" />
@@ -156,12 +155,6 @@
 			<parents>is_added_consumer</parents>
 			<probabilities>0.14 0.86 0 1</probabilities>
 		</cpt>
-		<cpt id="geo_location_transnational">
-			<state id="yes" />
-			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
-		</cpt>
 		<cpt id="number_of_business_segments">
 			<state id="n0" />
 			<state id="n1" />
@@ -174,34 +167,33 @@
 		<cpt id="is_added">
 			<state id="yes" />
 			<state id="no" />
-			<parents>number_of_business_segments</parents>
-			<probabilities>0 1 1 0 1 0 1 0 1 0 1 0</probabilities>
+			<probabilities>0 1</probabilities>
 		</cpt>
-		<cpt id="Copy_of_geo_location_foreign_rural">
+		<cpt id="bus_geo_location_foreign_rural">
 			<state id="yes" />
 			<state id="no" />
 			<parents>is_added</parents>
 			<probabilities>0.14 0.86 0 1</probabilities>
 		</cpt>
-		<cpt id="Copy_of_geo_location_foreign_urban">
+		<cpt id="bus_geo_location_foreign_urban">
 			<state id="yes" />
 			<state id="no" />
 			<parents>is_added</parents>
 			<probabilities>0.14 0.86 0 1</probabilities>
 		</cpt>
-		<cpt id="Copy_of_geo_location_foreign">
+		<cpt id="bus_geo_location_foreign">
 			<state id="yes" />
 			<state id="no" />
 			<parents>is_added</parents>
 			<probabilities>0.14 0.86 0 1</probabilities>
 		</cpt>
-		<cpt id="Copy_of_geo_location_domestic_rural">
+		<cpt id="bus_geo_location_domestic_rural">
 			<state id="yes" />
 			<state id="no" />
 			<parents>is_added</parents>
 			<probabilities>0.14 0.86 0 1</probabilities>
 		</cpt>
-		<cpt id="Copy_of_geo_location_domestic_urban">
+		<cpt id="bus_geo_location_domestic_urban">
 			<state id="yes" />
 			<state id="no" />
 			<parents>is_added</parents>
@@ -222,31 +214,25 @@
 		<noisymax id="company_size_small">
 			<state id="yes" />
 			<state id="no" />
-			<parents>Copy_of_geo_location_foreign_rural Copy_of_geo_location_foreign_urban Copy_of_geo_location_domestic_rural Copy_of_geo_location_domestic_urban is_added</parents>
+			<parents>bus_geo_location_foreign_rural bus_geo_location_foreign_urban bus_geo_location_domestic_rural bus_geo_location_domestic_urban is_added</parents>
 			<strengths>0 1 0 1 0 1 0 1 1 0</strengths>
 			<parameters>0.2 0.8 0 1 0.8 0.2 0 1 0.2 0.8 0 1 0.8 0.2 0 1 0 1 0 1 0.329755859375 0.670244140625</parameters>
 		</noisymax>
 		<noisymax id="company_size_medium">
 			<state id="yes" />
 			<state id="no" />
-			<parents>Copy_of_geo_location_foreign_rural Copy_of_geo_location_foreign_urban Copy_of_geo_location_domestic_rural Copy_of_geo_location_domestic_urban is_added</parents>
+			<parents>bus_geo_location_foreign_rural bus_geo_location_foreign_urban bus_geo_location_domestic_rural bus_geo_location_domestic_urban is_added</parents>
 			<strengths>0 1 0 1 0 1 0 1 1 0</strengths>
 			<parameters>0.4 0.6 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.6 0.4 0 1 0 1 0 1 0.329755859375 0.670244140625</parameters>
 		</noisymax>
 		<noisymax id="company_size_large">
 			<state id="yes" />
 			<state id="no" />
-			<parents>Copy_of_geo_location_foreign_rural Copy_of_geo_location_foreign_urban Copy_of_geo_location_domestic_rural Copy_of_geo_location_domestic_urban is_added</parents>
+			<parents>bus_geo_location_foreign_rural bus_geo_location_foreign_urban bus_geo_location_domestic_rural bus_geo_location_domestic_urban is_added</parents>
 			<strengths>0 1 0 1 0 1 0 1 1 0</strengths>
 			<parameters>0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0 1 0 1 0.329755859375 0.670244140625</parameters>
 		</noisymax>
-		<cpt id="Copy_of_geo_location_domestic">
-			<state id="yes" />
-			<state id="no" />
-			<parents>is_added</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
-		</cpt>
-		<cpt id="Copy_of_geo_location_transnational">
+		<cpt id="bus_geo_location_domestic">
 			<state id="yes" />
 			<state id="no" />
 			<parents>is_added</parents>
@@ -264,8 +250,7 @@
 		<cpt id="Copy_of_is_added">
 			<state id="yes" />
 			<state id="no" />
-			<parents>number_of_npo_segments</parents>
-			<probabilities>0 1 1 0 1 0 1 0 1 0 1 0</probabilities>
+			<probabilities>0 1</probabilities>
 		</cpt>
 		<cpt id="type_international">
 			<state id="yes" />
@@ -299,21 +284,21 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>20 44 225 96</position>
+				<position>64 636 269 688</position>
 			</node>
 			<node id="number_of_business_segments">
 				<name>number_of_business_segments</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1349 432 1556 480</position>
+				<position>62 762 269 810</position>
 			</node>
 			<node id="number_of_npo_segments">
 				<name>number_of_npo_segments</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>155 811 359 852</position>
+				<position>69 706 273 747</position>
 			</node>
 			<node id="age_under_12">
 				<name>age_under_12</name>
@@ -446,14 +431,14 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>524 655 746 685</position>
+				<position>517 522 739 552</position>
 			</node>
 			<node id="geo_location_foreign">
 				<name>geo_location_foreign</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>524 624 742 654</position>
+				<position>520 492 738 522</position>
 			</node>
 			<node id="geo_location_domestic_rural">
 				<name>geo_location_domestic_rural</name>
@@ -468,13 +453,6 @@
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
 				<position>521 552 735 582</position>
-			</node>
-			<node id="geo_location_transnational">
-				<name>geo_location_transnational</name>
-				<interior color="e5f6f7" />
-				<outline color="000080" />
-				<font color="000000" name="Arial" size="8" />
-				<position>521 522 726 552</position>
 			</node>
 			<node id="is_added_consumer">
 				<name>is_added</name>
@@ -502,70 +480,63 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1719 435 1899 475</position>
+				<position>1503 365 1683 405</position>
 			</node>
 			<node id="company_size_medium">
 				<name>company_size_medium</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1726 508 1899 556</position>
+				<position>1520 426 1693 474</position>
 			</node>
 			<node id="company_size_large">
 				<name>company_size_large</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1720 583 1906 623</position>
+				<position>1525 486 1711 526</position>
 			</node>
-			<node id="Copy_of_geo_location_domestic">
-				<name>geo_location_domestic</name>
+			<node id="bus_geo_location_domestic">
+				<name>bus_geo_location_domestic</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2289 545 2530 590</position>
+				<position>2189 507 2430 552</position>
 			</node>
-			<node id="Copy_of_geo_location_transnational">
-				<name>geo_location_transnational</name>
+			<node id="bus_geo_location_foreign_rural">
+				<name>bus_geo_location_foreign_rural</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2277 582 2529 627</position>
+				<position>2134 557 2392 602</position>
 			</node>
-			<node id="Copy_of_geo_location_foreign_rural">
-				<name>geo_location_foreign_rural</name>
+			<node id="bus_geo_location_foreign_urban">
+				<name>bus_geo_location_foreign_urban</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2242 597 2500 642</position>
+				<position>2100 606 2352 651</position>
 			</node>
-			<node id="Copy_of_geo_location_foreign_urban">
-				<name>geo_location_foreign_urban</name>
+			<node id="bus_geo_location_foreign">
+				<name>bus_geo_location_foreign</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2200 597 2452 642</position>
+				<position>1989 647 2238 692</position>
 			</node>
-			<node id="Copy_of_geo_location_foreign">
-				<name>geo_location_foreign</name>
+			<node id="bus_geo_location_domestic_rural">
+				<name>bus_geo_location_domestic_rural</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2156 600 2405 645</position>
+				<position>1913 696 2170 741</position>
 			</node>
-			<node id="Copy_of_geo_location_domestic_rural">
-				<name>geo_location_domestic_rural</name>
+			<node id="bus_geo_location_domestic_urban">
+				<name>bus_geo_location_domestic_urban</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2107 600 2364 645</position>
-			</node>
-			<node id="Copy_of_geo_location_domestic_urban">
-				<name>geo_location_domestic_urban</name>
-				<interior color="e5f6f7" />
-				<outline color="000080" />
-				<font color="000000" name="Arial" size="8" />
-				<position>2063 598 2327 643</position>
+				<position>1893 744 2157 789</position>
 			</node>
 			<node id="is_added">
 				<name>is_added</name>
@@ -607,7 +578,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>459 807 574 854</position>
+				<position>350 812 465 859</position>
 			</node>
 		</genie>
 	</extensions>

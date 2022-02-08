@@ -11,6 +11,7 @@ class BayesNetwork:
         self.net = pysmile.Network()
         print("Importing net:", path)
         self.net.read_file(path)
+        self.net.update_beliefs()
 
     def learn(self, path_newdata):
         ds = pysmile.learning.DataSet()
@@ -23,6 +24,16 @@ class BayesNetwork:
         self.net.set_evidence(varname, val)
         self.net.update_beliefs()
 
+    def get_node_names(self):
+        h = self.net.get_first_node()
+        names = []
+        while True:
+            names.append(self.net.get_node_name(h))
+            h = self.net.get_next_node(h)
+            if h == -1:
+                break
+        return names
+
     def predict_popup(self, varname):
         # TODO uztaisiit arii ja varname ir vektors, tad kāda ir joint varbūtība vektoram
         probs = self.net.get_node_value(varname)
@@ -34,6 +45,7 @@ class BayesNetwork:
             self.net.clear_all_evidence()
         else:
             self.net.clear_evidence(varname)
+
 
 class MultiNetwork:
     def __init__(self):
@@ -57,7 +69,8 @@ class MultiNetwork:
         # TODO handlot joint varbuutiibu vektoram
         preds = defaultdict(lambda: 1.0)
         for evidence in list_evidence:
-            for varname, value in evidence.items():
+            for varname, _ in evidence.items():
+                # print(varname, varname in self.bns[bn_name].get_node_names())
                 val, prob = self.bns[bn_name].predict_popup(varname)
                 preds[val] += np.clip(prob, epsilon, np.inf)
         best_val = None
