@@ -66,6 +66,7 @@ class MultiNetwork:
                 self.bns[bn_name].clear_evidence(varname)
 
     def predict(self, bn_name, list_evidence):
+        self.add_net(bn_name)
         # TODO handlot joint varbuutiibu vektoram
         preds = defaultdict(lambda: 1.0)
         for evidence in list_evidence:
@@ -80,3 +81,30 @@ class MultiNetwork:
                 best_prob = prob
                 best_val = val
         return best_val, best_prob
+
+    def predict_all(self, translation):
+        # TODO first set all evidence, then predict vars thar are left
+        bp = defaultdict(list)
+        for bn_name, list_evidence in translation.items():
+            preds = self.predict(bn_name, list_evidence)
+            bp[bn_name].extend(preds)
+        return bp
+
+
+if __name__ == "__main__":
+    from tests.body_generators import PredictBodyGen
+    from Translator import Translator
+    net = MultiNetwork()
+
+    gen = PredictBodyGen()
+    trans = Translator()
+
+    guids = gen()
+    translation = trans(guids)
+
+    bp = net.predict_all(translation)
+    pred_guids = trans.back(bp)
+    print(pred_guids)
+
+
+

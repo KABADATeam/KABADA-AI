@@ -4,6 +4,9 @@ from glob import glob
 from os.path import join, basename
 from config import repo_dir
 from copy import deepcopy
+from pprint import pprint
+from re import findall
+from ast import literal_eval
 
 def traverse_leafs(translation):
     translation_flat = deepcopy(translation)
@@ -19,20 +22,62 @@ def traverse_leafs(translation):
 
     return leafs
 
-net = MultiNetwork()
 
-fs = sorted(glob(join(repo_dir, "translation", "*.json")))
-for f in fs:
-    bn_name = basename(f).replace(".json", "")
-    net.add_net(bn_name)
+def check_variable_names():
+    net = MultiNetwork()
 
-    with open(f, "r") as conn:
-        translation = json.load(conn)
+    fs = sorted(glob(join(repo_dir, "translation", "*.json")))
+    for f in fs:
+        bn_name = basename(f).replace(".json", "")
+        net.add_net(bn_name)
 
-    leafs = traverse_leafs(translation)
+        with open(f, "r") as conn:
+            translation = json.load(conn)
 
-    varnames_correct = net.bns[bn_name].get_node_names()
-    for varname in [list(k.keys())[0] for k in leafs]:
-        if varname not in varnames_correct:
-            raise ValueError(f"{varname} not a note name for {bn_name}")
-    # net.predict(bn_name, leafs)
+        leafs = traverse_leafs(translation)
+
+        varnames_correct = net.bns[bn_name].get_node_names()
+        for varname in [list(k.keys())[0] for k in leafs]:
+            if varname not in varnames_correct:
+                raise ValueError(f"{varname} not a note name for {bn_name}")
+        # net.predict(bn_name, leafs)
+
+def parse_texter():
+    with open("../docs/Texter.txt", "r", encoding="cp866") as conn:
+        codes = conn.read().split("\n")
+
+    dict_guid2stuff = {}
+    for code in codes:
+        try:
+            a = literal_eval(findall(r"(\{.*\})", code)[0])
+        except Exception as e:
+            print(e)
+            continue
+
+        if len(a) == 0:
+            continue
+
+        dict_guid2stuff[a["Id"]] = a["Value"], a["Kind"]
+    return dict_guid2stuff
+
+def validate_wrt_texter():
+    dict_guid2stuff = parse_texter()
+    fs = sorted(glob(join(repo_dir, "translation", "*.json")))
+    for f in fs:
+        bn_name = basename(f).replace(".json", "")
+        with open(f, "r") as conn:
+            translation = json.load(conn)
+
+        for guid, stuff in translation.items():
+            # print(dict_guid2stuff[guid])
+            val1, kind1 = dict_guid2stuff[guid]
+            s = list(stuff.keys())[0]
+            val, kind = s.split(":kind")
+            if not (val == val1 and int(kind) == kind1):
+                raise ValueError( val, val1, int(kind), kind1)
+
+
+if __name__ == "__main__":
+    check_variable_names()
+    validate_wrt_texter()
+    print("everythings OK :)")
