@@ -80,12 +80,12 @@ class MultiNetwork:
                 self.bns[bn_name].clear_evidence(varname)
 
     def predict_all(self, translation):
-        for bn_name, list_evidence in translation.items():
-            self.add_net(bn_name)
-            self.add_evidence(bn_name, list_evidence)
         # TODO handlot multi value guids (lai prob buutu joint)
         bp = defaultdict(set)
         for bn_name, list_evidence in translation.items():
+            self.add_net(bn_name)
+            self.add_evidence(bn_name, list_evidence)
+
             list_variables = self.random_variables_2_predict[bn_name]
             s_variables_in_evidence = {list(b.keys())[0] for b in list_evidence}
             for varname in list_variables:
@@ -97,6 +97,9 @@ class MultiNetwork:
                     except Exception as e:
                         # print(varname, e)
                         pass
+
+            self.bns[bn_name].clear_evidence()
+
         return bp
 
 
@@ -109,12 +112,17 @@ if __name__ == "__main__":
     trans = Translator()
     net = MultiNetwork(translator=trans)
 
-    guids = gen()
-    translation = trans(guids)
+    for _ in range(100):
+        guids = gen()
+        translation = trans(guids)
+        bp = net.predict_all(translation)
+        pred_guids = trans.back(bp)
 
-    bp = net.predict_all(translation)
-    pred_guids = trans.back(bp)
-    pprint(pred_guids)
+        print("--------------------------")
+        print([trans.lookup_uiname[guid] for guid in guids])
+        print([trans.lookup_uiname[guid] for guid in pred_guids])
+        # exit()
+
 
 
 

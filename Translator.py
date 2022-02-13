@@ -10,6 +10,7 @@ class Translator:
     def __init__(self):
         fs = sorted(glob(join(repo_dir, "translation", "*.json")))
 
+        self.lookup_uiname = {}
         self.lookup = {}
         for f in fs:
             bn_name = basename(f).replace(".json", "")
@@ -18,6 +19,7 @@ class Translator:
 
             for guid, trans in translation.items():
                 self.lookup[guid] = (bn_name, list(trans.values())[0])
+                self.lookup_uiname[guid] = list(trans.keys())[0]
 
         self.inverse_lookup = defaultdict(lambda :defaultdict(list))
         for guid, (bn_name, values) in self.lookup.items():

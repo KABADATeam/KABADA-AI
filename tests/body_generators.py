@@ -9,9 +9,9 @@ from ast import literal_eval
 import numpy as np
 import random
 
-seed = 3
-np.random.seed(seed)
-random.seed(seed)
+# seed = 3
+# np.random.seed(seed)
+# random.seed(seed)
 
 class PredictBodyGen:
     def __init__(self, flag_fake_guids=False):

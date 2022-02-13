@@ -27,16 +27,16 @@ class PredictAll(Action):
         Action.__init__(self, *args, **kwargs)
         self.name = "predict"
 
-    def generate_bp(self):
-        pass
-
 
 with open(join(repo_dir, "translation", "customer_segments.json"), "r") as conn:
     translation = json.load(conn)
 
 pred_body_gen = PredictBodyGen()
 actions = [
-    PredictAll(id_session=0, body_json=pred_body_gen())
+    PredictAll(id_session=0, guids=pred_body_gen()),
+    PredictAll(id_session=0, guids=pred_body_gen()),
+    PredictAll(id_session=0, guids=pred_body_gen()),
+    PredictAll(id_session=0, guids=pred_body_gen())
 ]
 
 for action in actions:

@@ -1,7 +1,17 @@
-from flask import Flask, request, jsonify
+import argparse
+from flask import Flask, request
 from collections import defaultdict
 from BayesNetwork import MultiNetwork
 from Translator import Translator
+# import os, sys
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# from flask_script import Manager
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--ip', type=str, default="localhost")
+parser.add_argument('--port', type=int, default="2222")
+
+args = parser.parse_args()
 
 app = Flask(__name__)
 
@@ -18,7 +28,7 @@ def predict():
         if id_session not in dict_sessions:
             dict_sessions[id_session] = MultiNetwork()
 
-        translation = translator(json['body_json'])
+        translation = translator(json['guids'])
         bp = dict_sessions[id_session].predict_all(translation)
 
         return {"value": translator.back(bp), "status": "success"}
@@ -26,4 +36,4 @@ def predict():
         return 'Content-Type not supported!'
 
 
-app.run("localhost", 2222, debug=True)
+app.run(args.ip, args.port, debug=True)
