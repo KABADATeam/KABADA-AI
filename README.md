@@ -13,16 +13,19 @@ is used via python bindings. KABADA AI component is packaged as docker
 application.
 
 ### Installation and running
-First - go to repo root. 
 
 To build docker image
 ```buildoutcfg
 docker build -t kabada_ai .
 ```
 
-To start AI service
+To start AI service for the first time
 ```buildoutcfg
-docker run --name kaby -d -p 2222:2222 kabada_ai
+docker run --name kaby -v shared_files:/shared_files -d -p 2222:2222 kabada_ai
+```
+To start AI service next time
+```buildoutcfg
+docker start kaby
 ```
 
 To shutdown the service

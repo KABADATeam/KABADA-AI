@@ -29,8 +29,9 @@ class Translator:
     def __call__(self, bag_guids, *args, **kwargs):
         translation = defaultdict(list)
         for guid in bag_guids:
-            bn_name, list_evidence = self.lookup[guid]
-            translation[bn_name].extend(list_evidence)
+            if guid in self.lookup:
+                bn_name, list_evidence = self.lookup[guid]
+                translation[bn_name].extend(list_evidence)
         return translation
 
     def back(self, bp):

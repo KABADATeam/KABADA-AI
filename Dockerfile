@@ -9,8 +9,10 @@ RUN pip3 install flask numpy
 RUN pip install --no-cache-dir --index-url https://support.bayesfusion.com/pysmile-A/ pysmile
 
 EXPOSE 2222
-CMD python3 app.py
+#CMD python3 app.py
 
+##### usefull commands
+# docker run -v shared_files:/shared_files -p 2222:2222 -it kabada_ai /bin/bash
 # docker run --name kaby -d -p 2222:2222 kabada_ai
 # docker build -t kabada_ai .
 # docker run -it kabada_ai /bin/bash

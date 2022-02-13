@@ -33,10 +33,10 @@ with open(join(repo_dir, "translation", "customer_segments.json"), "r") as conn:
 
 pred_body_gen = PredictBodyGen()
 actions = [
-    PredictAll(id_session=0, guids=pred_body_gen()),
-    PredictAll(id_session=0, guids=pred_body_gen()),
-    PredictAll(id_session=0, guids=pred_body_gen()),
-    PredictAll(id_session=0, guids=pred_body_gen())
+    PredictAll(guids=pred_body_gen()),
+    PredictAll(guids=pred_body_gen()),
+    PredictAll(guids=pred_body_gen()),
+    PredictAll(guids=pred_body_gen())
 ]
 
 for action in actions:

@@ -6,11 +6,13 @@ from collections import defaultdict
 import smile_licence.pysmile_license
 from config import net_dir, epsilon
 from collections import Counter
+import logging
 
 class BayesNetwork:
     def __init__(self, path):
         self.net = pysmile.Network()
-        print("Importing net:", path)
+        # print("Importing net:", path)
+        logging.info("Importing net: " + path)
         self.net.read_file(path)
         self.net.update_beliefs()
 
