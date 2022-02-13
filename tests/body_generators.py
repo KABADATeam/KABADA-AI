@@ -9,6 +9,10 @@ from ast import literal_eval
 import numpy as np
 import random
 
+seed = 3
+np.random.seed(seed)
+random.seed(seed)
+
 class PredictBodyGen:
     def __init__(self, flag_fake_guids=False):
         self.flag_fake_guids = flag_fake_guids
@@ -26,7 +30,7 @@ class PredictBodyGen:
                     self.guids[i] = ''.join(random.sample(self.guids[i],len(self.guids[i])))
 
     def __call__(self, *args, **kwargs):
-        n_sample = int(len(self.guids) * 0.5)
+        n_sample = int(len(self.guids) * 0.1)
         return list(np.random.choice(self.guids, n_sample))
 
 

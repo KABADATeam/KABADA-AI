@@ -5,6 +5,7 @@ from config import repo_dir
 from pprint import pprint
 from collections import defaultdict
 
+
 class Translator:
     def __init__(self):
         fs = sorted(glob(join(repo_dir, "translation", "*.json")))
@@ -18,6 +19,11 @@ class Translator:
             for guid, trans in translation.items():
                 self.lookup[guid] = (bn_name, list(trans.values())[0])
 
+        self.inverse_lookup = defaultdict(lambda :defaultdict(list))
+        for guid, (bn_name, values) in self.lookup.items():
+            for varname, value in (tuple(a.items())[0] for a in values):
+                self.inverse_lookup[bn_name][varname].append(value)
+
     def __call__(self, bag_guids, *args, **kwargs):
         translation = defaultdict(list)
         for guid in bag_guids:
@@ -26,11 +32,13 @@ class Translator:
         return translation
 
     def back(self, bp):
-        # TODO how to handle cases like "All age groups" ?
-        for bn_name, list_evidence in bp.items():
-            pass
+        guids = []
+        for guid, (bn_name, values) in self.lookup.items():
+            necessary_condition = {tuple(a.items())[0] for a in values}
+            if necessary_condition.issubset(bp[bn_name]):
+                guids.append(guid)
 
-        return {}
+        return guids
 
 
 if __name__ == "__main__":
