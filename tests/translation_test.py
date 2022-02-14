@@ -70,6 +70,7 @@ def validate_wrt_texter():
 
         for guid, stuff in translation.items():
             # print(dict_guid2stuff[guid])
+            guid = guid.split("::")[-1]
             val1, kind1 = dict_guid2stuff[guid]
             s = list(stuff.keys())[0]
             val, kind = s.split(":kind")
@@ -77,7 +78,20 @@ def validate_wrt_texter():
                 raise ValueError( val, val1, int(kind), kind1)
 
 
+def check_bp_flattener():
+    from Translator import Flattener
+    flattener = Flattener()
+    guids = flattener({
+            "a": {"a1": ["a11", "a12"], "a2": ["a21", "a22"]},
+            "b": {"b1": ["b11"], "b2": ["b21", "b22", {"b23": ["b231"]}]},
+        })
+    pprint(guids)
+    guids = flattener(flattener.full_bp)
+    pprint(flattener.back(guids))
+
+
 if __name__ == "__main__":
     check_variable_names()
     validate_wrt_texter()
+    # check_bp_flattener()
     print("everythings OK :)")

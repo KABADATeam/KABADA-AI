@@ -1,12 +1,12 @@
 {
-	"ef193985-9b48-495e-a40c-3f53f2b0b30a": {"Under 12:kind32": [{"age_under_12": "yes"}]},
-	"6e0f7f5e-1780-4218-a5c5-f6be04b49a12": {"12 - 17:kind32": [{"age_12_17": "yes"}]},
-	"109af523-c8ae-409f-a5ab-c15d02ce5858": {"18 - 24:kind32": [{"age_18_24": "yes"}]},
-	"22d688a4-1dae-42c2-98af-4e076de1ca73": {"25 - 34:kind32": [{"age_25_34": "yes"}]},
-	"c31ebd92-79bc-417c-bab4-0c3960778ef7": {"35 - 64:kind32": [{"age_35_64": "yes"}]},
-	"88579996-53e2-4699-a6f0-b97df2421276": {"65 - 74:kind32": [{"age_65_74": "yes"}]},
-	"97f2428a-982b-44a6-8b54-9b7f81c8958b": {"75 years or older:kind32": [{"age_75_over": "yes"}]},
-	"6d1b4bb9-7de0-443d-a9f4-9880cb99fab0": {"All age groups:kind32": [
+	"plan::custSegs::consumer::age::ef193985-9b48-495e-a40c-3f53f2b0b30a": {"Under 12:kind32": [{"age_under_12": "yes"}]},
+	"plan::custSegs::consumer::age::6e0f7f5e-1780-4218-a5c5-f6be04b49a12": {"12 - 17:kind32": [{"age_12_17": "yes"}]},
+	"plan::custSegs::consumer::age::109af523-c8ae-409f-a5ab-c15d02ce5858": {"18 - 24:kind32": [{"age_18_24": "yes"}]},
+	"plan::custSegs::consumer::age::22d688a4-1dae-42c2-98af-4e076de1ca73": {"25 - 34:kind32": [{"age_25_34": "yes"}]},
+	"plan::custSegs::consumer::age::c31ebd92-79bc-417c-bab4-0c3960778ef7": {"35 - 64:kind32": [{"age_35_64": "yes"}]},
+	"plan::custSegs::consumer::age::88579996-53e2-4699-a6f0-b97df2421276": {"65 - 74:kind32": [{"age_65_74": "yes"}]},
+	"plan::custSegs::consumer::age::97f2428a-982b-44a6-8b54-9b7f81c8958b": {"75 years or older:kind32": [{"age_75_over": "yes"}]},
+	"plan::custSegs::consumer::age::6d1b4bb9-7de0-443d-a9f4-9880cb99fab0": {"All age groups:kind32": [
 		{"age_under_12":  "yes"},
 		{"age_12_17":  "yes"},
 		{"age_18_24":  "yes"},
@@ -16,37 +16,48 @@
 		{"age_75_over":  "yes"}
 	]},
 
-	"c7cb2b43-fc30-40ec-b06b-2bdeadc6000f": {"male:kind39": [{"gender_male":  "yes"}]},
-	"a9677a24-bc3c-40aa-8265-4be52545113b": {"female:kind39": [{"gender_female":  "yes"}]},
+	"plan::custSegs::consumer::gender::c7cb2b43-fc30-40ec-b06b-2bdeadc6000f": {"male:kind39": [{"gender_male":  "yes"}]},
+	"plan::custSegs::consumer::gender::a9677a24-bc3c-40aa-8265-4be52545113b": {"female:kind39": [{"gender_female":  "yes"}]},
 
-	"bc6e314f-5d86-40dc-a791-d63be99c22bd": {"Primary:kind34": [{"education_primary":  "yes"}]},
-	"bbab5ef4-bbd3-44aa-a879-1a792a5feada": {"Secondary:kind34": [{"education_secondary":  "yes"}]},
-	"4718bb8b-3018-4408-9ff1-68ab9c4f2b87": {"Higher education:kind34": [{"education_higher":  "yes"}]},
+	"plan::custSegs::consumer::education::bc6e314f-5d86-40dc-a791-d63be99c22bd": {"Primary:kind34": [{"education_primary":  "yes"}]},
+	"plan::custSegs::consumer::education::bbab5ef4-bbd3-44aa-a879-1a792a5feada": {"Secondary:kind34": [{"education_secondary":  "yes"}]},
+	"plan::custSegs::consumer::education::4718bb8b-3018-4408-9ff1-68ab9c4f2b87": {"Higher education:kind34": [{"education_higher":  "yes"}]},
 
-	"b30ffa71-9656-4f10-be64-cd92bad378c0": {"Low:kind33": [{"income_low":  "yes"}]},
-	"d2a35000-6520-47fb-921a-1968a38f6eb8": {"Medium:kind33": [{"income_medium":  "yes"}]},
-	"bdb6d057-80b7-411a-a6b6-12aae71581c3": {"High:kind33": [{"income_high":  "yes"}]},
+	"plan::custSegs::consumer::income::b30ffa71-9656-4f10-be64-cd92bad378c0": {"Low:kind33": [{"income_low":  "yes"}]},
+	"plan::custSegs::consumer::income::d2a35000-6520-47fb-921a-1968a38f6eb8": {"Medium:kind33": [{"income_medium":  "yes"}]},
+	"plan::custSegs::consumer::income::bdb6d057-80b7-411a-a6b6-12aae71581c3": {"High:kind33": [{"income_high":  "yes"}]},
 
-	"c055ffa9-c8e4-4f77-859d-cae9785736f6": {"Domestic:kind35": [{"bus_geo_location_domestic":  "yes"}]},
-	"dd32e3d1-de98-436a-be89-79206cf5204b": {"Domestic Urban:kind35": [{"bus_geo_location_domestic_urban":  "yes"}]},
-	"2d5348f7-f619-4de2-a186-ee0ad4fff927": {"Domestic Rural:kind35": [{"bus_geo_location_domestic_rural":  "yes"}]},
-	"197debde-3d72-4bae-89e5-e5d9010c8562": {"Foreign:kind35": [{"bus_geo_location_foreign":  "yes"}]},
-	"5bf44939-b777-454a-86c2-280eea5fc6dd": {"Foreign Urban:kind35": [{"bus_geo_location_foreign_urban":  "yes"}]},
-	"e59e3f4e-077f-4d34-9214-f5b93134cf44": {"Foreign Rural:kind35": [{"bus_geo_location_foreign_rural":  "yes"}]},
-	"825d07dd-581b-4473-841c-9ec037746ae2": {"Transnational:kind35": [
+	"plan::custSegs::consumer::geographic_location::c055ffa9-c8e4-4f77-859d-cae9785736f6": {"Domestic:kind35": [{"bus_geo_location_domestic":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::dd32e3d1-de98-436a-be89-79206cf5204b": {"Domestic Urban:kind35": [{"bus_geo_location_domestic_urban":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::2d5348f7-f619-4de2-a186-ee0ad4fff927": {"Domestic Rural:kind35": [{"bus_geo_location_domestic_rural":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::197debde-3d72-4bae-89e5-e5d9010c8562": {"Foreign:kind35": [{"bus_geo_location_foreign":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::5bf44939-b777-454a-86c2-280eea5fc6dd": {"Foreign Urban:kind35": [{"bus_geo_location_foreign_urban":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::e59e3f4e-077f-4d34-9214-f5b93134cf44": {"Foreign Rural:kind35": [{"bus_geo_location_foreign_rural":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::825d07dd-581b-4473-841c-9ec037746ae2": {"Transnational:kind35": [
 				{"bus_geo_location_domestic":  "yes"},
 				{"bus_geo_location_foreign":  "yes"}
 			]},
 
-	"3a0ffc1e-bede-4f74-9cff-5735a0b600f9": {"Goods:kind37": [{"type_goods": "yes"}]},
-	"593cfcc0-bc1d-4189-b0af-bdd5f51b0b8d": {"Services:kind37": [{"type_services": "yes"}]},
+	"plan::custSegs::business::business_type::3a0ffc1e-bede-4f74-9cff-5735a0b600f9": {"Goods:kind37": [{"type_goods": "yes"}]},
+	"plan::custSegs::business::business_type::593cfcc0-bc1d-4189-b0af-bdd5f51b0b8d": {"Services:kind37": [{"type_services": "yes"}]},
 
-	"a2254a01-9908-42e0-af0d-8a0b04875197": {"Small:kind36": [{"company_size_small":  "yes"}]},
-	"37634235-3b04-4aad-a647-6d79a2c88655": {"Medium:kind36": [{"company_size_medium":  "yes"}]},
-	"bbc364e1-2394-48c7-8aaf-774ba76942b6": {"Large:kind36": [{"company_size_large":  "yes"}]},
+	"plan::custSegs::business::company_size::a2254a01-9908-42e0-af0d-8a0b04875197": {"Small:kind36": [{"company_size_small":  "yes"}]},
+	"plan::custSegs::business::company_size::37634235-3b04-4aad-a647-6d79a2c88655": {"Medium:kind36": [{"company_size_medium":  "yes"}]},
+	"plan::custSegs::business::company_size::bbc364e1-2394-48c7-8aaf-774ba76942b6": {"Large:kind36": [{"company_size_large":  "yes"}]},
 
-	"7851aaea-93c4-48e8-8817-563ef55cf61a": {"International Organisations:kind38": [{"type_international":  "yes"}]},
-	"9454b766-1241-44ca-ae12-63e101fbae55": {"National Government:kind38": [{"type_national":  "yes"}]},
-	"a3a74886-85d0-4861-baa3-7d09bea0e583": {"Muncipality:kind38": [{"type_municipality":  "yes"}]},
-	"da790cb3-6e70-4f32-8e18-fab771727c07": {"Non-Government organisations:kind38": [{"type_ngo":  "yes"}]}
+	"plan::custSegs::business::geographic_location::c055ffa9-c8e4-4f77-859d-cae9785736f6": {"Domestic:kind35": [{"bus_geo_location_domestic":  "yes"}]},
+	"plan::custSegs::business::geographic_location::dd32e3d1-de98-436a-be89-79206cf5204b": {"Domestic Urban:kind35": [{"bus_geo_location_domestic_urban":  "yes"}]},
+	"plan::custSegs::business::geographic_location::2d5348f7-f619-4de2-a186-ee0ad4fff927": {"Domestic Rural:kind35": [{"bus_geo_location_domestic_rural":  "yes"}]},
+	"plan::custSegs::business::geographic_location::197debde-3d72-4bae-89e5-e5d9010c8562": {"Foreign:kind35": [{"bus_geo_location_foreign":  "yes"}]},
+	"plan::custSegs::business::geographic_location::5bf44939-b777-454a-86c2-280eea5fc6dd": {"Foreign Urban:kind35": [{"bus_geo_location_foreign_urban":  "yes"}]},
+	"plan::custSegs::business::geographic_location::e59e3f4e-077f-4d34-9214-f5b93134cf44": {"Foreign Rural:kind35": [{"bus_geo_location_foreign_rural":  "yes"}]},
+	"plan::custSegs::business::geographic_location::825d07dd-581b-4473-841c-9ec037746ae2": {"Transnational:kind35": [
+				{"bus_geo_location_domestic":  "yes"},
+				{"bus_geo_location_foreign":  "yes"}
+			]},
+
+	"plan::custSegs::publicNgo::business_type::7851aaea-93c4-48e8-8817-563ef55cf61a": {"International Organisations:kind38": [{"type_international":  "yes"}]},
+	"plan::custSegs::publicNgo::business_type::9454b766-1241-44ca-ae12-63e101fbae55": {"National Government:kind38": [{"type_national":  "yes"}]},
+	"plan::custSegs::publicNgo::business_type::a3a74886-85d0-4861-baa3-7d09bea0e583": {"Muncipality:kind38": [{"type_municipality":  "yes"}]},
+	"plan::custSegs::publicNgo::business_type::da790cb3-6e70-4f32-8e18-fab771727c07": {"Non-Government organisations:kind38": [{"type_ngo":  "yes"}]}
 }

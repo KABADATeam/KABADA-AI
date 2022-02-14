@@ -5,6 +5,8 @@ import requests
 from os.path import join
 from config import repo_dir
 from tests.body_generators import PredictBodyGen
+from flask import jsonify
+
 
 class Action:
     def __init__(self, *args, **kwargs):
@@ -22,6 +24,7 @@ class Action:
     def get_url(self):
         return 'http://localhost:2222/' + action.name
 
+
 class PredictAll(Action):
     def __init__(self, *args, **kwargs):
         Action.__init__(self, *args, **kwargs)
@@ -33,15 +36,20 @@ with open(join(repo_dir, "translation", "customer_segments.json"), "r") as conn:
 
 pred_body_gen = PredictBodyGen()
 actions = [
-    PredictAll(guids=pred_body_gen()),
-    PredictAll(guids=pred_body_gen()),
-    PredictAll(guids=pred_body_gen()),
-    PredictAll(guids=pred_body_gen())
+    PredictAll(**pred_body_gen()),
+    PredictAll(**pred_body_gen()),
+    PredictAll(**pred_body_gen()),
+    PredictAll(**pred_body_gen())
 ]
+
+# import json
+# a = json.loads(str(actions[0].get_json()).replace("'", '"'))
+# print(a)
+# exit()
 
 for action in actions:
     print("----------------------- " + action.name)
     r = requests.post(action.get_url(), json=action.get_json(), verify=False)
-    print(json.loads(r.text))
+    print(r.text)
     print("-----------------------")
     # exit()

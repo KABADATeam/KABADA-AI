@@ -8,10 +8,13 @@ from re import findall
 from ast import literal_eval
 import numpy as np
 import random
+from Translator import Flattener
 
 # seed = 3
 # np.random.seed(seed)
 # random.seed(seed)
+
+flattener = Flattener()
 
 class PredictBodyGen:
     def __init__(self, flag_fake_guids=False):
@@ -31,7 +34,10 @@ class PredictBodyGen:
 
     def __call__(self, *args, **kwargs):
         n_sample = int(len(self.guids) * 0.1)
-        return list(np.random.choice(self.guids, n_sample))
+        guids = list(np.random.choice(self.guids, n_sample))
+        bp = flattener.back(guids)
+        bp['location'] = "some_id"
+        return bp
 
 
 if __name__ == "__main__":
@@ -40,6 +46,6 @@ if __name__ == "__main__":
     translator = Translator()
     generator = PredictBodyGen()
 
-    bag_guid = generator()
-
+    bp = generator()
+    bag_guid = flattener(bp)
     pprint(translator(bag_guid))

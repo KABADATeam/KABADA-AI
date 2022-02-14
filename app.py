@@ -2,7 +2,7 @@ import argparse
 from flask import Flask, request
 from collections import defaultdict
 from BayesNetwork import MultiNetwork
-from Translator import Translator
+from Translator import Translator, Flattener
 from config import repo_dir
 import logging
 
@@ -25,6 +25,7 @@ applogger.addHandler(file_handler)
 
 dict_sessions = {}
 translator = Translator()
+flattener = Flattener()
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -33,14 +34,19 @@ def predict():
         json = request.json
         # id_session = json['id_session']
         id_session = 0
-        logging.info('received %s', json['guids'])
+        location = json["location"]
         if id_session not in dict_sessions:
             dict_sessions[id_session] = MultiNetwork()
 
-        translation = translator(json['guids'])
-        bp = dict_sessions[id_session].predict_all(translation)
-        logging.info('returning %s', json['guids'])
-        return {"guids": translator.back(bp), "status": "success"}
+        guids = flattener(json)
+        logging.info('received num %s guids', len(guids))
+        translation = translator(guids)
+        translation = dict_sessions[id_session].predict_all(translation)
+        guids = translator.back(translation)
+        bp = flattener.back(guids)
+        logging.info('returning num %s guids', len(guids))
+        bp['location'] = location
+        return bp
     else:
         return 'Content-Type not supported!'
 

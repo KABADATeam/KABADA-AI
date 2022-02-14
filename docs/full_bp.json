@@ -1,0 +1,32 @@
+{
+	"plan":
+	{
+	"custSegs":
+	{
+		"consumer":
+			[
+			{
+				"age": ["c31ebd92-79bc-417c-bab4-0c3960778ef7", "ef193985-9b48-495e-a40c-3f53f2b0b30a", "22d688a4-1dae-42c2-98af-4e076de1ca73", "6d1b4bb9-7de0-443d-a9f4-9880cb99fab0", "97f2428a-982b-44a6-8b54-9b7f81c8958b", "88579996-53e2-4699-a6f0-b97df2421276", "109af523-c8ae-409f-a5ab-c15d02ce5858", "6e0f7f5e-1780-4218-a5c5-f6be04b49a12"],
+				"gender":["c7cb2b43-fc30-40ec-b06b-2bdeadc6000f", "a9677a24-bc3c-40aa-8265-4be52545113b"],
+				"education":["bbab5ef4-bbd3-44aa-a879-1a792a5feada", "4718bb8b-3018-4408-9ff1-68ab9c4f2b87", "bc6e314f-5d86-40dc-a791-d63be99c22bd"],
+				"income":["bdb6d057-80b7-411a-a6b6-12aae71581c3", "d2a35000-6520-47fb-921a-1968a38f6eb8", "b30ffa71-9656-4f10-be64-cd92bad378c0"],
+				"geographic_location":["5bf44939-b777-454a-86c2-280eea5fc6dd", "dd32e3d1-de98-436a-be89-79206cf5204b", "825d07dd-581b-4473-841c-9ec037746ae2", "c055ffa9-c8e4-4f77-859d-cae9785736f6", "197debde-3d72-4bae-89e5-e5d9010c8562", "2d5348f7-f619-4de2-a186-ee0ad4fff927", "e59e3f4e-077f-4d34-9214-f5b93134cf44"]
+			}
+			],
+		"business":
+			[
+			{
+				"business_type":["3a0ffc1e-bede-4f74-9cff-5735a0b600f9", "593cfcc0-bc1d-4189-b0af-bdd5f51b0b8d"],
+				"company_size":["37634235-3b04-4aad-a647-6d79a2c88655", "bbc364e1-2394-48c7-8aaf-774ba76942b6", "a2254a01-9908-42e0-af0d-8a0b04875197"],
+				"geographic_location":["5bf44939-b777-454a-86c2-280eea5fc6dd", "dd32e3d1-de98-436a-be89-79206cf5204b", "825d07dd-581b-4473-841c-9ec037746ae2", "c055ffa9-c8e4-4f77-859d-cae9785736f6", "197debde-3d72-4bae-89e5-e5d9010c8562", "2d5348f7-f619-4de2-a186-ee0ad4fff927", "e59e3f4e-077f-4d34-9214-f5b93134cf44"]
+			}
+			],
+		"publicNgo":
+			[
+			{
+				"business_type":["7851aaea-93c4-48e8-8817-563ef55cf61a", "9454b766-1241-44ca-ae12-63e101fbae55", "a3a74886-85d0-4861-baa3-7d09bea0e583", "da790cb3-6e70-4f32-8e18-fab771727c07"]
+			}
+			]
+	}
+	}
+}
