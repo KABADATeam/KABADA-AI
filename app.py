@@ -40,7 +40,7 @@ def predict():
         translation = translator(json['guids'])
         bp = dict_sessions[id_session].predict_all(translation)
         logging.info('returning %s', json['guids'])
-        return {"value": translator.back(bp), "status": "success"}
+        return {"guids": translator.back(bp), "status": "success"}
     else:
         return 'Content-Type not supported!'
 
