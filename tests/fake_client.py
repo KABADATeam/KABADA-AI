@@ -1,11 +1,10 @@
 import sys
-sys.path.insert(0, "/")
+sys.path.insert(0, ".")
 import json
 import requests
 from os.path import join
 from config import repo_dir
 from tests.body_generators import PredictBodyGen
-from flask import jsonify
 
 
 class Action:
@@ -50,6 +49,6 @@ actions = [
 for action in actions:
     print("----------------------- " + action.name)
     r = requests.post(action.get_url(), json=action.get_json(), verify=False)
-    print(r.text)
+    print(json.loads(r.text))
     print("-----------------------")
     # exit()
