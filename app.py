@@ -35,9 +35,9 @@ def predict():
         # id_session = json['id_session']
         id_session = 0
         location = json["location"]
+        id_bp = json['plan']['businessPlan_id']
         if id_session not in dict_sessions:
             dict_sessions[id_session] = MultiNetwork()
-
         guids = flattener(json)
         logging.info('received num %s guids', len(guids))
         translation = translator(guids)
@@ -46,6 +46,7 @@ def predict():
         bp = flattener.back(guids)
         logging.info('returning num %s guids', len(guids))
         bp['location'] = location
+        bp['plan']['businessPlan_id'] = id_bp
         return bp
     else:
         return 'Content-Type not supported!'

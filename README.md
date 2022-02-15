@@ -64,6 +64,8 @@ To shutdown the service
 ```buildoutcfg
 docker stop kaby
 ```
-
 Service url is ``localhost:2222``
 
+## Endpoints
+To receive recommandations for field values, use predict endpoint, which
+has url ``http:/<ip>:<port>/predict``. For this request use ``post`` method.

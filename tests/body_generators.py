@@ -37,6 +37,7 @@ class PredictBodyGen:
         guids = list(np.random.choice(self.guids, n_sample))
         bp = flattener.back(guids)
         bp['location'] = "some_id"
+        bp['plan']['businessPlan_id'] = "some_id"
         return bp
 
 
