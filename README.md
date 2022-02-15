@@ -21,13 +21,13 @@ In the prompt push Customize button and fill the tick boxes as in image bellow a
 ![python install menu](docs/python_customized_installation.png "python customized installation")
 
 
-After that install necessary python libraries with these commands
+After that install necessary python libraries with these commands in CMD
 ```buildoutcfg
 pip install -r requirements.txt
 pip install --no-cache-dir --index-url https://support.bayesfusion.com/pysmile-A/ pysmile
 ```
 
-To start application go to this repository's root directory and run 
+To start application go to this repository's root directory via CMD and run 
 ```buildoutcfg
 python app.py --ip=localhost --port=2222
 ```
@@ -36,7 +36,7 @@ the service by providing corresponding script parameter values.
 
 #### Testing on windows
 To test if all necessary components are installed start the rest server
-as describer previously. Then also from repository's root directory run
+as describer previously. Then also from repository's root directory via CMD run
 ```buildoutcfg
 python tests/fake_client.py
 ```
