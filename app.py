@@ -3,7 +3,7 @@ from flask import Flask, request
 from collections import defaultdict
 from BayesNetwork import MultiNetwork
 from Translator import Translator, Flattener
-from config import repo_dir
+from config import repo_dir, log_dir
 import logging
 
 parser = argparse.ArgumentParser()
@@ -17,7 +17,7 @@ app = Flask(__name__)
 
 app.debug = True
 applogger = app.logger
-file_handler = logging.FileHandler(repo_dir + "/shared_files/app.log")
+file_handler = logging.FileHandler(log_dir + "/app.log")
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 file_handler.setLevel(logging.DEBUG)
 applogger.setLevel(logging.DEBUG)
