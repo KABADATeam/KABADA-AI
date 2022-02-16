@@ -1,0 +1,6 @@
+{
+	"plan::custSegs::publicNgo::business_type::7851aaea-93c4-48e8-8817-563ef55cf61a": {"International Organisations:kind38": [{"type_international":  "yes"}]},
+	"plan::custSegs::publicNgo::business_type::9454b766-1241-44ca-ae12-63e101fbae55": {"National Government:kind38": [{"type_national":  "yes"}]},
+	"plan::custSegs::publicNgo::business_type::a3a74886-85d0-4861-baa3-7d09bea0e583": {"Muncipality:kind38": [{"type_municipality":  "yes"}]},
+	"plan::custSegs::publicNgo::business_type::da790cb3-6e70-4f32-8e18-fab771727c07": {"Non-Government organisations:kind38": [{"type_ngo":  "yes"}]}
+}

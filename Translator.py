@@ -7,17 +7,26 @@ from collections import defaultdict
 from copy import deepcopy
 
 
-def rec_accumulate_guids(bp, path, guids):
+def rec_accumulate_guids(bp, path, guids, bp2bn, sep="::"):
     if isinstance(bp, str) or isinstance(bp, int) or isinstance(bp, float):
-        guids.append(path + [str(bp)])
+        guids.append(path + sep + str(bp))
 
     if isinstance(bp, dict):
         for k, v in bp.items():
-            rec_accumulate_guids(v, path + [k], guids)
+            if len(path) > 0:
+                rec_accumulate_guids(v, path + sep + k, guids, bp2bn, sep=sep)
+            else:
+                rec_accumulate_guids(v, k, guids, bp2bn, sep=sep)
 
     if isinstance(bp, list):
         for v in bp:
-            rec_accumulate_guids(v, path, guids)
+            if path in bp2bn:
+                subguids = []
+                rec_accumulate_guids(v, path, subguids, bp2bn, sep=sep)
+                if len(subguids) > 0:
+                    guids.append((bp2bn[path], subguids))
+            else:
+                rec_accumulate_guids(v, path, guids, bp2bn, sep=sep)
 
 
 def rec_change_bp(bp, path, sep="::"):
@@ -65,15 +74,24 @@ class Flattener:
         self.sep = sep
         with open(join(repo_dir, "docs", "full_bp.json"), "r") as conn:
             self.full_bp = json.load(conn)
+
+        with open(join(repo_dir, "docs", "bp_flatten_names_to_bns.json"), "r") as conn:
+            self.bp2bn = json.load(conn)
         # self.full_guid_bp = deepcopy(self.full_bp)
         # rec_change_bp(self.full_guid_bp, [], sep=sep)
 
     def __call__(self, bp):
         guids = []
-        rec_accumulate_guids(bp, [], guids)
-        for i in range(len(guids)):
-            guids[i] = "::".join(guids[i])
-        return guids
+        rec_accumulate_guids(bp, "", guids, self.bp2bn)
+        output = []
+        default = []
+        for guid in guids:
+            if isinstance(guid, tuple):
+                output.append(guid)
+            else:
+                default.append(guid)
+        output.append(("bp", default))
+        return output
 
     def back(self, guids):
         set_guids = set(guids)
@@ -111,13 +129,17 @@ class Translator:
         return translation
 
     def back(self, bp):
-        guids = []
-        for guid, (bn_name, values) in self.lookup.items():
-            necessary_condition = {tuple(a.items())[0] for a in values}
-            if necessary_condition.issubset(bp[bn_name]):
-                guids.append(guid)
+        guids_by_bn = []
+        for bn_name0, values0 in bp:
+            guids = []
+            for guid, (bn_name, values) in self.lookup.items():
+                if bn_name == bn_name0:
+                    necessary_condition = {tuple(a.items())[0] for a in values}
+                    if necessary_condition.issubset(values0):
+                        guids.append(guid)
+            guids_by_bn.append((bn_name0, guids))
 
-        return guids
+        return guids_by_bn
 
 
 if __name__ == "__main__":

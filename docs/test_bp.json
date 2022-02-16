@@ -1,0 +1,43 @@
+{
+	"plan":
+	{
+	"nace":"00000000-0000-0000-0000-000000000000",
+	"language":"00000000-0000-0000-0000-000000000000",
+	"country":"00000000-0000-0000-0000-000000000000",
+
+	"custSegs":
+	{
+		"consumer":
+			[
+			{
+				"age": ["c31ebd92-79bc-417c-bab4-0c3960778ef7", "ef193985-9b48-495e-a40c-3f53f2b0b30a"],
+				"gender":["c7cb2b43-fc30-40ec-b06b-2bdeadc6000f"],
+				"education":["bbab5ef4-bbd3-44aa-a879-1a792a5feada"],
+				"income":["bdb6d057-80b7-411a-a6b6-12aae71581c3"],
+				"geographic_location":["5bf44939-b777-454a-86c2-280eea5fc6dd"]
+			},
+				{
+				"age": ["ef193985-9b48-495e-a40c-3f53f2b0b30a"],
+				"gender":["a9677a24-bc3c-40aa-8265-4be52545113b"],
+				"education":["4718bb8b-3018-4408-9ff1-68ab9c4f2b87"],
+				"income":["d2a35000-6520-47fb-921a-1968a38f6eb8"],
+				"geographic_location":["dd32e3d1-de98-436a-be89-79206cf5204b"]
+			}
+			],
+		"business":
+			[
+			{
+				"business_type":[],
+				"company_size":[],
+				"geographic_location":[]
+			}
+			],
+		"publicNgo":
+			[
+			{
+				"business_type":[]
+			}
+			]
+	}
+	}
+}

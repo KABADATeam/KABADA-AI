@@ -7,9 +7,11 @@ import smile_licence.pysmile_license
 from config import net_dir, epsilon
 from collections import Counter
 import logging
+from Translator import Translator
 
 class BayesNetwork:
     def __init__(self, path):
+
         self.net = pysmile.Network()
         # print("Importing net:", path)
         logging.info("Importing net: " + path)
@@ -52,6 +54,7 @@ class BayesNetwork:
 
 class MultiNetwork:
     def __init__(self, translator=None):
+        self.translator = Translator()
         self.bns = {}
         self.random_variables_2_predict = {}
         if translator is not None:
@@ -65,7 +68,6 @@ class MultiNetwork:
 
     def add_evidence(self, bn_name, list_evidence):
         # if two identical evidence provided - there will be smile error
-
         list_evidence = {(list(b.keys())[0], list(b.values())[0]) for b in list_evidence}
         for varname, value in list_evidence:
             for _ in range(10):
@@ -81,28 +83,38 @@ class MultiNetwork:
             for varname, value in evidence.items():
                 self.bns[bn_name].clear_evidence(varname)
 
-    def predict_all(self, translation):
+    def predict_all(self, guids_by_bn):
         # TODO handlot multi value guids (lai prob buutu joint)
-        bp = defaultdict(set)
-        for bn_name, list_evidence in translation.items():
+        bp = []
+        for bn_name, list_guids in guids_by_bn:
+            list_evidence = self.translator(list_guids)
+            if len(list_evidence) == 0:
+                continue
+            assert len(list_evidence) == 1 , "pa tiikliem tika sadaliits ar flattener"
+            list_evidence = list_evidence[bn_name]
+
             self.add_net(bn_name)
             self.add_evidence(bn_name, list_evidence)
 
             list_variables = self.random_variables_2_predict[bn_name]
             s_variables_in_evidence = {list(b.keys())[0] for b in list_evidence}
+            recomendations = set()
             for varname in list_variables:
                 if varname not in s_variables_in_evidence:
                     try:
                         val, prob = self.bns[bn_name].predict_popup(varname)
                         if prob > 0.5:
-                            bp[bn_name].add((varname, val))
+                            recomendations.add((varname, val))
                     except Exception as e:
                         # print(varname, e)
                         pass
 
+            bp.append((bn_name, recomendations))
             self.bns[bn_name].clear_evidence()
 
-        return bp
+        translations_by_bn = self.translator.back(bp)
+
+        return translations_by_bn
 
 
 if __name__ == "__main__":

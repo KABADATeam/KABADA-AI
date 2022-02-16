@@ -1,0 +1,40 @@
+{
+	"plan::custSegs::consumer::age::ef193985-9b48-495e-a40c-3f53f2b0b30a": {"Under 12:kind32": [{"age_under_12": "yes"}]},
+	"plan::custSegs::consumer::age::6e0f7f5e-1780-4218-a5c5-f6be04b49a12": {"12 - 17:kind32": [{"age_12_17": "yes"}]},
+	"plan::custSegs::consumer::age::109af523-c8ae-409f-a5ab-c15d02ce5858": {"18 - 24:kind32": [{"age_18_24": "yes"}]},
+	"plan::custSegs::consumer::age::22d688a4-1dae-42c2-98af-4e076de1ca73": {"25 - 34:kind32": [{"age_25_34": "yes"}]},
+	"plan::custSegs::consumer::age::c31ebd92-79bc-417c-bab4-0c3960778ef7": {"35 - 64:kind32": [{"age_35_64": "yes"}]},
+	"plan::custSegs::consumer::age::88579996-53e2-4699-a6f0-b97df2421276": {"65 - 74:kind32": [{"age_65_74": "yes"}]},
+	"plan::custSegs::consumer::age::97f2428a-982b-44a6-8b54-9b7f81c8958b": {"75 years or older:kind32": [{"age_75_over": "yes"}]},
+	"plan::custSegs::consumer::age::6d1b4bb9-7de0-443d-a9f4-9880cb99fab0": {"All age groups:kind32": [
+		{"age_under_12":  "yes"},
+		{"age_12_17":  "yes"},
+		{"age_18_24":  "yes"},
+		{"age_25_34":  "yes"},
+		{"age_35_64":  "yes"},
+		{"age_65_74":  "yes"},
+		{"age_75_over":  "yes"}
+	]},
+
+	"plan::custSegs::consumer::gender::c7cb2b43-fc30-40ec-b06b-2bdeadc6000f": {"male:kind39": [{"gender_male":  "yes"}]},
+	"plan::custSegs::consumer::gender::a9677a24-bc3c-40aa-8265-4be52545113b": {"female:kind39": [{"gender_female":  "yes"}]},
+
+	"plan::custSegs::consumer::education::bc6e314f-5d86-40dc-a791-d63be99c22bd": {"Primary:kind34": [{"education_primary":  "yes"}]},
+	"plan::custSegs::consumer::education::bbab5ef4-bbd3-44aa-a879-1a792a5feada": {"Secondary:kind34": [{"education_secondary":  "yes"}]},
+	"plan::custSegs::consumer::education::4718bb8b-3018-4408-9ff1-68ab9c4f2b87": {"Higher education:kind34": [{"education_higher":  "yes"}]},
+
+	"plan::custSegs::consumer::income::b30ffa71-9656-4f10-be64-cd92bad378c0": {"Low:kind33": [{"income_low":  "yes"}]},
+	"plan::custSegs::consumer::income::d2a35000-6520-47fb-921a-1968a38f6eb8": {"Medium:kind33": [{"income_medium":  "yes"}]},
+	"plan::custSegs::consumer::income::bdb6d057-80b7-411a-a6b6-12aae71581c3": {"High:kind33": [{"income_high":  "yes"}]},
+
+	"plan::custSegs::consumer::geographic_location::c055ffa9-c8e4-4f77-859d-cae9785736f6": {"Domestic:kind35": [{"geo_location_domestic":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::dd32e3d1-de98-436a-be89-79206cf5204b": {"Domestic Urban:kind35": [{"geo_location_domestic_urban":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::2d5348f7-f619-4de2-a186-ee0ad4fff927": {"Domestic Rural:kind35": [{"geo_location_domestic_rural":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::197debde-3d72-4bae-89e5-e5d9010c8562": {"Foreign:kind35": [{"geo_location_foreign":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::5bf44939-b777-454a-86c2-280eea5fc6dd": {"Foreign Urban:kind35": [{"geo_location_foreign_urban":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::e59e3f4e-077f-4d34-9214-f5b93134cf44": {"Foreign Rural:kind35": [{"geo_location_foreign_rural":  "yes"}]},
+	"plan::custSegs::consumer::geographic_location::825d07dd-581b-4473-841c-9ec037746ae2": {"Transnational:kind35": [
+				{"geo_location_domestic":  "yes"},
+				{"geo_location_foreign":  "yes"}
+			]}
+}
