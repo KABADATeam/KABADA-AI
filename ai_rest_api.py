@@ -52,4 +52,5 @@ def predict():
         return 'Content-Type not supported!'
 
 
-app.run(args.ip, args.port)
+if __name__ == "__name__":
+    app.run(args.ip, args.port)
