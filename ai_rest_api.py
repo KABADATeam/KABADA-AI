@@ -2,7 +2,7 @@ import argparse
 from flask import Flask, request
 from collections import defaultdict
 from BayesNetwork import MultiNetwork
-from Translator import Translator, Flattener
+from Translator import Translator, Flattener, BPMerger
 from config import repo_dir, log_dir
 import logging
 
@@ -19,6 +19,7 @@ applogger.addHandler(file_handler)
 dict_sessions = {}
 translator = Translator()
 flattener = Flattener()
+merger = BPMerger()
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -33,13 +34,16 @@ def predict():
 
         if id_session not in dict_sessions:
             dict_sessions[id_session] = MultiNetwork()
-        guids = flattener(json)
-        logging.info('received num %s guids', len(guids))
-        translation = translator(guids)
-        translation = dict_sessions[id_session].predict_all(translation)
-        guids = translator.back(translation)
-        bp = flattener.back(guids)
-        logging.info('returning num %s guids', len(guids))
+        guids_by_bn = flattener(json)
+        logging.info('received num %s bns idetified', len(guids_by_bn))
+        recomendations_by_bn = dict_sessions[id_session].predict_all(guids_by_bn)
+
+        bp = None
+        for bn_name, recomendations in recomendations_by_bn:
+            if bp is None:
+                bp = flattener.back(recomendations)
+            else:
+                bp = merger(bp, flattener.back(recomendations))
 
         bp['location'] = location
         bp['plan']['businessPlan_id'] = id_bp
@@ -48,7 +52,9 @@ def predict():
     else:
         return 'Content-Type not supported!'
 
-if __name__ == "__name__":
+
+if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--ip', type=str, default="localhost")
     parser.add_argument('--port', type=int, default="2222")

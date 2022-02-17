@@ -4,6 +4,7 @@ import json
 import requests
 from os.path import join
 from config import repo_dir
+from glob import glob
 from tests.body_generators import PredictBodyGen
 
 
@@ -29,22 +30,22 @@ class PredictAll(Action):
         Action.__init__(self, *args, **kwargs)
         self.name = "predict"
 
-
-with open(join(repo_dir, "translation", "customer_segments.json"), "r") as conn:
-    translation = json.load(conn)
+translation = {}
+for f in glob(join(repo_dir, "translation", "*.json")):
+    with open(f, "r") as conn:
+        translation.update(json.load(conn))
 
 pred_body_gen = PredictBodyGen()
-actions = [
-    PredictAll(**pred_body_gen()),
-    PredictAll(**pred_body_gen()),
-    PredictAll(**pred_body_gen()),
-    PredictAll(**pred_body_gen())
-]
+# actions = [
+#     PredictAll(**pred_body_gen()),
+#     PredictAll(**pred_body_gen()),
+#     PredictAll(**pred_body_gen()),
+#     PredictAll(**pred_body_gen())
+# ]
 
-# import json
-# a = json.loads(str(actions[0].get_json()).replace("'", '"'))
-# print(a)
-# exit()
+actions = []
+for _ in range(1000):
+    actions.append(PredictAll(**pred_body_gen()))
 
 for action in actions:
     print("----------------------- " + action.name)

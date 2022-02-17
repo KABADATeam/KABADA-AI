@@ -5,6 +5,48 @@ from config import repo_dir
 from pprint import pprint
 from collections import defaultdict
 from copy import deepcopy
+import hashlib
+
+
+def rec_merge(bp1, bp2, path, bp2bn, sep="::"):
+
+    # if isinstance(bp1, str) or isinstance(bp1, int) or isinstance(bp, float):
+    #     return
+
+    if isinstance(bp1, dict):
+        assert bp1.keys() == bp2.keys()
+        res = {}
+        for k in bp1.keys():
+            path1 = k if len(path) == 0 else path + sep + k
+            res[k] = rec_merge(bp1[k], bp2[k], path1, bp2bn, sep=sep)
+        return res
+
+    if isinstance(bp1, list):
+        res = bp1 + bp2
+        hs = []
+        for r in res:
+            hs.append(hashlib.md5(str(r).encode("utf-8")).hexdigest())
+        set_unique = set()
+        inds_drop = []
+        for i, h in enumerate(hs):
+            if h in set_unique:
+                inds_drop.append(i)
+            else:
+                set_unique.add(h)
+        # TODO merge further
+        for i in reversed(sorted(inds_drop)):
+            res.pop(i)
+        return res
+
+
+class BPMerger:
+    def __init__(self):
+        with open(join(repo_dir, "docs", "bp_flatten_names_to_bns.json"), "r") as conn:
+            self.bp2bn = json.load(conn)
+
+    def __call__(self, bp1, bp2):
+        assert bp1.keys() == bp2.keys()
+        return rec_merge(bp1, bp2, "", self.bp2bn, sep="::")
 
 
 def rec_accumulate_guids(bp, path, guids, bp2bn, sep="::"):

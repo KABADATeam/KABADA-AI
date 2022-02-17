@@ -3,6 +3,8 @@ import json
 from config import repo_dir
 from pprint import pprint
 from BayesNetwork import MultiNetwork
+from os.path import join
+import hashlib
 flattener = Flattener()
 net = MultiNetwork()
 
@@ -21,6 +23,6 @@ for bn_name, recomendations in recomendations_by_bn:
     bps.append(bp)
     # pprint(bp)
     # exit()
-# TODO merge business plans
-pprint(bps)
-
+# pprint(bps)
+merger = BPMerger()
+pprint(merger(bps[0], bps[1]))
