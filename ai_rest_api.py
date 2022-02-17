@@ -19,7 +19,6 @@ applogger.addHandler(file_handler)
 dict_sessions = {}
 translator = Translator()
 flattener = Flattener()
-merger = BPMerger()
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -34,16 +33,13 @@ def predict():
 
         if id_session not in dict_sessions:
             dict_sessions[id_session] = MultiNetwork()
+
         guids_by_bn = flattener(json)
         logging.info('received num %s bns idetified', len(guids_by_bn))
+
         recomendations_by_bn = dict_sessions[id_session].predict_all(guids_by_bn)
 
-        bp = None
-        for bn_name, recomendations in recomendations_by_bn:
-            if bp is None:
-                bp = flattener.back(recomendations)
-            else:
-                bp = merger(bp, flattener.back(recomendations))
+        bp = flattener.back(recomendations_by_bn)
 
         bp['location'] = location
         bp['plan']['businessPlan_id'] = id_bp

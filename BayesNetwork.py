@@ -120,23 +120,25 @@ class MultiNetwork:
 if __name__ == "__main__":
     from pprint import pprint
     from tests.body_generators import PredictBodyGen
-    from Translator import Translator
+    from Translator import Flattener, BPMerger
 
     gen = PredictBodyGen()
-    trans = Translator()
-    net = MultiNetwork(translator=trans)
+    flattener = Flattener()
+    merger = BPMerger()
+    net = MultiNetwork()
 
     for _ in range(100):
-        guids = gen()
-        translation = trans(guids)
-        bp = net.predict_all(translation)
-        pred_guids = trans.back(bp)
+        bp = gen()
+        guids_by_bn = flattener(bp)
+        recomendations_by_bn = net.predict_all(guids_by_bn)
 
-        print("--------------------------")
-        print([trans.lookup_uiname[guid] for guid in guids])
-        print([trans.lookup_uiname[guid] for guid in pred_guids])
-        # exit()
-
-
+        bp = None
+        for bn_name, recomendations in recomendations_by_bn:
+            if bp is None:
+                bp = flattener.back(recomendations)
+            else:
+                bp = merger(bp, flattener.back(recomendations))
+        print(bp)
+        exit()
 
 

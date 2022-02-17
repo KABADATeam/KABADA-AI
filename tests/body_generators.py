@@ -35,7 +35,7 @@ class PredictBodyGen:
     def __call__(self, *args, **kwargs):
         n_sample = int(len(self.guids) * 0.1)
         guids = list(np.random.choice(self.guids, n_sample))
-        bp = flattener.back(guids)
+        bp = flattener.back_one_recomendation(guids)
         bp['location'] = "some_id"
         bp['plan']['businessPlan_id'] = "some_id"
         return bp
