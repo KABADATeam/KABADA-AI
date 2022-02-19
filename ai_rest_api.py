@@ -54,9 +54,6 @@ def predict():
 
 
 if __name__ == "__main__":
-    if os.path.exists(path_pid):
-        print("Allready running")
-        sys.exit(0)
 
     with open(path_pid, "w") as conn:
         conn.write(str(os.getpid()))
@@ -64,7 +61,7 @@ if __name__ == "__main__":
     parser.add_argument('--ip', type=str, default="localhost")
     parser.add_argument('--port', type=int, default="2222")
     args = parser.parse_args()
-    log_dir
+
     # app.run(args.ip, args.port)
     http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
     http_server.serve_forever()

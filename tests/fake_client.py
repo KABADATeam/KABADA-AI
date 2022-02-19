@@ -50,6 +50,7 @@ for _ in range(1000):
 for action in actions:
     print("----------------------- " + action.name)
     r = requests.post(action.get_url(), json=action.get_json(), verify=False)
-    print(json.loads(r.text))
+    # print(json.loads(r.text))
+    print(r.text)
     print("-----------------------")
     # exit()
