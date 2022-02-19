@@ -1,9 +1,13 @@
 import argparse
+import os
+import sys
+
 from flask import Flask, request
 from collections import defaultdict
 from BayesNetwork import MultiNetwork
-from Translator import Translator, Flattener, BPMerger
-from config import repo_dir, log_dir
+from Translator import Translator, Flattener
+from gevent.pywsgi import WSGIServer
+from config import repo_dir, log_dir, path_pid
 import logging
 
 
@@ -50,11 +54,17 @@ def predict():
 
 
 if __name__ == "__main__":
+    if os.path.exists(path_pid):
+        print("Allready running")
+        sys.exit(0)
 
+    with open(path_pid, "w") as conn:
+        conn.write(str(os.getpid()))
     parser = argparse.ArgumentParser()
     parser.add_argument('--ip', type=str, default="localhost")
     parser.add_argument('--port', type=int, default="2222")
-
     args = parser.parse_args()
-
-    app.run(args.ip, args.port)
+    log_dir
+    # app.run(args.ip, args.port)
+    http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
+    http_server.serve_forever()

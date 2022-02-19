@@ -28,11 +28,21 @@ pip install --no-cache-dir --index-url https://support.bayesfusion.com/pysmile-A
 ```
 
 To start application go to this repository's root directory via CMD and run 
+Applicaiton runs as a daemon - start it with command
 ```buildoutcfg
-python app.py --ip=localhost --port=2222
+python ai_daemon.py start --ip=localhost --port=2222
 ```
-this command will start rest api. You can change ip adress ad port of 
-the service by providing corresponding script parameter values. 
+and stop it with command
+```buildoutcfg
+python ai_daemon.py stop
+```
+or restart it with command
+```buildoutcfg
+python ai_daemon.py restart --ip=localhost --port=2222
+```
+There is default values for ip adress and port (localhost and 2222 
+respectively), so if default values are ok, you can skip providing 
+these values.
 
 #### Testing on windows
 To test if all necessary components are installed start the rest server
@@ -64,7 +74,33 @@ To shutdown the service
 ```buildoutcfg
 docker stop kaby
 ```
-Service url is ``localhost:2222``
+
+## Installation and running on Ubuntu 20.04LTS
+Open bash shell this repository's root directory and run this command
+```buildoutcfg
+sudo bash install_on_linux.sh
+```
+The script installs python and all necessary libraries.
+
+Applicaiton runs as a daemon - start it with command
+```buildoutcfg
+python3 ai_daemon.py start --ip=localhost --port=2222
+```
+and stop it with command
+```buildoutcfg
+python3 ai_daemon.py stop
+```
+or restart it with command
+```buildoutcfg
+python3 ai_daemon.py restart --ip=localhost --port=2222
+```
+There is default values for ip adress and port (localhost and 2222 
+respectively), so if default values are ok, you can skip providing 
+these values.
+
+The only difference with running on windows is using ``python3`` instead
+of ``python`` on windows.
+
 
 ## Endpoints
 To receive recommandations for field values, use predict endpoint, which
