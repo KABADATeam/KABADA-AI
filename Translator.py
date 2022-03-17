@@ -171,6 +171,32 @@ class Flattener:
 
         return bp
 
+
+def is_bps_identical(bp1, bp2, flattener=None):
+    if flattener is None:
+        flattener = Flattener()
+
+    f1 = flattener(bp1)
+    f2 = flattener(bp2)
+
+    if len(f1) != len(f2):
+        return False
+
+    f1 = sorted(f1, key=lambda x: x[0] + str(x[2]))
+    f2 = sorted(f2, key=lambda x: x[0] + str(x[2]))
+
+    for (bpname1, guids1, id_bp1), (bpname2, guids2, id_bp2) in zip(f1, f2):
+        if bpname1 != bpname2:
+            return False
+        if set(guids1) != set(guids2) and bpname1 != 'plan':
+            # print(set(guids1))
+            # print(set(guids2))
+            # print(222222)
+            return False
+        if id_bp1 != id_bp2:
+            return False
+    return True
+
 class Translator:
     def __init__(self):
         fs = sorted(glob(join(repo_dir, "translation", "*.json")))
