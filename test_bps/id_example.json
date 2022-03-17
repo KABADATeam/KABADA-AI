@@ -1,0 +1,48 @@
+{
+	"plan": {
+		"nace": "00000000-0000-0000-0000-000000000000",
+		"language": "00000000-0000-0000-0000-000000000000",
+		"country": "00000000-0000-0000-0000-000000000000",
+		"custSegs": {
+	"consumer":
+	[
+		{
+			"id":"c6fb4114-9657-4014-a953-0321b16d26e8",
+			"age":["ef193985-9b48-495e-a40c-3f53f2b0b30a"],
+			"gender":["c7cb2b43-fc30-40ec-b06b-2bdeadc6000f"],
+			"education":["bc6e314f-5d86-40dc-a791-d63be99c22bd"],
+			"income":["d2a35000-6520-47fb-921a-1968a38f6eb8","b30ffa71-9656-4f10-be64-cd92bad378c0"],
+			"geographic_location":["dd32e3d1-de98-436a-be89-79206cf5204b","c055ffa9-c8e4-4f77-859d-cae9785736f6"]
+		},
+		{
+			"id":"879d3b8f-68a5-454e-b0a1-4b3fcc4b7af1",
+			"age":["ef193985-9b48-495e-a40c-3f53f2b0b30a"],
+			"gender":["c7cb2b43-fc30-40ec-b06b-2bdeadc6000f"],
+			"education":["bc6e314f-5d86-40dc-a791-d63be99c22bd"],
+			"income":["d2a35000-6520-47fb-921a-1968a38f6eb8","b30ffa71-9656-4f10-be64-cd92bad378c0"],
+			"geographic_location":["dd32e3d1-de98-436a-be89-79206cf5204b","c055ffa9-c8e4-4f77-859d-cae9785736f6"]
+		}
+	],
+	"business":
+	[
+		{
+			"id":"b1eb8fe6-f25c-4ccf-bfe4-c8be71418434",
+			"business_type":["593cfcc0-bc1d-4189-b0af-bdd5f51b0b8d"],
+			"company_size":["a2254a01-9908-42e0-af0d-8a0b04875197"],
+			"geographic_location":["dd32e3d1-de98-436a-be89-79206cf5204b","c055ffa9-c8e4-4f77-859d-cae9785736f6"]
+		}
+	],
+	"publicNgo":
+	[
+		{
+			"id":"fd240700-fffb-4e14-9116-00e640b7c0fe",
+			"business_type":["7851aaea-93c4-48e8-8817-563ef55cf61a","9454b766-1241-44ca-ae12-63e101fbae55"]
+		},
+		{
+			"id":"a5ea7737-23eb-42f7-8ef3-cab5c10dc76d",
+			"business_type":["7851aaea-93c4-48e8-8817-563ef55cf61a","9454b766-1241-44ca-ae12-63e101fbae55"]
+		}
+	]
+}
+	}
+}

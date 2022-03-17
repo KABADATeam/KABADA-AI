@@ -23,6 +23,7 @@ class Action:
 
     def get_url(self):
         return 'http://localhost:2222/' + action.name
+        # return 'http://195.13.182.182:2222/' + action.name
 
 
 class PredictAll(Action):

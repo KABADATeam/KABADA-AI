@@ -8,33 +8,41 @@ from copy import deepcopy
 from hashlib import md5
 
 
+def copy_attribute(bp_from, bp_to, attr_name='id'):
+    if isinstance(bp_from, dict):
+        assert isinstance(bp_to, dict)
+        res = {}
+        if attr_name in bp_from:
+            bp_to[attr_name] = bp_from[attr_name]
+
+        for k in bp_from.keys() & bp_to.keys():
+            copy_attribute(bp_from[k], bp_to[k], attr_name=attr_name)
+        return res
+
+    if isinstance(bp_from, list):
+        assert isinstance(bp_to, list)
+        for bp_from_sub, bp_to_sub in zip(bp_from, bp_to):
+            copy_attribute(bp_from_sub, bp_to_sub, attr_name=attr_name)
+
+
 def rec_merge(bp1, bp2, path, bp2bn, sep="::", set_hashes_of_epmty=None):
 
     if isinstance(bp1, dict):
-        assert bp1.keys() == bp2.keys()
         res = {}
-        for k in bp1.keys():
+        for k in bp1.keys() & bp2.keys():
             path1 = k if len(path) == 0 else path + sep + k
             res[k] = rec_merge(bp1[k], bp2[k], path1, bp2bn, sep=sep, set_hashes_of_epmty=set_hashes_of_epmty)
+
+        for k in bp1.keys() - bp2.keys():
+            res[k] = bp1[k]
+
+        for k in bp2.keys() - bp1.keys():
+            res[k] = bp2[k]
+
         return res
 
     if isinstance(bp1, list):
         res = bp1 + bp2
-        hs = []
-        for r in res:
-            hs.append(md5(str(r).encode("utf-8")).hexdigest())
-            # print(22222, path in bp2bn, r, hs[-1])
-        set_unique = set()
-        inds_drop = []
-        num_unique_hs = len(set(hs))
-        for i, h in enumerate(hs):
-            if h in set_unique or (h in set_hashes_of_epmty and path in bp2bn and num_unique_hs > 1):
-                inds_drop.append(i)
-            else:
-                set_unique.add(h)
-        # TODO merge further, for now it seems unnecessary
-        for i in reversed(sorted(inds_drop)):
-            res.pop(i)
         return res
 
 
@@ -45,7 +53,6 @@ class BPMerger:
         self.set_hashes_of_epmty = set_hashes_of_epmty
 
     def __call__(self, bp1, bp2):
-        assert bp1.keys() == bp2.keys()
         return rec_merge(bp1, bp2, "", self.bp2bn, sep="::", set_hashes_of_epmty=self.set_hashes_of_epmty)
 
 
@@ -71,19 +78,22 @@ def rec_accumulate_guids(bp, path, guids, bp2bn, sep="::"):
                 rec_accumulate_guids(v, path, guids, bp2bn, sep=sep)
 
 
-def rec_delete_missing(bp, path, set_guids, sep="::", set_hashes_of_epmty=None):
+def rec_delete_missing(bp, path, set_guids, sep="::", set_hashes_of_epmty=None, flag_build_empty_hashes=False):
 
     if isinstance(bp, dict):
-
-        for k in list(bp.keys()):
+        for k in tuple(bp.keys()):
             v = bp[k]
-            if isinstance(v, str) or isinstance(bp, int) or isinstance(bp, float):
+            if isinstance(v, str) or isinstance(v, int) or isinstance(v, float):
                 if sep.join(path + [str(v)]) not in set_guids:
                     del bp[k]
             else:
-                rec_delete_missing(v, path + [k], set_guids, sep=sep,set_hashes_of_epmty=set_hashes_of_epmty)
-        if set_hashes_of_epmty is not None:
-            # print(1111111111, bp, md5(str(bp).encode("utf-8")).hexdigest())
+                rec_delete_missing(v, path + [k], set_guids, sep=sep, set_hashes_of_epmty=set_hashes_of_epmty,
+                                   flag_build_empty_hashes=flag_build_empty_hashes)
+                if not flag_build_empty_hashes and set_hashes_of_epmty is not None:
+                    if md5(str(v).encode("utf-8")).hexdigest() in set_hashes_of_epmty or len(bp[k]) == 0:
+                        del bp[k]
+
+        if flag_build_empty_hashes:
             set_hashes_of_epmty.add(md5(str(bp).encode("utf-8")).hexdigest())
 
     if isinstance(bp, list):
@@ -93,11 +103,15 @@ def rec_delete_missing(bp, path, set_guids, sep="::", set_hashes_of_epmty=None):
                 if sep.join(path + [str(bp[i])]) not in set_guids:
                     inds_drop.append(i)
             else:
-                rec_delete_missing(bp[i], path, set_guids, sep=sep,set_hashes_of_epmty=set_hashes_of_epmty)
+                rec_delete_missing(bp[i], path, set_guids, sep=sep,set_hashes_of_epmty=set_hashes_of_epmty,
+                                   flag_build_empty_hashes=flag_build_empty_hashes)
+                if not flag_build_empty_hashes and set_hashes_of_epmty is not None:
+                    if md5(str(bp[i]).encode("utf-8")).hexdigest() in set_hashes_of_epmty or len(bp[i]) == 0:
+                        inds_drop.append(i)
 
         for i in reversed(sorted(inds_drop)):
             bp.pop(i)
-        if set_hashes_of_epmty is not None:
+        if flag_build_empty_hashes:
             set_hashes_of_epmty.add(md5(str(bp).encode("utf-8")).hexdigest())
 
 
@@ -107,11 +121,11 @@ class Flattener:
         with open(join(repo_dir, "docs", "full_bp.json"), "r") as conn:
             self.full_bp = json.load(conn)
 
-        set_hashes_of_epmty = set()
+        self.set_hashes_of_epmty = set()
         bp = deepcopy(self.full_bp)
-        rec_delete_missing(bp, [], {}, sep=self.sep, set_hashes_of_epmty=set_hashes_of_epmty)
+        rec_delete_missing(bp, [], {}, sep=self.sep, set_hashes_of_epmty=self.set_hashes_of_epmty, flag_build_empty_hashes=True)
 
-        self.merger = BPMerger(set_hashes_of_epmty=set_hashes_of_epmty)
+        self.merger = BPMerger(set_hashes_of_epmty=self.set_hashes_of_epmty)
 
         with open(join(repo_dir, "docs", "bp_flatten_names_to_bns.json"), "r") as conn:
             self.bp2bn = json.load(conn)
@@ -132,7 +146,7 @@ class Flattener:
     def back_one_recomendation(self, guids):
         set_guids = set(guids)
         bp = deepcopy(self.full_bp)
-        rec_delete_missing(bp, [], set_guids, sep=self.sep)
+        rec_delete_missing(bp, [], set_guids, sep=self.sep, set_hashes_of_epmty=self.set_hashes_of_epmty)
         return bp
 
     def back(self, recomendations_by_bn):

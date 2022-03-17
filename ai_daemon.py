@@ -37,8 +37,8 @@ def stop():
         sys.exit(1)
 
     try:
-        os.kill(pid, 1)
         os.remove(path_pid)
+        os.kill(pid, 1)
     except Exception as e:
         if not isinstance(e, SystemError):
             print(e)
