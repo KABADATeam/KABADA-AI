@@ -86,7 +86,7 @@ class MultiNetwork:
     def predict_all(self, guids_by_bn):
         # TODO handlot multi value guids (lai prob buutu joint)
         bp = []
-        for bn_name, list_guids in guids_by_bn:
+        for bn_name, list_guids, id_bp in guids_by_bn:
             list_evidence = self.translator(list_guids)
             if len(list_evidence) == 0:
                 continue
@@ -109,7 +109,7 @@ class MultiNetwork:
                         # print(varname, e)
                         pass
 
-            bp.append((bn_name, recomendations))
+            bp.append((bn_name, recomendations, id_bp))
             self.bns[bn_name].clear_evidence()
 
         translations_by_bn = self.translator.back(bp)

@@ -13,12 +13,10 @@ def is_bps_identical(bp1, bp2):
     f1 = sorted(f1, key=lambda x: x[0])
     f2 = sorted(f2, key=lambda x: x[0])
 
-    for (bpname1, guids1), (bpname2, guids2) in zip(f1, f2):
+    for (bpname1, guids1, id_bp1), (bpname2, guids2, id_bp1) in zip(f1, f2):
         if bpname1 != bpname2:
-            # print((bpname1, guids1), (bpname2, guids2))
             return False
         if set(guids1) != set(guids2):
-            # print((bpname1, guids1), (bpname2, guids2))
             return False
     return True
 
@@ -26,7 +24,7 @@ gen = PredictBodyGen()
 flattener = Flattener()
 
 
-for _ in range(10000):
+for _ in range(1000):
     bp0 = gen()
 
     location = bp0["location"]

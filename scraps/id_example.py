@@ -27,5 +27,5 @@ recomendations_by_bn = net.predict_all(guids_by_bn)
 
 bp_new = flattener.back(recomendations_by_bn)
 
-copy_attribute(bp, bp_new)
+# copy_attribute(bp, bp_new)
 pprint(bp_new)

@@ -5,7 +5,7 @@ import sys
 from flask import Flask, request
 from collections import defaultdict
 from BayesNetwork import MultiNetwork
-from Translator import Translator, Flattener, copy_attribute
+from Translator import Translator, Flattener
 from gevent.pywsgi import WSGIServer
 from config import repo_dir, log_dir, path_pid
 import logging
@@ -51,7 +51,6 @@ def predict():
 
         bp['location'] = location
         bp['plan']['businessPlan_id'] = id_bp
-        copy_attribute(json, bp)
         logging.info(f"processing successfull of business plan with id {id_bp}")
         return bp
     else:
