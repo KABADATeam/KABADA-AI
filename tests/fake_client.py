@@ -3,10 +3,21 @@ sys.path.insert(0, ".")
 import json
 import requests
 from os.path import join
-from config import repo_dir
+from config import repo_dir, path_ip_port_json
 from glob import glob
+import os
 from tests.body_generators import PredictBodyGen
 
+ip = 'localhost'
+port = '2222'
+
+if os.path.exists(path_ip_port_json):
+    with open(path_ip_port_json, "r") as conn:
+        ip_port = json.load(conn)
+        if "ip" in ip_port:
+            ip = ip_port['ip']
+        if "port" in ip_port:
+            port = ip_port['port']
 
 class Action:
     def __init__(self, *args, **kwargs):
@@ -22,8 +33,7 @@ class Action:
         return json_body
 
     def get_url(self):
-        return 'http://localhost:2222/' + action.name
-        # return 'http://195.13.182.182:2222/' + action.name
+        return f'http://{ip}:{port}/' + action.name
 
 
 class PredictAll(Action):
