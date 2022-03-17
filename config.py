@@ -10,4 +10,6 @@ path_pid = join(repo_dir, "pid.txt")
 
 log_dir = join(repo_dir, "shared_files")
 
+path_ip_port_json = join(repo_dir, "ip_port.json")
+
 os.makedirs(log_dir, exist_ok=True)

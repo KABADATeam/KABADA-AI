@@ -105,3 +105,8 @@ of ``python`` on windows.
 ## Endpoints
 To receive recommandations for field values, use predict endpoint, which
 has url ``http:/<ip>:<port>/predict``. For this request use ``post`` method.
+
+## Default ip and port
+If You don't want to use daemon parameters to set ip and port other than ``localhost`` 
+and ``2222``, then make a json file in repo root with name ``ip_port.json`` that contains 
+the desired ip and port. For example ``{"ip": "192.168.1.137","port": "2222"}``.

@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import sys
 
@@ -7,7 +8,7 @@ from collections import defaultdict
 from BayesNetwork import MultiNetwork
 from Translator import Translator, Flattener
 from gevent.pywsgi import WSGIServer
-from config import repo_dir, log_dir, path_pid
+from config import repo_dir, log_dir, path_pid, path_ip_port_json
 import logging
 
 
@@ -70,6 +71,14 @@ if __name__ == "__main__":
     parser.add_argument('--ip', type=str, default="localhost")
     parser.add_argument('--port', type=int, default="2222")
     args = parser.parse_args()
+
+    if os.path.exists(path_ip_port_json):
+        with open(path_ip_port_json, "r") as conn:
+            ip_port = json.load(conn)
+            if "ip" in ip_port:
+                args.ip = ip_port['ip']
+            if "port" in ip_port:
+                args.port = ip_port['port']
 
     # app.run(args.ip, args.port)
     http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
