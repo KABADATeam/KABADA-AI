@@ -9,7 +9,7 @@ import os
 from tests.body_generators import PredictBodyGen
 
 ip = 'localhost'
-port = '2222'
+port = 2222
 
 if os.path.exists(path_ip_port_json):
     with open(path_ip_port_json, "r") as conn:
@@ -17,7 +17,7 @@ if os.path.exists(path_ip_port_json):
         if "ip" in ip_port:
             ip = ip_port['ip']
         if "port" in ip_port:
-            port = ip_port['port']
+            port = int(ip_port['port'])
 
 class Action:
     def __init__(self, *args, **kwargs):

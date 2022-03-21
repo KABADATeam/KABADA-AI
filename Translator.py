@@ -137,7 +137,7 @@ class Flattener:
             self.bp2bn = json.load(conn)
         self.bn2bp = {v: k for k, v in self.bp2bn.items()}
 
-    def __call__(self, bp):
+    def __call__(self, bp, flag_generate_plus_one=False):
         guids = []
         rec_accumulate_guids(bp, "", guids, self.bp2bn)
         output = []
@@ -147,6 +147,10 @@ class Flattener:
                 output.append(guid)
             else:
                 default.append(guid)
+        if flag_generate_plus_one:
+            for bn_name in {_[0] for _ in output}:
+                output.append((bn_name, [], "sample"))
+
         output.append(("plan", default, bp.get('id', None)))
         return output
 
@@ -158,10 +162,12 @@ class Flattener:
 
     def back(self, recomendations_by_bn):
         bp = None
-        for bn_name, recomendations, id_bp in recomendations_by_bn:
 
+        for bn_name, recomendations, id_bp in recomendations_by_bn:
+            # print(bn_name, id_bp, len(recomendations))
             bp_new = self.back_one_recomendation(recomendations)
             if id_bp is not None:
+                id_bp = None if id_bp == "sample" else id_bp
                 add_attribute(bp_new, self.bn2bp[bn_name], attr_name="id", attr_value=id_bp)
 
             if bp is None:

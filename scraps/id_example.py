@@ -12,7 +12,7 @@ with open(repo_dir + "/test_bps/id_example.json", "r") as conn:
     bp = json.load(conn)
 
 def check_with_recomendations():
-    guids_by_bn = flattener(bp)
+    guids_by_bn = flattener(bp, flag_generate_plus_one=True)
     # pprint(guids_by_bn)
     recomendations_by_bn = net.predict_all(guids_by_bn)
     # pprint(recomendations_by_bn)
@@ -28,6 +28,7 @@ def check_with_recomendations():
 
 
 def check_only_transformation():
+
     guids_by_bn = flattener(bp)
 
     bp_new = flattener.back(guids_by_bn)
@@ -38,5 +39,20 @@ def check_only_transformation():
     print(is_bps_identical(bp, bp_new))
 
 
-check_with_recomendations()
-check_only_transformation()
+def check_plus_one():
+
+    guids_by_bn = flattener(bp, flag_generate_plus_one=True)
+
+    recomendations_by_bn = net.predict_all(guids_by_bn)
+
+    bp_new = flattener.back(recomendations_by_bn)
+
+    # pprint(bp)
+    # print(11111111111111)
+    pprint(bp_new)
+    print(is_bps_identical(bp, bp_new))
+    print(len(bp_new['plan']['custSegs']['business']))
+
+# check_with_recomendations()
+# check_only_transformation()
+check_plus_one()

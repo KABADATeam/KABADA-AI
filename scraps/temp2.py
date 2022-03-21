@@ -14,7 +14,7 @@ with open(repo_dir + "/test_bps/test_bp.json", "r") as conn:
 #     bp = json.load(conn)
 
 # pprint(bp)
-guids_by_bn = flattener(bp)
+guids_by_bn = flattener(bp, flag_generate_plus_one=True)
 recomendations_by_bn = net.predict_all(guids_by_bn)
 # pprint(recomendations_by_bn)
 

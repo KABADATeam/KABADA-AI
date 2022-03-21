@@ -10,13 +10,14 @@ import logging
 from Translator import Translator
 
 class BayesNetwork:
-    def __init__(self, path):
-
+    def __init__(self, path, tresh_yes=0.5):
+        self.tresh_yes = tresh_yes
         self.net = pysmile.Network()
         # print("Importing net:", path)
         logging.info("Importing net: " + path)
         self.net.read_file(path)
         self.net.update_beliefs()
+        self.net.set_zero_avoidance_enabled(True)
 
     def learn(self, path_newdata):
         ds = pysmile.learning.DataSet()
@@ -51,20 +52,45 @@ class BayesNetwork:
         else:
             self.net.clear_evidence(varname)
 
+    def generate_one_sample(self):
+        # self.add_evidence("is_added", "yes")
+        nodes = [self.net.get_first_node()]
+        pairs = set()
+        while len(nodes) > 0:
+            num_nodes_at_start = len(nodes)
+            for node in nodes[:num_nodes_at_start]:
+                if self.net.get_node_name(node) != "is_added":
+                    if not self.net.is_value_valid(node):
+                        self.net.update_beliefs()
+                    probs = self.net.get_node_value(node)
+                    probs = np.cumsum(probs)
+                    i = np.digitize(np.random.uniform(), probs)
+                    val = self.net.get_outcome_id(node, i)
+                    if val != "no":
+                        pairs.add((self.net.get_node_name(node), val))
+                    self.net.set_evidence(node, val)
+
+                    self.net.clear_evidence(node)
+                nodes.extend(self.net.get_children(node))
+            nodes = nodes[num_nodes_at_start:]
+        self.clear_evidence()
+        return pairs
+
 
 class MultiNetwork:
-    def __init__(self, translator=None):
+    def __init__(self, translator=None, tresh_yes=0.5):
+        self.tresh_yes = tresh_yes
         self.translator = Translator()
         self.bns = {}
         self.random_variables_2_predict = {}
         if translator is not None:
-            self.random_variables_2_predict = {bn_name: list(vars.keys()) for bn_name, vars in translator.inverse_lookup.items()}
+            self.random_variables_2_predict = {bn_name: [_ for _ in vars.keys() if _!="is_added"] for bn_name, vars in translator.inverse_lookup.items()}
 
     def add_net(self, bn_name):
         if bn_name not in self.bns:
-            self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + ".xdsl"))
+            self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + ".xdsl"), tresh_yes=self.tresh_yes)
             if bn_name not in self.random_variables_2_predict:
-                self.random_variables_2_predict[bn_name] = self.bns[bn_name].get_node_names()
+                self.random_variables_2_predict[bn_name] = [_ for _ in self.bns[bn_name].get_node_names() if _!="is_added"]
 
     def add_evidence(self, bn_name, list_evidence):
         # if two identical evidence provided - there will be smile error
@@ -87,13 +113,20 @@ class MultiNetwork:
         # TODO handlot multi value guids (lai prob buutu joint)
         bp = []
         for bn_name, list_guids, id_bp in guids_by_bn:
+
             list_evidence = self.translator(list_guids)
+
             if len(list_evidence) == 0:
+                if bn_name in self.bns:
+                    recomendations = self.bns[bn_name].generate_one_sample()
+                    bp.append((bn_name, recomendations, id_bp))
                 continue
             assert len(list_evidence) == 1 , "pa tiikliem tika sadaliits ar flattener"
             list_evidence = list_evidence[bn_name]
 
             self.add_net(bn_name)
+            # print(bn_name)
+            # print(111, bn_name, len(self.bns[bn_name].generate_one_sample()))
             self.add_evidence(bn_name, list_evidence)
 
             list_variables = self.random_variables_2_predict[bn_name]
@@ -105,8 +138,7 @@ class MultiNetwork:
                         val, prob = self.bns[bn_name].predict_popup(varname)
                         if prob > 0.5:
                             recomendations.add((varname, val))
-                    except Exception as e:
-                        # print(varname, e)
+                    except pysmile.SMILEException as e:
                         pass
 
             bp.append((bn_name, recomendations, id_bp))
@@ -122,23 +154,26 @@ if __name__ == "__main__":
     from tests.body_generators import PredictBodyGen
     from Translator import Flattener, BPMerger
 
-    gen = PredictBodyGen()
-    flattener = Flattener()
-    merger = BPMerger()
-    net = MultiNetwork()
+    def check_recomendation_generation():
+        gen = PredictBodyGen()
+        flattener = Flattener()
+        merger = BPMerger()
+        net = MultiNetwork()
 
-    for _ in range(100):
-        bp = gen()
-        guids_by_bn = flattener(bp)
-        recomendations_by_bn = net.predict_all(guids_by_bn)
+        for _ in range(100):
+            bp = gen()
+            guids_by_bn = flattener(bp)
+            recomendations_by_bn = net.predict_all(guids_by_bn)
 
-        bp = None
-        for bn_name, recomendations in recomendations_by_bn:
-            if bp is None:
-                bp = flattener.back(recomendations)
-            else:
-                bp = merger(bp, flattener.back(recomendations))
-        print(bp)
+            # pprint(bp)
+            # exit()
+        print(recomendations_by_bn)
+
+
+    def generate_bn_sample():
+        net = BayesNetwork(join(net_dir, "consumer_segments.xdsl"))
+        net.generate_one_sample()
         exit()
 
-
+    check_recomendation_generation()
+    # generate_bn_sample()

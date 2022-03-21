@@ -5,7 +5,7 @@
 		<cpt id="Copy_of_is_added">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0 1</probabilities>
+			<probabilities>1 0</probabilities>
 		</cpt>
 		<cpt id="type_international">
 			<state id="yes" />
@@ -67,7 +67,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>58 81 173 128</position>
+				<position>57 80 172 127</position>
 			</node>
 		</genie>
 	</extensions>

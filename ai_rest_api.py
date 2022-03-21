@@ -43,7 +43,8 @@ def predict():
         if id_session not in dict_sessions:
             dict_sessions[id_session] = MultiNetwork()
 
-        guids_by_bn = flattener(json)
+        guids_by_bn = flattener(json, flag_generate_plus_one=True)
+
         logging.info('received num %s bns idetified', len(guids_by_bn))
 
         recomendations_by_bn = dict_sessions[id_session].predict_all(guids_by_bn)
@@ -78,7 +79,7 @@ if __name__ == "__main__":
             if "ip" in ip_port:
                 args.ip = ip_port['ip']
             if "port" in ip_port:
-                args.port = ip_port['port']
+                args.port = int(ip_port['port'])
 
     # app.run(args.ip, args.port)
     http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)

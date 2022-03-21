@@ -5,7 +5,7 @@
 		<cpt id="is_added_consumer">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0 1</probabilities>
+			<probabilities>1 0</probabilities>
 		</cpt>
 		<cpt id="age_under_12">
 			<state id="yes" />

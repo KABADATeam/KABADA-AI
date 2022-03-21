@@ -5,7 +5,7 @@
 		<cpt id="is_added">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0 1</probabilities>
+			<probabilities>1 0</probabilities>
 		</cpt>
 		<cpt id="type_goods">
 			<state id="yes" />
@@ -84,84 +84,84 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2129 204 2256 244</position>
+				<position>769 38 896 78</position>
 			</node>
 			<node id="type_services">
 				<name>type_services</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2133 246 2260 286</position>
+				<position>773 80 900 120</position>
 			</node>
 			<node id="company_size_small">
 				<name>company_size_small</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1503 365 1683 405</position>
+				<position>143 199 323 239</position>
 			</node>
 			<node id="company_size_medium">
 				<name>company_size_medium</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1520 426 1693 474</position>
+				<position>160 260 333 308</position>
 			</node>
 			<node id="company_size_large">
 				<name>company_size_large</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1525 486 1711 526</position>
+				<position>165 320 351 360</position>
 			</node>
 			<node id="bus_geo_location_domestic">
 				<name>bus_geo_location_domestic</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2189 507 2430 552</position>
+				<position>829 341 1070 386</position>
 			</node>
 			<node id="bus_geo_location_foreign_rural">
 				<name>bus_geo_location_foreign_rural</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2134 557 2392 602</position>
+				<position>774 391 1032 436</position>
 			</node>
 			<node id="bus_geo_location_foreign_urban">
 				<name>bus_geo_location_foreign_urban</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2100 606 2352 651</position>
+				<position>740 440 992 485</position>
 			</node>
 			<node id="bus_geo_location_foreign">
 				<name>bus_geo_location_foreign</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1989 647 2238 692</position>
+				<position>629 481 878 526</position>
 			</node>
 			<node id="bus_geo_location_domestic_rural">
 				<name>bus_geo_location_domestic_rural</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1913 696 2170 741</position>
+				<position>553 530 810 575</position>
 			</node>
 			<node id="bus_geo_location_domestic_urban">
 				<name>bus_geo_location_domestic_urban</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1893 744 2157 789</position>
+				<position>533 578 797 623</position>
 			</node>
 			<node id="is_added">
 				<name>is_added</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1670 211 1780 258</position>
+				<position>310 45 420 92</position>
 			</node>
 		</genie>
 	</extensions>
