@@ -54,15 +54,12 @@ dict_cpts = {'lev0': [], 'lev1': [],
              'lev2': [], 'lev3': []
              }
 
-
 def make_state(name, ann, irow):
     s = deepcopy(state_cpt)
     s1 = deepcopy(defcomment_genie_extension)
-
-    s['id'] = name
+    s['id'] = name + " " + ann
     s1['row'] = irow
     s1.string = ann
-
     return s, s1
 
 
@@ -102,6 +99,8 @@ for lev in ['lev1', 'lev0']:
                 # probs[iprev, i] = iprev
         # print(np.sum(probs, 1))
 
+        # probs = (probs.T / np.sum(probs, 1)).T
+        # probs = (probs / np.sum(probs, 0)).T
         print("np.sum(probs)", np.sum(probs))
 
         probs1 = deepcopy(probablities_cpr)

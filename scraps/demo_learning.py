@@ -31,17 +31,28 @@ class BayesNetwork:
         else:
             self.net.clear_evidence(varname)
 
-
-# up
 popup_ai = BayesNetwork()
-popup_ai.learn("../bayesgraphs/business_plan.txt")
+
+def updates_coefs():
+    popup_ai.learn("../bayesgraphs/business_plan.txt")
+
+def learns_fron_scratch():
+    # learns net from zero
+    ds = pysmile.learning.DataSet()
+    ds.read_file("../bayesgraphs/business_plan.txt")
+    search = pysmile.learning.BayesianSearch()
+    # search = pysmile.learning.GreedyThickThinning()
+    net = search.learn(ds)
+    popup_ai.net = net
 
 
 ds = pysmile.learning.DataSet()
 ds.read_file("../bayesgraphs/business_plan.txt")
-search = pysmile.learning.BayesianSearch()
-net = search.learn(ds)
-popup_ai.net = net
+
+training = pysmile.learning.BkKnowledge()
+net = training.learn()
+print(net)
+exit()
 
 # print(popup_ai)
 # # pysmile.learning.GreedyThickThinning("../bayesgraphs/business_plan.txt")

@@ -121,7 +121,7 @@ class MultiNetwork:
                     recomendations = self.bns[bn_name].generate_one_sample()
                     bp.append((bn_name, recomendations, id_bp))
                 continue
-            assert len(list_evidence) == 1 , "pa tiikliem tika sadaliits ar flattener"
+            assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
             list_evidence = list_evidence[bn_name]
 
             self.add_net(bn_name)
