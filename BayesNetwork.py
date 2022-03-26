@@ -54,12 +54,16 @@ class BayesNetwork:
 
     def generate_one_sample(self):
         # self.add_evidence("is_added", "yes")
-        nodes = [self.net.get_first_node()]
+        nodes = []
+        for node in self.net.get_all_nodes():
+            if len(self.net.get_parents(node)) == 0:
+                nodes.append(node)
         pairs = set()
         while len(nodes) > 0:
             num_nodes_at_start = len(nodes)
             for node in nodes[:num_nodes_at_start]:
                 if self.net.get_node_name(node) != "is_added":
+                    # print(self.net.get_node_name(node))
                     if not self.net.is_value_valid(node):
                         self.net.update_beliefs()
                     probs = self.net.get_node_value(node)
@@ -69,10 +73,14 @@ class BayesNetwork:
                     if val != "no":
                         pairs.add((self.net.get_node_name(node), val))
                     self.net.set_evidence(node, val)
-
                     self.net.clear_evidence(node)
-                nodes.extend(self.net.get_children(node))
+
+                for child in self.net.get_children(node):
+                    if child not in nodes:
+                        nodes.append(child)
+
             nodes = nodes[num_nodes_at_start:]
+
         self.clear_evidence()
         return pairs
 
