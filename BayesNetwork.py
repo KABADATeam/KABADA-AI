@@ -58,6 +58,9 @@ class BayesNetwork:
         for node in self.net.get_all_nodes():
             if len(self.net.get_parents(node)) == 0:
                 nodes.append(node)
+        # for i in nodes:
+        #     print(i, self.net.get_node_name(i))
+        # exit()
         pairs = set()
         while len(nodes) > 0:
             num_nodes_at_start = len(nodes)
@@ -73,12 +76,13 @@ class BayesNetwork:
                     if val != "no":
                         pairs.add((self.net.get_node_name(node), val))
                     self.net.set_evidence(node, val)
-                    self.net.clear_evidence(node)
+                    # print(node, self.net.get_node_name(node), val)
+                    # self.net.clear_evidence(node)
 
                 for child in self.net.get_children(node):
                     if child not in nodes:
                         nodes.append(child)
-
+            # print(nodes)
             nodes = nodes[num_nodes_at_start:]
 
         self.clear_evidence()
