@@ -2,149 +2,135 @@
 <!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
 <smile version="1.0" id="Network2" numsamples="10000" discsamples="10000">
 	<nodes>
-		<cpt id="is_added_consumer">
-			<state id="yes" />
-			<state id="no" />
-			<probabilities>1 0</probabilities>
-		</cpt>
 		<cpt id="age_under_12">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
-		</cpt>
-		<cpt id="age_35_64">
-			<state id="yes" />
-			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
-		</cpt>
-		<cpt id="age_25_34">
-			<state id="yes" />
-			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
-		</cpt>
-		<cpt id="age_18_24">
-			<state id="yes" />
-			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<probabilities>0.14 0.86</probabilities>
 		</cpt>
 		<cpt id="age_12_17">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<parents>age_under_12</parents>
+			<probabilities>0 1 0.16 0.84</probabilities>
+		</cpt>
+		<cpt id="age_18_24">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_12_17 age_under_12</parents>
+			<probabilities>0 1 0 1 0 1 0.2 0.8</probabilities>
+		</cpt>
+		<cpt id="age_25_34">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_18_24 age_under_12 age_12_17</parents>
+			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.25 0.75</probabilities>
+		</cpt>
+		<cpt id="age_35_64">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_25_34 age_under_12 age_18_24 age_12_17</parents>
+			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.33 0.67</probabilities>
 		</cpt>
 		<cpt id="age_65_74">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<parents>age_35_64 age_25_34 age_18_24 age_12_17 age_under_12</parents>
+			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.5 0.5</probabilities>
 		</cpt>
 		<cpt id="age_75_over">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<parents>age_65_74 age_35_64 age_25_34 age_18_24 age_12_17 age_under_12</parents>
+			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</probabilities>
 		</cpt>
 		<cpt id="gender_male">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.5 0.5 0 1</probabilities>
+			<probabilities>0.5 0.5</probabilities>
 		</cpt>
 		<cpt id="gender_female">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.5 0.5 0 1</probabilities>
+			<probabilities>0.5 0.5</probabilities>
 		</cpt>
 		<noisymax id="has_children">
 			<state id="yes" />
 			<state id="no" />
-			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over is_added_consumer</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
-			<parameters>0.000244140625 0.999755859375 0 1 0.05000000000000004 0.95 0 1 0.09999999999999998 0.9 0 1 0.4 0.6 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0 1 0 1 0 1</parameters>
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.000244140625 0.999755859375 0 1 0.05000000000000004 0.95 0 1 0.09999999999999998 0.9 0 1 0.4 0.6 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0 1</parameters>
 		</noisymax>
 		<noisymax id="education_primary">
 			<state id="yes" />
 			<state id="no" />
-			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over is_added_consumer</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
-			<parameters>0.5 0.5 0 1 0.7 0.3 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0 1 0 1 0 1</parameters>
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.09999999999999998 0.9 0 1 0.8 0.2 0 1 0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
 		</noisymax>
 		<noisymax id="education_secondary">
 			<state id="yes" />
 			<state id="no" />
-			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over is_added_consumer</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
-			<parameters>0.01000000000000001 0.99 0 1 0.3 0.7 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0 1 0 1 0 1</parameters>
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0 1 0 1 0.3 0.7 0 1 0.95 0.05 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
 		</noisymax>
 		<noisymax id="education_higher">
 			<state id="yes" />
 			<state id="no" />
-			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over is_added_consumer</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
-			<parameters>0.01000000000000001 0.99 0 1 0.02000000000000002 0.98 0 1 0.4 0.6 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0 1 0 1 0 1</parameters>
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0 1 0 1 0 1 0 1 0.4 0.6 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0 1</parameters>
 		</noisymax>
 		<cpt id="geo_location_foreign_rural">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<probabilities>0.14 0.86</probabilities>
 		</cpt>
 		<cpt id="geo_location_domestic_rural">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<probabilities>0.14 0.86</probabilities>
 		</cpt>
 		<noisymax id="income_low">
 			<state id="yes" />
 			<state id="no" />
-			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_foreign_rural geo_location_domestic_rural is_added_consumer</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
-			<parameters>0.95 0.05 0 1 0.8 0.2 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.6 0.4 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0 1 0 1 0 1</parameters>
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_foreign_rural geo_location_domestic_rural</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.95 0.05 0 1 0.8 0.2 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.6 0.4 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0 1</parameters>
 		</noisymax>
 		<noisymax id="income_high">
 			<state id="yes" />
 			<state id="no" />
-			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural is_added_consumer</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
-			<parameters>0.05000000000000004 0.95 0 1 0.3 0.7 0 1 0.7 0.3 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.3 0.7 0 1 0.3 0.7 0 1 0 1 0 1 0 1</parameters>
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.3 0.7 0 1 0.7 0.3 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.3 0.7 0 1 0.3 0.7 0 1 0 1</parameters>
 		</noisymax>
 		<noisymax id="income_medium">
 			<state id="yes" />
 			<state id="no" />
-			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural is_added_consumer</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</strengths>
-			<parameters>0.2 0.8 0 1 0.2 0.8 0 1 0.7 0.3 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0 1 0 1 0 1</parameters>
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.2 0.8 0 1 0.2 0.8 0 1 0.7 0.3 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0 1</parameters>
 		</noisymax>
 		<cpt id="geo_location_domestic">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<probabilities>0.14 0.86</probabilities>
 		</cpt>
 		<cpt id="geo_location_foreign_urban">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<probabilities>0.14 0.86</probabilities>
 		</cpt>
 		<cpt id="geo_location_foreign">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<probabilities>0.14 0.86</probabilities>
 		</cpt>
 		<cpt id="geo_location_domestic_urban">
 			<state id="yes" />
 			<state id="no" />
-			<parents>is_added_consumer</parents>
-			<probabilities>0.14 0.86 0 1</probabilities>
+			<probabilities>0.14 0.86</probabilities>
 		</cpt>
 	</nodes>
 	<extensions>
@@ -154,70 +140,70 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>794 214 931 238</position>
+				<position>990 229 1127 253</position>
 			</node>
 			<node id="age_35_64">
 				<name>age_35_64</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>815 404 952 428</position>
+				<position>998 504 1135 528</position>
 			</node>
 			<node id="age_25_34">
 				<name>age_25_34</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>806 355 943 379</position>
+				<position>1091 433 1228 457</position>
 			</node>
 			<node id="age_18_24">
 				<name>age_18_24</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>810 314 947 338</position>
+				<position>1110 368 1247 392</position>
 			</node>
 			<node id="age_12_17">
 				<name>age_12_17</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>800 255 937 279</position>
+				<position>1100 296 1237 320</position>
 			</node>
 			<node id="age_65_74">
 				<name>age_65_74</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>812 450 949 474</position>
+				<position>832 500 969 524</position>
 			</node>
 			<node id="age_75_over">
 				<name>age_75_over</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>815 491 952 515</position>
+				<position>752 436 889 460</position>
 			</node>
 			<node id="gender_male">
 				<name>gender_male</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>208 302 339 337</position>
+				<position>126 202 257 237</position>
 			</node>
 			<node id="gender_female">
 				<name>gender_female</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>199 377 330 412</position>
+				<position>117 277 248 312</position>
 			</node>
 			<node id="has_children">
 				<name>has_children</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1123 357 1263 391</position>
+				<position>1323 368 1463 402</position>
 			</node>
 			<node id="education_primary">
 				<name>education_primary</name>
@@ -238,28 +224,28 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>635 156 769 182</position>
+				<position>635 155 769 181</position>
 			</node>
 			<node id="income_low">
 				<name>income_low</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>401 300 504 325</position>
+				<position>319 200 422 225</position>
 			</node>
 			<node id="income_high">
 				<name>income_high</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>390 419 493 444</position>
+				<position>308 318 411 343</position>
 			</node>
 			<node id="income_medium">
 				<name>income_medium</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>381 350 508 375</position>
+				<position>299 250 426 275</position>
 			</node>
 			<node id="geo_location_domestic">
 				<name>geo_location_domestic</name>
@@ -302,13 +288,6 @@
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
 				<position>521 552 735 582</position>
-			</node>
-			<node id="is_added_consumer">
-				<name>is_added</name>
-				<interior color="e5f6f7" />
-				<outline color="000080" />
-				<font color="000000" name="Arial" size="8" />
-				<position>118 138 256 173</position>
 			</node>
 		</genie>
 	</extensions>
