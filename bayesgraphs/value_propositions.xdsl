@@ -90,7 +90,7 @@
 			<parents>price_level</parents>
 			<probabilities>0 1 0 1 0.5 0.5 1 0</probabilities>
 		</cpt>
-		<cpt id="product_features_is_more_comfortable__usable">
+		<cpt id="product_features_is_more_comfortable_usable">
 			<state id="yes" />
 			<state id="no" />
 			<probabilities>0.05 0.95</probabilities>
@@ -224,7 +224,7 @@
 				<position>517 160 913 214</position>
 			</node>
 			<node id="product_features_is_the_result_of_r_d">
-				<name>product_features_is_the_result_of_r&amp;d</name>
+				<name>product_features_is_the_result_of_r_d</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
@@ -258,8 +258,8 @@
 				<font color="000000" name="Arial" size="8" />
 				<position>538 472 909 531</position>
 			</node>
-			<node id="product_features_is_more_comfortable__usable">
-				<name>product_features_is_more_comfortable_&amp;usable</name>
+			<node id="product_features_is_more_comfortable_usable">
+				<name>product_features_is_more_comfortable_usable</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />

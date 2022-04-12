@@ -1,0 +1,35 @@
+{
+  "plan::valueProposition::prodType::c64ed84d-db99-4a25-95f1-79bb99fa6936": {"Service:kind13": [{"product_type":  "service"}]},
+  "plan::valueProposition::prodType::3f2faea5-f8f6-43b4-80f2-db55874a5c4b": {"Physical good:kind13": [{"product_type": "physical good"}]},
+
+  "plan::valueProposition::priceLevel::3325759e-8add-4b30-a00c-10ce7fbbd330": {"Free:kind17": [{"price_level": "free"}]},
+  "plan::valueProposition::priceLevel::4261a424-6b58-467c-a5da-1844827950b5": {"High-end:kind17": [{"price_level": "high_end"}]},
+  "plan::valueProposition::priceLevel::1245994e-b52c-4c9a-9060-8c4856742197": {"Economy:kind17": [{"price_level": "economy"}]},
+  "plan::valueProposition::priceLevel::10f4eb49-006c-4f56-89d4-fb1743313707": {"Market:kind17": [{"price_level": "market"}]},
+
+  "plan::valueProposition::addIncomeSource::87ffbf10-1f99-4d0b-ae5a-202736ed5a4e": {"Different price for business:kind16": [{"income_source_different_price_for_business": "yes"}]},
+  "plan::valueProposition::addIncomeSource::085df303-2e4d-4dd0-9e9f-204085352597": {"Fees come from another product:kind16": [{"income_source_fees_come_from_another_product": "yes"}]},
+  "plan::valueProposition::addIncomeSource::75bcee28-686d-47e6-82b2-5c2a32168377": {"Non time limited usage:kind16": [{"income_source_non_time_limited_usage": "yes"}]},
+  "plan::valueProposition::addIncomeSource::95f441a5-2f4e-4c6e-93e7-5e18cbe26749": {"Other:kind16": [{"income_source_other": "yes"}]},
+  "plan::valueProposition::addIncomeSource::67cdf9e6-acc0-404a-a189-78325e83f547": {"Paid plans:kind16": [{"income_source_paid_plans": "yes"}]},
+  "plan::valueProposition::addIncomeSource::93916775-80bd-4355-bfda-907e8a737cbe": {"Additional functions:kind16": [{"income_source_additional_functions": "yes"}]},
+  "plan::valueProposition::addIncomeSource::fe928bb7-8ef0-4f01-b40b-f7da62c1c084": {"Different price for individuals:kind16": [{"income_source_different_price_for_individuals": "yes"}]},
+
+  "plan::valueProposition::productFeatures::aae57ccf-f33c-4a0e-925a-7a65d8ca171e": {"Is a fundamentally new product or service:kind15": [{"product_features_is_a_fundamentally_new_product_or_serivce": "yes"}]},
+  "plan::valueProposition::productFeatures::0ff6b626-a1ff-4184-b1bb-5bf2992091bd": {"Is an improvement of an existing product or service:kind15": [{"product_features_is_an_improvement_of_an_existing_product_or_service": "yes"}]},
+  "plan::valueProposition::productFeatures::5eb6013b-0cca-4f89-b39d-e711477a972f": {"Has a different visual design:kind15": [{"product_features_has_a_different_visual_design": "yes"}]},
+  "plan::valueProposition::productFeatures::bdf69fe7-c3e3-44e1-a984-41041ea08e96": {"Is the result of R&D:kind15": [{"product_features_is_the_result_of_r_d": "yes"}]},
+  "plan::valueProposition::productFeatures::2984418a-638e-4da9-be1d-12ba94d8ffaf": {"Has a new set of features:kind15": [{"product_features_has_a_new_set_of_features": "yes"}]},
+  "plan::valueProposition::productFeatures::96f638ad-c41f-492f-982a-7f4018bcb3a6": {"Aims to set a trend:kind15": [{"product_features_aims_to_set_a_trend": "yes"}]},
+  "plan::valueProposition::productFeatures::ae7c712d-f780-429f-aed6-87509c0bc43c": {"Has an improved production/delivery process:kind15": [{"product_features_has_an_improved_poduction_delivery_process": "yes"}]},
+  "plan::valueProposition::productFeatures::adcdc439-8170-4fab-a70d-457c1b98bc92": {"Is exclusive:kind15": [{"product_features_is_exclusive": "yes"}]},
+  "plan::valueProposition::productFeatures::7baa945c-4bcb-46b9-8e95-c72fe5b49778": {"Is more comfortable & usable:kind15": [{"product_features_is_more_comfortable_usable": "yes"}]},
+  "plan::valueProposition::productFeatures::f9862c29-9a20-4cbe-8fa2-5e1660f6b8da": {"Is more user-friendly:kind15": [{"product_features_is_more_user_friendly": "yes"}]},
+  "plan::valueProposition::productFeatures::dfe881a2-cd69-4295-a16a-edfb2c8fc0bf": {"Is safer to use:kind15": [{"product_features_is_safer_to_use": "yes"}]},
+  "plan::valueProposition::productFeatures::121f0a92-8b35-4890-8384-b66f48db9ac5": {"Is more durable:kind15": [{"product_features_is_more_durable": "yes"}]},
+  "plan::valueProposition::productFeatures::07d5452f-6ea6-4ae6-9395-89fd1d0eeab0": {"Is a niche:kind15": [{"product_features_is_a_niche": "yes"}]},
+  "plan::valueProposition::productFeatures::5365d22f-9372-4471-baab-f1175d25ae0f": {"Is more eco-friendly:kind15": [{"product_features_is_more_eco_friendly": "yes"}]},
+  "plan::valueProposition::productFeatures::d39c0155-1419-4a48-962f-2e42d5aca11b": {"Is more adaptable/versatile:kind15": [{"product_features_is_more_adaptive_versatile": "yes"}]},
+  "plan::valueProposition::productFeatures::4cb290b2-7fbc-4846-be7b-79f9e3efbb46": {"Is more customisable (more user-selectable options):kind15": [{"product_features_is_mote_customisable": "yes"}]},
+  "plan::valueProposition::productFeatures::49ac2e9c-ecbb-4a14-aa35-a35efb4ff919": {"Is a different variant of a current product/service:kind15": [{"product_features_is_a_different_variant_of_a_current_product": "yes"}]}
+}
