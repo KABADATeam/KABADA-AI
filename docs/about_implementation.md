@@ -26,5 +26,8 @@ guid parts.
 In last steps of the processing elements of``list<bn_name, list<predicted_guids>>`` are
 merged together. If merger is merged BPs in on level - it won't merger lower
 levels in the json hierarchy. Merger assumes all BPs has the same form as full_bp.json.
-Merger uses md5 hashes of subjsons to recognize some situations.
 
+To filter guids, kinds, etc use ``scraps/texter_exploration.py``. When adding new bayes networks such places needs to be updated:
+* docs/bp_flatten_names_to_bns.json
+* make a new translation json in and save in translations folder
+* update docs/full_bp.json with all the possible guids

@@ -6,6 +6,7 @@ from os.path import join
 from config import repo_dir, path_ip_port_json
 from glob import glob
 import os
+from pprint import pprint
 from tests.body_generators import PredictBodyGen
 
 ip = 'localhost'
@@ -47,19 +48,15 @@ for f in glob(join(repo_dir, "translation", "*.json")):
         translation.update(json.load(conn))
 
 pred_body_gen = PredictBodyGen()
-# actions = [
-#     PredictAll(**pred_body_gen()),
-#     PredictAll(**pred_body_gen()),
-#     PredictAll(**pred_body_gen()),
-#     PredictAll(**pred_body_gen())
-# ]
-
 actions = []
 for _ in range(1000):
     actions.append(PredictAll(**pred_body_gen()))
 
 for action in actions:
     print("----------------------- " + action.name)
+
+    # pprint(action.get_json())
+    # exit()
     r = requests.post(action.get_url(), json=action.get_json(), verify=False)
     # print(json.loads(r.text))
     print(r.text)

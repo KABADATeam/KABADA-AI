@@ -36,8 +36,11 @@ class PredictBodyGen:
         n_sample = int(len(self.guids) * 0.1)
         guids = list(np.random.choice(self.guids, n_sample))
         bp = flattener.back_one_recomendation(guids)
-        bp['location'] = "some_id"
+        bp['location'] = "some_location"
+        if 'plan' not in bp:
+            bp['plan'] = {}
         bp['plan']['businessPlan_id'] = "some_id"
+
         return bp
 
 
@@ -49,4 +52,5 @@ if __name__ == "__main__":
 
     bp = generator()
     bag_guid = flattener(bp)
-    pprint(translator(bag_guid))
+    for bp_name, guids, id_bp in bag_guid:
+        pprint(translator(guids))

@@ -1,5 +1,6 @@
 {
 	"plan::custSegs::consumer": "consumer_segments",
 	"plan::custSegs::business": "business_segments",
-	"plan::custSegs::publicNgo": "public_bodies_and_ngo"
+	"plan::custSegs::publicNgo": "public_bodies_and_ngo",
+	"plan::valueProposition": "value_proposition"
 }

@@ -29,6 +29,7 @@ def check_variable_names():
     fs = sorted(glob(join(repo_dir, "translation", "*.json")))
     for f in fs:
         bn_name = basename(f).replace(".json", "")
+        print(bn_name)
         net.add_net(bn_name)
 
         with open(f, "r") as conn:
