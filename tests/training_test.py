@@ -7,12 +7,13 @@ from collections import defaultdict, Counter
 import pandas as pd
 import pysmile
 import pickle
-np.random.seed(0)
+from config import path_temp_data_file
+np.random.seed(3)
 
 pred_body_gen = PredictBodyGen()
 bps_for_training = []
-for _ in range(100):
-    bps_for_training.append(pred_body_gen())
+for _ in range(10000):
+    bps_for_training.append(pred_body_gen.generate_from_bn())
 
 with open("../bp.pickle", "rb") as conn:
     bp = pickle.load(conn)
@@ -54,26 +55,24 @@ for bp in bps_for_training:
     guids_by_bn = flattener(bp)
     for bn_name, list_guids, id_bp in guids_by_bn:
         for _, pairs in translator(list_guids).items():
-            for d in pairs:
-                for k, v in d.items():
-                    if k in set_seen_variables_in_one_bp:
-                        raise ValueError(guids_by_bn, k, set_seen_variables_in_one_bp)
-                    set_seen_variables_in_one_bp.add(k)
-                    bn_datas[bn_name][k].append(v)
+            for varname, value in pairs:
+                if varname in set_seen_variables_in_one_bp:
+                    raise ValueError(varname, set_seen_variables_in_one_bp, guids_by_bn)
+
+                set_seen_variables_in_one_bp.add(varname)
+                bn_datas[bn_name][varname].append(value)
+
         set_seen_variables_in_one_bp.clear()
-        # TODO 'no' var likt viena bn ietvaros, aarpus bn nav pareizi
         empty_filler(bn_datas[bn_name])
-        # print(pd.DataFrame(data))
-        # exit()
 
 for bn_name, bn_data in bn_datas.items():
     empty_filler.at_end(bn_data)
     bn_datas[bn_name] = pd.DataFrame(bn_data)
 
 # print(bn_datas.shape, Counter(bn_datas['geo_location_foreign']))
-for bn_name, bn_data in bn_datas.items():
-    for c in bn_data.columns:
-        print(c, Counter(bn_data[c]))
+# for bn_name, bn_data in bn_datas.items():
+#     for c in bn_data.columns:
+#         print(c, Counter(bn_data[c]))
 
-
+mbn.learn_all(bn_datas)
 

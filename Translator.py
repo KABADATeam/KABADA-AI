@@ -207,7 +207,6 @@ class Translator:
     def __init__(self):
         fs = sorted(glob(join(repo_dir, "translation", "*.json")))
 
-        # self.lookup_uiname = {}
         self.lookup = {}
         for f in fs:
             bn_name = basename(f).replace(".json", "")
@@ -220,22 +219,19 @@ class Translator:
                         for varname, value in kw_dict.items():
                             self.lookup[guid] = (bn_name, (varname, value))
 
-                # self.lookup[guid] = (bn_name, list(trans.values())[0])
-                # self.lookup_uiname[guid] = list(trans.keys())[0]
-
         self.inverse_lookup = defaultdict(lambda :defaultdict(list))
         for guid, (bn_name, (varname, value)) in self.lookup.items():
             self.inverse_lookup[bn_name][varname].append(value)
 
     def __call__(self, bag_guids, *args, **kwargs):
-        translation = defaultdict(list)
+        translation = defaultdict(set)
         for guid in bag_guids:
             if guid in self.lookup:
-                bn_name, list_evidence = self.lookup[guid]
-                translation[bn_name].extend(list_evidence)
+                bn_name, evidence = self.lookup[guid]
+                translation[bn_name].add(evidence)
 
         for bn_name in translation:
-            translation[bn_name] = list(set(translation[bn_name]))
+            translation[bn_name] = list(translation[bn_name])
         return translation
 
     def back(self, bp):
@@ -244,7 +240,6 @@ class Translator:
             guids = []
             for guid, (bn_name, values) in self.lookup.items():
                 if bn_name == bn_name0:
-                    # necessary_condition = {tuple(a.items())[0] for a in values}
                     necessary_condition = set(values)
                     if necessary_condition.issubset(values0):
                         guids.append(guid)

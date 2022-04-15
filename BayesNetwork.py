@@ -1,13 +1,15 @@
 import numpy as np
 import pysmile
 from os.path import join
+import pandas as pd
 from collections import defaultdict
 # pysmile_license is your license key
 import smile_licence.pysmile_license
-from config import net_dir, epsilon
+from config import net_dir, epsilon, path_temp_data_file
 from collections import Counter
 import logging
-from Translator import Translator
+from Translator import Translator, Flattener
+
 
 class BayesNetwork:
     def __init__(self, path, tresh_yes=0.5):
@@ -24,7 +26,24 @@ class BayesNetwork:
         ds.read_file(path_newdata)
         matching = ds.match_network(self.net)
         em = pysmile.learning.EM()
+
+        list_noisy_max = [node for node in self.net.get_all_nodes()
+                          if self.net.get_node_type(node) == pysmile.NodeType.NOISY_MAX]
+
+        for node in list_noisy_max:
+            self.net.set_node_type(node, int(pysmile.NodeType.CPT))
+
         em.learn(ds, self.net, matching)
+
+        for node in list_noisy_max:
+            self.net.set_node_type(node, int(pysmile.NodeType.NOISY_MAX))
+
+    def learn_new_dependencies(self, path_newdata):
+        ds = pysmile.learning.DataSet()
+        ds.read_file("../bayesgraphs/business_plan.txt")
+        search = pysmile.learning.BayesianSearch()
+        new_net = search.learn(ds)
+        exit()
 
     def add_evidence(self, varname, val):
         self.net.set_evidence(varname, val)
@@ -52,15 +71,11 @@ class BayesNetwork:
         else:
             self.net.clear_evidence(varname)
 
-    def generate_one_sample(self):
-        # self.add_evidence("is_added", "yes")
+    def generate_one_sample(self, flag_with_nos=False):
         nodes = []
         for node in self.net.get_all_nodes():
             if len(self.net.get_parents(node)) == 0:
                 nodes.append(node)
-        # for i in nodes:
-        #     print(i, self.net.get_node_name(i))
-        # exit()
         pairs = set()
         while len(nodes) > 0:
             num_nodes_at_start = len(nodes)
@@ -73,11 +88,11 @@ class BayesNetwork:
                     probs = np.cumsum(probs)
                     i = np.digitize(np.random.uniform(), probs)
                     val = self.net.get_outcome_id(node, i)
-                    if val != "no":
+                    if flag_with_nos:
+                        pairs.add((self.net.get_node_name(node), val))
+                    elif val != "no":
                         pairs.add((self.net.get_node_name(node), val))
                     self.net.set_evidence(node, val)
-                    # print(node, self.net.get_node_name(node), val)
-                    # self.net.clear_evidence(node)
 
                 for child in self.net.get_children(node):
                     if child not in nodes:
@@ -93,10 +108,14 @@ class MultiNetwork:
     def __init__(self, translator=None, tresh_yes=0.5):
         self.tresh_yes = tresh_yes
         self.translator = Translator()
+        self.flattener = None
         self.bns = {}
         self.random_variables_2_predict = {}
         if translator is not None:
             self.random_variables_2_predict = {bn_name: [_ for _ in vars.keys() if _!="is_added"] for bn_name, vars in translator.inverse_lookup.items()}
+
+        for bn_name in self.translator.inverse_lookup.keys():
+            self.add_net(bn_name)
 
     def add_net(self, bn_name):
         if bn_name not in self.bns:
@@ -121,13 +140,36 @@ class MultiNetwork:
             for varname, value in evidence.items():
                 self.bns[bn_name].clear_evidence(varname)
 
+    def learn_all(self, tabs_by_bn, min_size_training_set=10):
+        for bn_name, tab in tabs_by_bn.items():
+            if tab.shape[0] < min_size_training_set:
+                continue
+
+            if bn_name in self.bns:
+                for varname in self.bns[bn_name].get_node_names():
+                    if varname not in tab.columns:
+                        tab[varname] = ['no'] * tab.shape[0]
+                tab.to_csv(path_temp_data_file, sep=" ", index=False)
+                self.bns[bn_name].learn(path_temp_data_file)
+
+    def sample_all(self):
+        bp = []
+        for bn_name, bn in self.bns.items():
+            for _ in range(np.random.randint(1, 3)):
+                recomendations = bn.generate_one_sample()
+                bp.append((bn_name, recomendations, None))
+        translations_by_bn = self.translator.back(bp)
+
+        if self.flattener is None:
+            self.flattener = Flattener()
+        bp = self.flattener.back(translations_by_bn)
+        return bp
+
     def predict_all(self, guids_by_bn):
         # TODO handlot multi value guids (lai prob buutu joint)
         bp = []
         for bn_name, list_guids, id_bp in guids_by_bn:
-
             list_evidence = self.translator(list_guids)
-
             if len(list_evidence) == 0:
                 if bn_name in self.bns:
                     recomendations = self.bns[bn_name].generate_one_sample()
@@ -136,13 +178,12 @@ class MultiNetwork:
             assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
             list_evidence = list_evidence[bn_name]
 
-            self.add_net(bn_name)
-            # print(bn_name)
-            # print(111, bn_name, len(self.bns[bn_name].generate_one_sample()))
             self.add_evidence(bn_name, list_evidence)
 
             list_variables = self.random_variables_2_predict[bn_name]
             s_variables_in_evidence = {list(b.keys())[0] for b in list_evidence}
+
+            # TODO shito paartaisiit lai iet peec atkariibu virziena un katru jauno veertiibu uzliekot kaa add_evidence
             recomendations = set()
             for varname in list_variables:
                 if varname not in s_variables_in_evidence:
@@ -187,5 +228,35 @@ if __name__ == "__main__":
         net.generate_one_sample()
         exit()
 
-    check_recomendation_generation()
+
+    def single_bn_train_test():
+        # np.random.seed(0)
+        from config import path_temp_data_file
+        mbn = MultiNetwork()
+        bn = mbn.bns["consumer_segments"]
+        # bn = BayesNetwork("bayesgraphs/business_plan.xdsl")
+        # bn = BayesNetwork("bayesgraphs/business_plan_with_noisy_max.xdsl")
+        bps = defaultdict(list)
+        B = 100
+        for _ in range(B):
+            for varname, value in bn.generate_one_sample(flag_with_nos=True):
+                bps[varname].append(value)
+
+        # deleting some columns
+        for i, c in enumerate(list(bps.keys())):
+            del bps[c]
+            if i > 15:
+                break
+
+        for node in bn.get_node_names():
+            if node not in bps:
+                bps[node] = ["no"] * B
+
+        pd.DataFrame(bps).to_csv(path_temp_data_file, sep=" ", index=False)
+        bn.learn(path_temp_data_file)
+        # bn.learn("bayesgraphs/consumer_segments.txt")
+        exit()
+
+    # check_recomendation_generation()
     # generate_bn_sample()
+    single_bn_train_test()

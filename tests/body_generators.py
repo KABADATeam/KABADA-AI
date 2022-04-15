@@ -10,6 +10,7 @@ import numpy as np
 import random
 from collections import defaultdict
 from Translator import Flattener
+from BayesNetwork import MultiNetwork
 
 # seed = 3
 # np.random.seed(seed)
@@ -20,6 +21,7 @@ flattener = Flattener()
 class PredictBodyGen:
     def __init__(self, flag_fake_guids=False):
         self.flag_fake_guids = flag_fake_guids
+        self.mbn = None
         fs = sorted(glob(join(repo_dir, "translation", "*.json")))
         self.guids = []
         for f in fs:
@@ -50,6 +52,11 @@ class PredictBodyGen:
                 continue
             i += 1
             set_prefixes.add(prefix)
+
+    def generate_from_bn(self):
+        if self.mbn is None:
+            self.mbn = MultiNetwork()
+        return self.mbn.sample_all()
 
     def __call__(self, *args, **kwargs):
         n_sample = int(len(self.guids) * 0.3)

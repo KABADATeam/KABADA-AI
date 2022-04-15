@@ -1,13 +1,14 @@
 import numpy as np
 import pysmile
+from pprint import pprint
 
 # pysmile_license is your license key
 import smile_licence.pysmile_license
 
 class BayesNetwork:
-    def __init__(self):
+    def __init__(self, path="../bayesgraphs/business_plan.xdsl"):
         self.net = pysmile.Network()
-        self.net.read_file("../bayesgraphs/business_plan.xdsl")
+        self.net.read_file(path)
 
     def learn(self, path_newdata):
         ds = pysmile.learning.DataSet()
@@ -32,15 +33,60 @@ class BayesNetwork:
             self.net.clear_evidence(varname)
 
 
+def learn_net_from_scratch():
+    ds = pysmile.learning.DataSet()
+    ds.read_file("../bayesgraphs/business_plan.txt")
+    search = pysmile.learning.BayesianSearch()
+    # search = pysmile.learning.TAN()
+    net = search.learn(ds)
+    # net.add_node(pysmile.NodeType.NOISY_MAX, "ccccc")
+    print([net.get_node_name(_) for _ in net.get_all_nodes()])
+    # net.add_arc("telpas", 'ienakumu_veids')
+
+    # pprint(dir(net))
+    net.write_file("../bayesgraphs/trained_graphs/business_plan_bayes_searched.xdsl")
+    return net
+
+
+net = BayesNetwork()
+net_nm = BayesNetwork("../bayesgraphs/business_plan_with_noisy_max.xdsl")
+
+for node in net.net.get_all_nodes():
+    node_name = net.net.get_node_name(node)
+
+    print(1111111, net_nm.net.get_node_type(node) == pysmile.NodeType.NOISY_MAX)
+    net_nm.net.set_node_type(node, pysmile.NodeType.CPT)
+    print(node_name, net.net.get_node_type(node_name), net_nm.net.get_node_type(node_name))
+
+    v = net.net.get_node_definition(node_name)
+    v_nm = net_nm.net.get_node_definition(node_name)
+    print(len(v), v)
+    print(len(v_nm), v_nm)
+
+net_nm.learn("../bayesgraphs/business_plan.txt")
+
+exit()
+
 # up
 popup_ai = BayesNetwork()
-popup_ai.learn("../bayesgraphs/business_plan.txt")
 
 
-ds = pysmile.learning.DataSet()
-ds.read_file("../bayesgraphs/business_plan.txt")
-search = pysmile.learning.BayesianSearch()
-net = search.learn(ds)
+
+# exit()
+
+# net2 = learn_net_from_scratch()
+# net2 = BayesNetwork("../bayesgraphs/trained_graphs/business_plan_bayes_searched.xdsl")
+net2 = popup_ai
+
+
+for node in net2.net.get_all_nodes():
+    node_name = net2.net.get_node_name(node)
+    print(node_name, net2.net.get_node_definition(node_name))
+    # exit()
+    # exit()
+
+
+exit()
 popup_ai.net = net
 
 # print(popup_ai)

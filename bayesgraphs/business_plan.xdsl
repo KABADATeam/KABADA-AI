@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This network was created in trial version of GeNIe, which can be used for evaluation purposes only -->
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
 <smile version="1.0" id="Network2" numsamples="10000" discsamples="10000">
 	<nodes>
 		<cpt id="nozare">
 			<state id="masinbuve" />
 			<state id="IT" />
 			<state id="edinasana" />
-			<probabilities>0.2 0.5 0.3</probabilities>
+			<probabilities>0 0.7 0.3</probabilities>
 		</cpt>
 		<cpt id="klienti">
 			<state id="uznemumi" />
@@ -19,7 +19,7 @@
 			<state id="investori" />
 			<state id="kapitals" />
 			<parents>nozare</parents>
-			<probabilities>0.8 0.1 0.1 0.1 0.8 0.1 0.2 0.1 0.7</probabilities>
+			<probabilities>0.8 0.1 0.1 0 0.8 0.2 0.2 0.1 0.7</probabilities>
 		</cpt>
 		<cpt id="telpas">
 			<state id="ofiss" />
@@ -32,7 +32,7 @@
 			<state id="samaksa_par_projektu" />
 			<state id="regulari_pirkumi" />
 			<parents>nozare klienti</parents>
-			<probabilities>0.7499999999999999 0.2500000000000001 0 1 0.7499999999999999 0.2500000000000001 0 1 0.7499999999999999 0.2500000000000001 0 1</probabilities>
+			<probabilities>0.3614393587793328 0.6385606412206672 0.2267803351084392 0.7732196648915608 0.3614393587793328 0.6385606412206672 0.2267803351084392 0.7732196648915608 0.2048002878824871 0.7951997121175129 0.037109375 0.962890625</probabilities>
 		</cpt>
 		<cpt id="cash_flow">
 			<state id="pozitivs_pec_3_gadiem" />
@@ -42,7 +42,7 @@
 		</cpt>
 	</nodes>
 	<extensions>
-		<genie version="1.0" app="GeNIe 3.0.6518.2 EVALUATION" name="business_plan">
+		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="business_plan">
 			<node id="nozare">
 				<name>nozare</name>
 				<interior color="e5f6f7" />
