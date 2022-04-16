@@ -13,6 +13,7 @@ np.random.seed(3)
 pred_body_gen = PredictBodyGen()
 bps_for_training = []
 for _ in range(10000):
+    np.random.seed(_)
     bps_for_training.append(pred_body_gen.generate_from_bn())
 
 with open("../bp.pickle", "rb") as conn:

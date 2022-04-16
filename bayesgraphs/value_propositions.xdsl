@@ -20,8 +20,8 @@
 			<probabilities>0.14 0.86</probabilities>
 		</cpt>
 		<cpt id="income_source_additional_functions">
-			<state id="State0" />
-			<state id="State1" />
+			<state id="yes" />
+			<state id="no" />
 			<probabilities>0.14 0.86</probabilities>
 		</cpt>
 		<cpt id="income_source_paid_plans">
@@ -88,7 +88,7 @@
 			<state id="yes" />
 			<state id="no" />
 			<parents>price_level</parents>
-			<probabilities>0 1 0 1 0.5 0.5 1 0</probabilities>
+			<probabilities>0.01 0.99 0.01 0.99 0.5 0.5 0.01 0.99</probabilities>
 		</cpt>
 		<cpt id="product_features_is_more_comfortable_usable">
 			<state id="yes" />
@@ -249,7 +249,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>524 415 916 475</position>
+				<position>576 399 968 459</position>
 			</node>
 			<node id="product_features_is_exclusive">
 				<name>product_features_is_exclusive</name>
@@ -284,7 +284,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>564 754 942 823</position>
+				<position>566 736 944 805</position>
 			</node>
 			<node id="product_features_is_a_niche">
 				<name>product_features_is_a_niche</name>

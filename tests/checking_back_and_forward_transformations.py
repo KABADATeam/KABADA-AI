@@ -24,7 +24,11 @@ for _ in range(1000):
     s = str(bp)
     h_after = md5(s.encode('utf-8')).hexdigest()
 
-    print(h_before, h_after)
+    print("hashes can differ ->", h_before, h_after)
+    # if h_before != h_after:
+    #     pprint(bp)
+    #     pprint(bp0)
+    #     exit()
     if not is_bps_identical(bp, bp0):
         pprint(bp0)
         print("---------------------")

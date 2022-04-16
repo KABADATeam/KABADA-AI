@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 import pysmile
 from os.path import join
@@ -8,6 +10,7 @@ import smile_licence.pysmile_license
 from config import net_dir, epsilon, path_temp_data_file
 from collections import Counter
 import logging
+import io
 from Translator import Translator, Flattener
 
 
@@ -21,7 +24,7 @@ class BayesNetwork:
         self.net.update_beliefs()
         self.net.set_zero_avoidance_enabled(True)
 
-    def learn(self, path_newdata):
+    def learn(self, path_newdata, flag_verbose=-1):
         ds = pysmile.learning.DataSet()
         ds.read_file(path_newdata)
         matching = ds.match_network(self.net)
@@ -33,7 +36,14 @@ class BayesNetwork:
         for node in list_noisy_max:
             self.net.set_node_type(node, int(pysmile.NodeType.CPT))
 
-        em.learn(ds, self.net, matching)
+        try:
+            em.learn(ds, self.net, matching)
+        except pysmile.SMILEException as e:
+            if "ErrNo=-43" in str(e):
+                if flag_verbose==0:
+                    print(f"Warning: somewhere in the net is singularities, zeros")
+            else:
+                raise e
 
         for node in list_noisy_max:
             self.net.set_node_type(node, int(pysmile.NodeType.NOISY_MAX))
@@ -45,8 +55,15 @@ class BayesNetwork:
         new_net = search.learn(ds)
         exit()
 
-    def add_evidence(self, varname, val):
-        self.net.set_evidence(varname, val)
+    def add_evidence(self, varname, val, flag_verbose=-1):
+        try:
+            self.net.set_evidence(varname, val)
+        except pysmile.SMILEException as e:
+            if "ErrNo=-26" in str(e):
+                if flag_verbose==0:
+                    print(f"Warning: not possible to add {varname} = {val}, value is not possible according to other evidence")
+            else:
+                raise e
         self.net.update_beliefs()
 
     def get_node_names(self):
@@ -92,6 +109,7 @@ class BayesNetwork:
                         pairs.add((self.net.get_node_name(node), val))
                     elif val != "no":
                         pairs.add((self.net.get_node_name(node), val))
+                    # print(probs, pairs)
                     self.net.set_evidence(node, val)
 
                 for child in self.net.get_children(node):
@@ -99,7 +117,6 @@ class BayesNetwork:
                         nodes.append(child)
             # print(nodes)
             nodes = nodes[num_nodes_at_start:]
-
         self.clear_evidence()
         return pairs
 
@@ -111,6 +128,7 @@ class MultiNetwork:
         self.flattener = None
         self.bns = {}
         self.random_variables_2_predict = {}
+
         if translator is not None:
             self.random_variables_2_predict = {bn_name: [_ for _ in vars.keys() if _!="is_added"] for bn_name, vars in translator.inverse_lookup.items()}
 
@@ -125,15 +143,10 @@ class MultiNetwork:
 
     def add_evidence(self, bn_name, list_evidence):
         # if two identical evidence provided - there will be smile error
-        list_evidence = {(list(b.keys())[0], list(b.values())[0]) for b in list_evidence}
+        list_evidence = {*list_evidence}
+        self.bns[bn_name].clear_evidence()
         for varname, value in list_evidence:
-            for _ in range(10):
-                try:
-                    self.bns[bn_name].add_evidence(varname, value)
-                    # print('success')
-                except Exception as e:
-                    # print('fail')
-                    pass
+            self.bns[bn_name].add_evidence(varname, value)
 
     def clear_evidence(self, bn_name, list_evidence):
         for evidence in list_evidence:
@@ -142,6 +155,7 @@ class MultiNetwork:
 
     def learn_all(self, tabs_by_bn, min_size_training_set=10):
         for bn_name, tab in tabs_by_bn.items():
+
             if tab.shape[0] < min_size_training_set:
                 continue
 
@@ -176,14 +190,13 @@ class MultiNetwork:
                     bp.append((bn_name, recomendations, id_bp))
                 continue
             assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
+
             list_evidence = list_evidence[bn_name]
-
-            self.add_evidence(bn_name, list_evidence)
-
             list_variables = self.random_variables_2_predict[bn_name]
-            s_variables_in_evidence = {list(b.keys())[0] for b in list_evidence}
+            s_variables_in_evidence = {b[0] for b in list_evidence}
 
             # TODO shito paartaisiit lai iet peec atkariibu virziena un katru jauno veertiibu uzliekot kaa add_evidence
+            self.add_evidence(bn_name, list_evidence)
             recomendations = set()
             for varname in list_variables:
                 if varname not in s_variables_in_evidence:
@@ -212,8 +225,11 @@ if __name__ == "__main__":
         flattener = Flattener()
         merger = BPMerger()
         net = MultiNetwork()
+        np.random.seed(1)
 
         for _ in range(100):
+            np.random.seed(_)
+            # bp = gen.generate_from_bn()
             bp = gen()
             guids_by_bn = flattener(bp)
             recomendations_by_bn = net.predict_all(guids_by_bn)
@@ -222,12 +238,10 @@ if __name__ == "__main__":
             # exit()
         print(recomendations_by_bn)
 
-
     def generate_bn_sample():
         net = BayesNetwork(join(net_dir, "consumer_segments.xdsl"))
         net.generate_one_sample()
         exit()
-
 
     def single_bn_train_test():
         # np.random.seed(0)
@@ -257,6 +271,6 @@ if __name__ == "__main__":
         # bn.learn("bayesgraphs/consumer_segments.txt")
         exit()
 
-    # check_recomendation_generation()
+    check_recomendation_generation()
     # generate_bn_sample()
-    single_bn_train_test()
+    # single_bn_train_test()

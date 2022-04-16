@@ -1,6 +1,6 @@
 {
   "plan::valueProposition::prodType::c64ed84d-db99-4a25-95f1-79bb99fa6936": {"Service:kind14": [{"product_type":  "service"}]},
-  "plan::valueProposition::prodType::3f2faea5-f8f6-43b4-80f2-db55874a5c4b": {"Physical good:kind14": [{"product_type": "physical good"}]},
+  "plan::valueProposition::prodType::3f2faea5-f8f6-43b4-80f2-db55874a5c4b": {"Physical good:kind14": [{"product_type": "physical_good"}]},
 
   "plan::valueProposition::priceLevel::3325759e-8add-4b30-a00c-10ce7fbbd330": {"Free:kind17": [{"price_level": "free"}]},
   "plan::valueProposition::priceLevel::4261a424-6b58-467c-a5da-1844827950b5": {"High-end:kind17": [{"price_level": "high_end"}]},

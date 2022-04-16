@@ -215,20 +215,23 @@ class Translator:
 
             for guid, trans in translation.items():
                 for _, kw_dicts in trans.items():
+                    pairs = []
                     for kw_dict in kw_dicts:
                         for varname, value in kw_dict.items():
-                            self.lookup[guid] = (bn_name, (varname, value))
+                            pairs.append((varname, value))
+                    self.lookup[guid] = (bn_name, pairs)
 
         self.inverse_lookup = defaultdict(lambda :defaultdict(list))
-        for guid, (bn_name, (varname, value)) in self.lookup.items():
-            self.inverse_lookup[bn_name][varname].append(value)
+        for guid, (bn_name, pairs) in self.lookup.items():
+            for varname, value in pairs:
+                self.inverse_lookup[bn_name][varname].append(value)
 
     def __call__(self, bag_guids, *args, **kwargs):
         translation = defaultdict(set)
         for guid in bag_guids:
             if guid in self.lookup:
                 bn_name, evidence = self.lookup[guid]
-                translation[bn_name].add(evidence)
+                translation[bn_name].update(evidence)
 
         for bn_name in translation:
             translation[bn_name] = list(translation[bn_name])
@@ -240,11 +243,10 @@ class Translator:
             guids = []
             for guid, (bn_name, values) in self.lookup.items():
                 if bn_name == bn_name0:
-                    necessary_condition = set(values)
+                    necessary_condition = {*values}
                     if necessary_condition.issubset(values0):
                         guids.append(guid)
             guids_by_bn.append((bn_name0, guids, id_bp))
-
         return guids_by_bn
 
 
