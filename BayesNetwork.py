@@ -10,7 +10,8 @@ import smile_licence.pysmile_license
 from config import net_dir, epsilon, path_temp_data_file
 from collections import Counter
 import logging
-import io
+from copy import deepcopy
+from itertools import chain
 from Translator import Translator, Flattener
 
 
@@ -55,7 +56,7 @@ class BayesNetwork:
         new_net = search.learn(ds)
         exit()
 
-    def add_evidence(self, varname, val, flag_verbose=-1):
+    def add_evidence(self, varname, val, flag_verbose=-1, flag_update_beliefs=True):
         try:
             self.net.set_evidence(varname, val)
         except pysmile.SMILEException as e:
@@ -64,7 +65,8 @@ class BayesNetwork:
                     print(f"Warning: not possible to add {varname} = {val}, value is not possible according to other evidence")
             else:
                 raise e
-        self.net.update_beliefs()
+        if flag_update_beliefs:
+            self.net.update_beliefs()
 
     def get_node_names(self):
         h = self.net.get_first_node()
@@ -76,11 +78,56 @@ class BayesNetwork:
                 break
         return names
 
-    def predict_popup(self, varname):
-        # TODO uztaisiit arii ja varname ir vektors, tad kāda ir joint varbūtība vektoram
-        probs = self.net.get_node_value(varname)
-        i_most_likely = np.argmax(probs)
-        return self.net.get_outcome_id(varname, i_most_likely), probs[i_most_likely]
+    def predict_popup(self, list_evidence=None, flag_with_nos=False, flag_noisy=False):
+
+        set_fixed_variables = set()
+        if list_evidence is not None:
+            for varname, value in list_evidence:
+                self.add_evidence(varname, value, flag_update_beliefs=False)
+                set_fixed_variables.add(varname)
+
+        nodes = []
+        for node in self.net.get_all_nodes():
+            # TODO nodroshiinaat, ka ieksh nodes ir kaada node (jo var nebuut ja visas ir kaa evidence)
+            if len(self.net.get_parents(node)) == 0:
+                nodes.append(node)
+
+        # putting nodes in a sequence of causality
+        levels_of_nodes = []
+        while len(nodes) > 0:
+            num_nodes_at_start = len(nodes)
+            levels_of_nodes.append([_ for _ in nodes if _ not in set_fixed_variables])
+            for node in nodes[:num_nodes_at_start]:
+                for child in self.net.get_children(node):
+                    if child not in nodes:
+                        nodes.append(child)
+            nodes = nodes[num_nodes_at_start:]
+        nodes = chain(*levels_of_nodes)
+
+        # generating prediction
+        pairs = []
+        for node in nodes:
+            if not self.net.is_value_valid(node):
+                self.net.update_beliefs()
+            probs = self.net.get_node_value(node)
+
+            if flag_noisy:
+                i = np.digitize(np.random.uniform(), np.cumsum(probs))
+            else:
+                i = np.argmax(probs)
+
+            val = self.net.get_outcome_id(node, i)
+            pairs.append((self.net.get_node_name(node), val, probs[i]))
+            self.net.set_evidence(node, val)
+
+        # cleaning output
+        pairs = [(varname, value) for varname, value, prob in pairs if prob >= self.tresh_yes]
+        if not flag_with_nos:
+            pairs = [(varname, value) for varname, value in pairs if value != "no"]
+
+        # exit()
+        self.clear_evidence()
+        return pairs
 
     def clear_evidence(self, varname=None):
         if varname is None:
@@ -102,8 +149,7 @@ class BayesNetwork:
                     if not self.net.is_value_valid(node):
                         self.net.update_beliefs()
                     probs = self.net.get_node_value(node)
-                    probs = np.cumsum(probs)
-                    i = np.digitize(np.random.uniform(), probs)
+                    i = np.digitize(np.random.uniform(), np.cumsum(probs))
                     val = self.net.get_outcome_id(node, i)
                     if flag_with_nos:
                         pairs.add((self.net.get_node_name(node), val))
@@ -192,21 +238,7 @@ class MultiNetwork:
             assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
 
             list_evidence = list_evidence[bn_name]
-            list_variables = self.random_variables_2_predict[bn_name]
-            s_variables_in_evidence = {b[0] for b in list_evidence}
-
-            # TODO shito paartaisiit lai iet peec atkariibu virziena un katru jauno veertiibu uzliekot kaa add_evidence
-            self.add_evidence(bn_name, list_evidence)
-            recomendations = set()
-            for varname in list_variables:
-                if varname not in s_variables_in_evidence:
-                    try:
-                        val, prob = self.bns[bn_name].predict_popup(varname)
-                        if prob > 0.5:
-                            recomendations.add((varname, val))
-                    except pysmile.SMILEException as e:
-                        pass
-
+            recomendations = {*self.bns[bn_name].predict_popup(list_evidence)}
             bp.append((bn_name, recomendations, id_bp))
             self.bns[bn_name].clear_evidence()
 
@@ -221,6 +253,7 @@ if __name__ == "__main__":
     from Translator import Flattener, BPMerger
 
     def check_recomendation_generation():
+        np.random.seed(1)
         gen = PredictBodyGen()
         flattener = Flattener()
         merger = BPMerger()
@@ -229,8 +262,8 @@ if __name__ == "__main__":
 
         for _ in range(100):
             np.random.seed(_)
-            # bp = gen.generate_from_bn()
-            bp = gen()
+            bp = gen.generate_from_bn()
+            # bp = gen()
             guids_by_bn = flattener(bp)
             recomendations_by_bn = net.predict_all(guids_by_bn)
 

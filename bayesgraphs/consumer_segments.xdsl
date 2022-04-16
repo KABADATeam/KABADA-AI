@@ -51,7 +51,8 @@
 		<cpt id="gender_female">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0.5 0.5</probabilities>
+			<parents>gender_male</parents>
+			<probabilities>0.05 0.95 0.95 0.05</probabilities>
 		</cpt>
 		<noisymax id="has_children">
 			<state id="yes" />
@@ -70,16 +71,16 @@
 		<noisymax id="education_secondary">
 			<state id="yes" />
 			<state id="no" />
-			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
-			<parameters>0 1 0 1 0.3 0.7 0 1 0.95 0.05 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over education_primary</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0 1 0 1 0.3 0.7 0 1 0.95 0.05 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
 		</noisymax>
 		<noisymax id="education_higher">
 			<state id="yes" />
 			<state id="no" />
-			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
-			<parameters>0 1 0 1 0 1 0 1 0.4 0.6 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0 1</parameters>
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over education_primary education_secondary</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0 1 0 1 0 1 0 1 0.4 0.6 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
 		</noisymax>
 		<cpt id="geo_location_foreign_rural">
 			<state id="yes" />
@@ -98,19 +99,19 @@
 			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
 			<parameters>0.95 0.05 0 1 0.8 0.2 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.6 0.4 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0 1</parameters>
 		</noisymax>
-		<noisymax id="income_high">
-			<state id="yes" />
-			<state id="no" />
-			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
-			<parameters>0.05000000000000004 0.95 0 1 0.3 0.7 0 1 0.7 0.3 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.3 0.7 0 1 0.3 0.7 0 1 0 1</parameters>
-		</noisymax>
 		<noisymax id="income_medium">
 			<state id="yes" />
 			<state id="no" />
-			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
-			<parameters>0.2 0.8 0 1 0.2 0.8 0 1 0.7 0.3 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0 1</parameters>
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural income_low</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.2 0.8 0 1 0.2 0.8 0 1 0.7 0.3 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.05000000000000004 0.95 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="income_high">
+			<state id="yes" />
+			<state id="no" />
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural income_low income_medium</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.3 0.7 0 1 0.7 0.3 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.3 0.7 0 1 0.3 0.7 0 1 0.05000000000000004 0.95 0 1 0.05000000000000004 0.95 0 1 0 1</parameters>
 		</noisymax>
 		<cpt id="geo_location_domestic">
 			<state id="yes" />
@@ -189,14 +190,14 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>126 202 257 237</position>
+				<position>52 171 183 206</position>
 			</node>
 			<node id="gender_female">
 				<name>gender_female</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>117 277 248 312</position>
+				<position>30 291 161 326</position>
 			</node>
 			<node id="has_children">
 				<name>has_children</name>
@@ -210,14 +211,14 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>654 28 796 54</position>
+				<position>576 45 718 71</position>
 			</node>
 			<node id="education_secondary">
 				<name>education_secondary</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>633 75 794 101</position>
+				<position>721 79 882 105</position>
 			</node>
 			<node id="education_higher">
 				<name>education_higher</name>
@@ -231,21 +232,21 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>319 200 422 225</position>
+				<position>376 178 479 203</position>
 			</node>
 			<node id="income_high">
 				<name>income_high</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>308 318 411 343</position>
+				<position>365 338 468 363</position>
 			</node>
 			<node id="income_medium">
 				<name>income_medium</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>299 250 426 275</position>
+				<position>214 232 341 257</position>
 			</node>
 			<node id="geo_location_domestic">
 				<name>geo_location_domestic</name>
