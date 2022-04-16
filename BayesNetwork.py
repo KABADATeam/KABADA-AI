@@ -15,6 +15,49 @@ from itertools import chain
 from Translator import Translator, Flattener
 
 
+class Beam:
+    cnt = 0
+    def __init__(self, *triple):
+        node, val, self.prob = triple
+        self.vals = [(node, val, self.prob)]
+        self.probs_history = [self.prob]
+        self.id = Beam.cnt
+        Beam.cnt += 1
+
+    def update_probs(self, bn_net):
+        for node, *_ in self.vals:
+            bn_net.net.clear_evidence(node)
+
+        self.probs_history.clear()
+        for node, val, _ in self.vals:
+            if not bn_net.net.is_value_valid(node):
+                bn_net.net.update_beliefs()
+            self.probs_history.append(bn_net.net.get_node_value(node)[val])
+            bn_net.add_evidence(node, val)
+
+        # probs = np.asarray(self.probs_history)
+        # self.prob = 1 - np.prod((1 - probs))
+
+    def add_element(self, *triple):
+        node, val, prob = triple
+        self.vals.append((node, val, prob))
+        self.probs_history.append(prob)
+
+        # probs = np.asarray(self.probs_history)
+        # self.prob = 1 - np.prod((1 - probs))
+        self.prob = np.average(self.probs_history)
+
+    def add_element_by_generating_new(self, *triple):
+        new_beam = deepcopy(self)
+        new_beam.id = Beam.cnt
+        Beam.cnt += 1
+        new_beam.add_element(*triple)
+        return new_beam
+
+    def __repr__(self):
+        return str(self.vals) + " " + str(self.prob)
+
+
 class BayesNetwork:
     def __init__(self, path, tresh_yes=0.5):
         self.tresh_yes = tresh_yes
@@ -78,7 +121,12 @@ class BayesNetwork:
                 break
         return names
 
-    def predict_popup(self, list_evidence=None, flag_with_nos=False, flag_noisy=False):
+    def get_node_probs(self, node):
+        if not self.net.is_value_valid(node):
+            self.net.update_beliefs()
+        return self.net.get_node_value(node)
+
+    def predict_popup(self, list_evidence=None, flag_with_nos=False, flag_noisy=False, num_beams=1):
 
         set_fixed_variables = set()
         if list_evidence is not None:
@@ -105,27 +153,40 @@ class BayesNetwork:
         nodes = chain(*levels_of_nodes)
 
         # generating prediction
-        pairs = []
-        for node in nodes:
-            if not self.net.is_value_valid(node):
-                self.net.update_beliefs()
-            probs = self.net.get_node_value(node)
+        beams = []
+        for i_node, node in enumerate(nodes):
+            if i_node == 0:
+                probs = self.get_node_probs(node)
+                for val in range(len(probs)):
+                    beams.append(Beam(node, val, probs[val]))
+            else:
+                for i_beam in range(len(beams)):
+                    beam = beams[i_beam]
+                    beam.update_probs(self)
+                    probs_net = self.get_node_probs(node)
+
+                    for val, prob in enumerate(probs_net):
+                        if val == 0:
+                            beam.add_element(node, val, prob)
+                        else:
+                            beams.append(beam.add_element_by_generating_new(node, val, prob))
+                probs = [beam.prob for beam in beams]
 
             if flag_noisy:
-                i = np.digitize(np.random.uniform(), np.cumsum(probs))
+                inds = np.random.choice(len(probs), size=min(num_beams, len(probs)), p=probs, replace=False)
             else:
-                i = np.argmax(probs)
+                inds = np.argsort(-np.asarray(probs))[:num_beams]
 
-            val = self.net.get_outcome_id(node, i)
-            pairs.append((self.net.get_node_name(node), val, probs[i]))
-            self.net.set_evidence(node, val)
+            for i in list(reversed(range(len(beams)))):
+                if i not in inds:
+                    beams.pop(i)
 
         # cleaning output
-        pairs = [(varname, value) for varname, value, prob in pairs if prob >= self.tresh_yes]
+        i_opt = np.argmax([_.prob for _ in beams])
+        pairs = [(self.net.get_node_name(node), self.net.get_outcome_id(node, val)) for node, val, prob in beams[i_opt].vals if prob >= self.tresh_yes]
         if not flag_with_nos:
             pairs = [(varname, value) for varname, value in pairs if value != "no"]
 
-        # exit()
         self.clear_evidence()
         return pairs
 
@@ -146,9 +207,7 @@ class BayesNetwork:
             for node in nodes[:num_nodes_at_start]:
                 if self.net.get_node_name(node) != "is_added":
                     # print(self.net.get_node_name(node))
-                    if not self.net.is_value_valid(node):
-                        self.net.update_beliefs()
-                    probs = self.net.get_node_value(node)
+                    probs = self.get_node_probs(node)
                     i = np.digitize(np.random.uniform(), np.cumsum(probs))
                     val = self.net.get_outcome_id(node, i)
                     if flag_with_nos:
@@ -262,8 +321,8 @@ if __name__ == "__main__":
 
         for _ in range(100):
             np.random.seed(_)
-            bp = gen.generate_from_bn()
-            # bp = gen()
+            # bp = gen.generate_from_bn()
+            bp = gen()
             guids_by_bn = flattener(bp)
             recomendations_by_bn = net.predict_all(guids_by_bn)
 
