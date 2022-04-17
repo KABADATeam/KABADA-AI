@@ -1,5 +1,3 @@
-import sys
-
 import numpy as np
 import pysmile
 from os.path import join
@@ -51,9 +49,22 @@ class BayesNetwork:
 
     def learn_new_dependencies(self, path_newdata):
         ds = pysmile.learning.DataSet()
-        ds.read_file("../bayesgraphs/business_plan.txt")
-        search = pysmile.learning.BayesianSearch()
-        new_net = search.learn(ds)
+        ds.read_file(path_newdata)
+        net_new = pysmile.learning.BayesianSearch().learn(ds)
+        # net_new = pysmile.learning.TAN().learn(ds)
+
+        for node in self.net.get_all_nodes():
+            parents_new = {*net_new.get_parents(node)}
+            print(parents_new)
+            if len(parents_new) > 0:
+                parents = {*self.net.get_parents(node)}
+                print(len(parents_new), len(parents))
+
+                exit()
+
+
+
+        print(net_new)
         exit()
 
     def add_evidence(self, varname, val, flag_verbose=-1, flag_update_beliefs=True):
@@ -123,6 +134,7 @@ class BayesNetwork:
                 val = self.net.get_outcome_id(node, i)
                 if probs[i] > self.tresh_yes:
                     pairs.append((self.net.get_node_name(node), val))
+                self.net.set_evidence(node, val)
 
         if not flag_with_nos:
             pairs = [(varname, value) for varname, value in pairs if value != "no"]
@@ -252,31 +264,34 @@ if __name__ == "__main__":
     def single_bn_train_test():
         # np.random.seed(0)
         from config import path_temp_data_file
-        mbn = MultiNetwork()
-        bn = mbn.bns["consumer_segments"]
-        # bn = BayesNetwork("bayesgraphs/business_plan.xdsl")
+        # mbn = MultiNetwork(tresh_yes=0.0)
+        # bn = mbn.bns["consumer_segments"]
+        # bn = BayesNetwork("bayesgraphs/business_plan.xdsl", tresh_yes=0.0)
+        bn = BayesNetwork("bayesgraphs/age_vs_edu.xdsl", tresh_yes=0.0)
         # bn = BayesNetwork("bayesgraphs/business_plan_with_noisy_max.xdsl")
         bps = defaultdict(list)
         B = 100
+        all_varnames = bn.get_node_names()
         for _ in range(B):
             for varname, value in bn.generate_one_sample(flag_with_nos=True):
                 bps[varname].append(value)
 
         # deleting some columns
-        for i, c in enumerate(list(bps.keys())):
-            del bps[c]
-            if i > 15:
-                break
+        # for i, c in enumerate(list(bps.keys())):
+        #     del bps[c]
+        #     if i > 0:
+        #         break
 
         for node in bn.get_node_names():
             if node not in bps:
                 bps[node] = ["no"] * B
 
         pd.DataFrame(bps).to_csv(path_temp_data_file, sep=" ", index=False)
-        bn.learn(path_temp_data_file)
+        # bn.learn(path_temp_data_file)
+        bn.learn_new_dependencies(path_temp_data_file)
         # bn.learn("bayesgraphs/consumer_segments.txt")
         exit()
 
-    check_recomendation_generation()
+    # check_recomendation_generation()
     # generate_bn_sample()
-    # single_bn_train_test()
+    single_bn_train_test()
