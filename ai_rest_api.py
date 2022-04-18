@@ -61,9 +61,9 @@ def predict():
 
 if __name__ == "__main__":
 
-    # if os.path.exists(path_pid):
-    #     print("pid file exists, daemon already running, if not - delete pid file")
-    #     sys.exit(1)
+    if os.path.exists(path_pid):
+        print("pid file exists, daemon already running, if not - delete pid file")
+        sys.exit(1)
 
     with open(path_pid, "w") as conn:
         conn.write(str(os.getpid()))
@@ -81,6 +81,6 @@ if __name__ == "__main__":
             if "port" in ip_port:
                 args.port = int(ip_port['port'])
 
-    app.run(args.ip, args.port)
-    # http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
-    # http_server.serve_forever()
+    # app.run(args.ip, args.port)
+    http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
+    http_server.serve_forever()
