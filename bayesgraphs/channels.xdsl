@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
+<smile version="1.0" id="Network2" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="channel">
+			<state id="direct_sales" />
+			<state id="retailers" />
+			<state id="wholesalers" />
+			<state id="agents" />
+			<state id="other" />
+			<state id="no" />
+			<probabilities>0.2 0.2 0.2 0.2 0.2 0</probabilities>
+		</cpt>
+		<cpt id="direct_sales">
+			<state id="own_shop" />
+			<state id="market_fairs" />
+			<state id="direct_visit" />
+			<state id="no" />
+			<parents>channel</parents>
+			<probabilities>0.4236675700090334 0.4841915085817525 0.09214092140921409 0 0.33 0.33 0.34 0 0.33 0.33 0.34 0 0.33 0.33 0.34 0 0.33 0.33 0.34 0 0 0 0 1</probabilities>
+		</cpt>
+		<noisymax id="own_shop_type">
+			<state id="physical" />
+			<state id="online" />
+			<state id="no" />
+			<parents>direct_sales channel</parents>
+			<strengths>0 1 2 3 0 1 2 3 4 5</strengths>
+			<parameters>0.4799 0.52 0.0001 0.53 0.4699 0.0001 0.53 0.4699 0.0001 0 0 1 0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0 0 1 0 0 1</parameters>
+		</noisymax>
+		<cpt id="store_location">
+			<state id="fixed_location" />
+			<state id="mobile" />
+			<state id="own_website" />
+			<state id="platform" />
+			<state id="no" />
+			<parents>own_shop_type</parents>
+			<probabilities>0.7 0.3 0 0 0 0 0 0.8 0.2 0 0 0 0 0 1</probabilities>
+		</cpt>
+		<noisymax id="distribution_channels_self_pickup">
+			<state id="yes" />
+			<state id="no" />
+			<parents>own_shop_type</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.95 0.05 0 1 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="distribution_channels_delivery_to_home">
+			<state id="yes" />
+			<state id="no" />
+			<parameters>0.5 0.5</parameters>
+		</noisymax>
+		<noisymax id="distrubution_channels_courier_service">
+			<state id="yes" />
+			<state id="no" />
+			<parents>own_shop_type store_location</parents>
+			<strengths>0 1 2 0 1 2 3 4</strengths>
+			<parameters>0.2 0.8 0.9 0.1 0 1 0.5 0.5 0.5 0.5 0.5 0.5 1 0 0 1 0.5 0.5</parameters>
+		</noisymax>
+		<noisymax id="distribution_channels_own_delivery">
+			<state id="yes" />
+			<state id="no" />
+			<parents>store_location</parents>
+			<strengths>0 1 2 3 4</strengths>
+			<parameters>0 1 0 1 0.7 0.3 0 1 0 1 0.5 0.5</parameters>
+		</noisymax>
+		<noisymax id="distribution_channels_to_the_email">
+			<state id="yes" />
+			<state id="no" />
+			<parameters>0.5 0.5</parameters>
+		</noisymax>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="Channels">
+			<node id="channel">
+				<name>channel</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>49 79 189 103</position>
+			</node>
+			<node id="direct_sales">
+				<name>direct_sales</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>245 32 316 76</position>
+			</node>
+			<node id="own_shop_type">
+				<name>own_shop_type</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>328 112 480 153</position>
+			</node>
+			<node id="store_location">
+				<name>store_location</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>491 47 677 71</position>
+			</node>
+			<node id="distribution_channels_self_pickup">
+				<name>distribution_channels_self_pickup</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>92 199 322 232</position>
+			</node>
+			<node id="distribution_channels_delivery_to_home">
+				<name>distribution_channels_delivery_to_home</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>23 278 272 321</position>
+			</node>
+			<node id="distrubution_channels_courier_service">
+				<name>distrubution_channels_courier_service</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>203 343 468 383</position>
+			</node>
+			<node id="distribution_channels_own_delivery">
+				<name>distribution_channels_own_delivery</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>476 181 730 226</position>
+			</node>
+			<node id="distribution_channels_to_the_email">
+				<name>distribution_channels_to_the_email</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>462 268 682 315</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>

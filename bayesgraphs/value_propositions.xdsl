@@ -5,15 +5,24 @@
 		<cpt id="product_type">
 			<state id="physical_good" />
 			<state id="service" />
-			<probabilities>0.5 0.5</probabilities>
+			<state id="no" />
+			<probabilities>0.495 0.495 0.01</probabilities>
 		</cpt>
-		<cpt id="price_level">
+		<cpt id="product_features_has_an_improved_poduction_delivery_process">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.05 0.95</probabilities>
+		</cpt>
+		<noisymax id="price_level">
 			<state id="free" />
 			<state id="economy" />
 			<state id="market" />
 			<state id="high_end" />
-			<probabilities>0.25 0.25 0.25 0.25</probabilities>
-		</cpt>
+			<state id="no" />
+			<parents>product_features_has_an_improved_poduction_delivery_process</parents>
+			<strengths>0 1</strengths>
+			<parameters>0.04999965009938789 0.85 0.04999965009938785 0.04999938767622431 1.312125e-06 0 0 0 0 1 0.2475000000000001 0.257498687875 0.2475 0.2475 1.312125e-06</parameters>
+		</noisymax>
 		<cpt id="income_source_non_time_limited_usage">
 			<state id="yes" />
 			<state id="no" />
@@ -27,22 +36,28 @@
 		<cpt id="income_source_paid_plans">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0.14 0.86</probabilities>
+			<parents>product_type</parents>
+			<probabilities>0.14 0.86 0.8 0.2 0.5 0.5</probabilities>
 		</cpt>
-		<cpt id="income_source_different_price_for_business">
+		<noisymax id="income_source_different_price_for_business">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0.14 0.86</probabilities>
-		</cpt>
-		<cpt id="income_source_different_price_for_individuals">
+			<parents>price_level</parents>
+			<strengths>0 1 2 3 4</strengths>
+			<parameters>0.14 0.86 0.14 0.86 0.14 0.86 0.9 0.09999999999999998 0 1 0.3174072265625 0.6825927734375</parameters>
+		</noisymax>
+		<noisymax id="income_source_different_price_for_individuals">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0.14 0.86</probabilities>
-		</cpt>
+			<parents>product_type price_level</parents>
+			<strengths>0 1 2 0 1 2 3 4</strengths>
+			<parameters>0.14 0.86 0.76 0.24 0 1 0.14 0.86 0.14 0.86 0.14 0.86 0.9 0.09999999999999998 0 1 0.3583984375 0.6416015625</parameters>
+		</noisymax>
 		<cpt id="income_source_fees_come_from_another_product">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0.14 0.86</probabilities>
+			<parents>price_level</parents>
+			<probabilities>0.99 0.01 0.14 0.86 0.14 0.86 0.14 0.86 0.14 0.86</probabilities>
 		</cpt>
 		<cpt id="income_source_other">
 			<state id="yes" />
@@ -54,52 +69,24 @@
 			<state id="no" />
 			<probabilities>0.05 0.95</probabilities>
 		</cpt>
-		<cpt id="product_features_is_an_improvement_of_an_existing_product_or_service">
-			<state id="yes" />
-			<state id="no" />
-			<probabilities>0.05 0.95</probabilities>
-		</cpt>
-		<cpt id="product_features_has_a_different_visual_design">
-			<state id="yes" />
-			<state id="no" />
-			<probabilities>0.05 0.95</probabilities>
-		</cpt>
-		<cpt id="product_features_is_the_result_of_r_d">
-			<state id="yes" />
-			<state id="no" />
-			<probabilities>0.05 0.95</probabilities>
-		</cpt>
-		<cpt id="product_features_has_a_new_set_of_features">
-			<state id="yes" />
-			<state id="no" />
-			<probabilities>0.05 0.95</probabilities>
-		</cpt>
-		<cpt id="product_features_aims_to_set_a_trend">
-			<state id="yes" />
-			<state id="no" />
-			<probabilities>0.05 0.95</probabilities>
-		</cpt>
-		<cpt id="product_features_has_an_improved_poduction_delivery_process">
-			<state id="yes" />
-			<state id="no" />
-			<probabilities>0.05 0.95</probabilities>
-		</cpt>
 		<cpt id="product_features_is_exclusive">
 			<state id="yes" />
 			<state id="no" />
 			<parents>price_level</parents>
-			<probabilities>0.01 0.99 0.01 0.99 0.5 0.5 0.01 0.99</probabilities>
-		</cpt>
-		<cpt id="product_features_is_more_comfortable_usable">
-			<state id="yes" />
-			<state id="no" />
-			<probabilities>0.05 0.95</probabilities>
+			<probabilities>0.01 0.99 0.01 0.99 0.01 0.99 0.8 0.2 0.5 0.5</probabilities>
 		</cpt>
 		<cpt id="product_features_is_more_user_friendly">
 			<state id="yes" />
 			<state id="no" />
 			<probabilities>0.05 0.95</probabilities>
 		</cpt>
+		<noisymax id="product_features_is_more_comfortable_usable">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_is_exclusive product_features_is_more_user_friendly</parents>
+			<strengths>0 1 0 1</strengths>
+			<parameters>0.7 0.3 0 1 0.8 0.2 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
 		<cpt id="product_features_is_safer_to_use">
 			<state id="yes" />
 			<state id="no" />
@@ -110,23 +97,25 @@
 			<state id="no" />
 			<probabilities>0.05 0.95</probabilities>
 		</cpt>
-		<cpt id="product_features_is_a_niche">
-			<state id="yes" />
-			<state id="no" />
-			<parents>price_level</parents>
-			<probabilities>0.05 0.95 0.1 0.9 0.5 0.5 0.9 0.1</probabilities>
-		</cpt>
-		<cpt id="product_features_is_more_eco_friendly">
-			<state id="yes" />
-			<state id="no" />
-			<probabilities>0.05 0.95</probabilities>
-		</cpt>
 		<cpt id="product_features_is_more_adaptive_versatile">
 			<state id="yes" />
 			<state id="no" />
 			<probabilities>0.05 0.95</probabilities>
 		</cpt>
-		<cpt id="product_features_is_mote_customisable">
+		<noisymax id="product_features_is_an_improvement_of_an_existing_product_or_service">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_is_more_comfortable_usable product_features_is_safer_to_use product_features_is_more_durable product_features_is_more_adaptive_versatile</parents>
+			<strengths>0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.8 0.2 0 1 0.85 0.15 0 1 0.8 0.2 0 1 0.8 0.2 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<cpt id="product_features_has_a_different_visual_design">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_is_an_improvement_of_an_existing_product_or_service</parents>
+			<probabilities>0.8 0.2 0.05 0.95</probabilities>
+		</cpt>
+		<cpt id="product_features_aims_to_set_a_trend">
 			<state id="yes" />
 			<state id="no" />
 			<probabilities>0.05 0.95</probabilities>
@@ -136,190 +125,225 @@
 			<state id="no" />
 			<probabilities>0.05 0.95</probabilities>
 		</cpt>
+		<noisymax id="product_features_is_the_result_of_r_d">
+			<state id="yes" />
+			<state id="no" />
+			<parents>price_level product_features_is_a_fundamentally_new_product_or_serivce product_features_aims_to_set_a_trend product_features_is_a_different_variant_of_a_current_product</parents>
+			<strengths>0 1 2 3 4 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0.05000000000000004 0.95 0.05000000000000004 0.95 0.75 0.25 0 1 0.8 0.2 0 1 0.85 0.15 0 1 0.85 0.15 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<noisymax id="product_features_has_a_new_set_of_features">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_has_a_different_visual_design product_features_is_the_result_of_r_d product_features_is_a_different_variant_of_a_current_product</parents>
+			<strengths>0 1 0 1 0 1</strengths>
+			<parameters>0.73 0.27 0 1 0.8 0.2 0 1 0.85 0.15 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<noisymax id="product_features_is_a_niche">
+			<state id="yes" />
+			<state id="no" />
+			<parents>price_level product_features_is_exclusive</parents>
+			<strengths>0 1 2 3 4 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0.05000000000000004 0.95 0.05000000000000004 0.95 0.872412109375 0.127587890625 0 1 0.85 0.15 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<noisymax id="product_features_is_more_eco_friendly">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_is_a_niche</parents>
+			<strengths>0 1</strengths>
+			<parameters>0.75 0.25 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<noisymax id="product_features_is_mote_customisable">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_has_a_new_set_of_features</parents>
+			<strengths>0 1</strengths>
+			<parameters>0.8 0.2 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
 	</nodes>
 	<extensions>
-		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="Network1">
+		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="value_proposition">
 			<node id="product_type">
 				<name>product_type</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>39 49 200 146</position>
+				<position>22 522 183 619</position>
 			</node>
 			<node id="price_level">
 				<name>price_level</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>255 62 410 126</position>
+				<position>468 327 623 391</position>
 			</node>
 			<node id="income_source_non_time_limited_usage">
 				<name>income_source_non_time_limited_usage</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>43 215 342 265</position>
+				<position>26 203 325 253</position>
 			</node>
 			<node id="income_source_additional_functions">
 				<name>income_source_additional_functions</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>39 264 350 319</position>
+				<position>22 141 333 196</position>
 			</node>
 			<node id="income_source_paid_plans">
 				<name>income_source_paid_plans</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>33 323 338 367</position>
+				<position>8 314 313 358</position>
 			</node>
 			<node id="income_source_different_price_for_business">
 				<name>income_source_different_price_for_business</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>39 376 348 443</position>
+				<position>600 514 909 581</position>
 			</node>
 			<node id="income_source_different_price_for_individuals">
 				<name>income_source_different_price_for_individuals</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>12 448 363 516</position>
+				<position>151 371 502 439</position>
 			</node>
 			<node id="income_source_fees_come_from_another_product">
 				<name>income_source_fees_come_from_another_product</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>29 522 364 582</position>
+				<position>227 524 562 584</position>
 			</node>
 			<node id="income_source_other">
 				<name>income_source_other</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>65 591 315 626</position>
+				<position>43 261 293 296</position>
 			</node>
 			<node id="product_features_is_a_fundamentally_new_product_or_serivce">
 				<name>product_features_is_a_fundamentally_new_product_or_serivce</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>526 26 861 84</position>
+				<position>743 128 1078 186</position>
 			</node>
 			<node id="product_features_is_an_improvement_of_an_existing_product_or_service">
 				<name>product_features_is_an_improvement_of_an_existing_product_or_service</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>514 89 895 159</position>
+				<position>946 26 1327 96</position>
 			</node>
 			<node id="product_features_has_a_different_visual_design">
 				<name>product_features_has_a_different_visual_design</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>517 160 913 214</position>
+				<position>1037 259 1433 313</position>
 			</node>
 			<node id="product_features_is_the_result_of_r_d">
 				<name>product_features_is_the_result_of_r_d</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>525 215 908 276</position>
+				<position>711 320 1094 381</position>
 			</node>
 			<node id="product_features_has_a_new_set_of_features">
 				<name>product_features_has_a_new_set_of_features</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>521 277 915 339</position>
+				<position>1057 388 1451 450</position>
 			</node>
 			<node id="product_features_aims_to_set_a_trend">
 				<name>product_features_aims_to_set_a_trend</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>510 347 911 408</position>
+				<position>863 462 1264 523</position>
 			</node>
 			<node id="product_features_has_an_improved_poduction_delivery_process">
 				<name>product_features_has_an_improved_poduction_delivery_process</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>576 399 968 459</position>
+				<position>394 191 786 251</position>
 			</node>
 			<node id="product_features_is_exclusive">
 				<name>product_features_is_exclusive</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>538 472 909 531</position>
+				<position>894 566 1265 625</position>
 			</node>
 			<node id="product_features_is_more_comfortable_usable">
 				<name>product_features_is_more_comfortable_usable</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>519 538 931 606</position>
+				<position>948 638 1360 706</position>
 			</node>
 			<node id="product_features_is_more_user_friendly">
 				<name>product_features_is_more_user_friendly</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>548 611 933 679</position>
+				<position>1148 737 1533 805</position>
 			</node>
 			<node id="product_features_is_safer_to_use">
 				<name>product_features_is_safer_to_use</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>561 691 938 756</position>
+				<position>1390 24 1767 89</position>
 			</node>
 			<node id="product_features_is_more_durable">
 				<name>product_features_is_more_durable</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>566 736 944 805</position>
+				<position>1600 157 1978 226</position>
 			</node>
 			<node id="product_features_is_a_niche">
 				<name>product_features_is_a_niche</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>563 812 949 889</position>
+				<position>407 633 793 710</position>
 			</node>
 			<node id="product_features_is_more_eco_friendly">
 				<name>product_features_is_more_eco_friendly</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>567 888 943 958</position>
+				<position>195 732 571 802</position>
 			</node>
 			<node id="product_features_is_more_adaptive_versatile">
 				<name>product_features_is_more_adaptive_versatile</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>574 957 943 1028</position>
+				<position>1450 250 1819 321</position>
 			</node>
 			<node id="product_features_is_mote_customisable">
 				<name>product_features_is_mote_customisable</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>567 1020 963 1102</position>
+				<position>1317 535 1713 617</position>
 			</node>
 			<node id="product_features_is_a_different_variant_of_a_current_product">
 				<name>product_features_is_a_different_variant_of_a_current_product</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>557 1100 983 1178</position>
+				<position>1458 332 1884 410</position>
 			</node>
 		</genie>
 	</extensions>

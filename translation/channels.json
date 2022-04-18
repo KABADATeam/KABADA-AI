@@ -1,0 +1,27 @@
+{
+  "plan::channels::channelType::3c81ac65-960e-44aa-b752-17808fa31c1f": {"Direct sales:kind27": [{"channel": "direct_sales"}]},
+  "plan::channels::channelType::b0cb1000-5a92-47a0-a45b-499c5f580524": {"Agents:kind27": [{"channel": "agents"}]},
+  "plan::channels::channelType::e1915d59-a5a4-43bd-a5db-7c8ab320371a": {"Wholesalers:kind27": [{"channel": "wholesalers"}]},
+  "plan::channels::channelType::d57d1d34-e721-4d46-a5f4-a3f9e7d3a198": {"Other:kind27": [{"channel": "other"}]},
+  "plan::channels::channelType::97070765-ae68-4bb1-9b50-d99761807ef4": {"Retailers:kind27": [{"channel": "retailers"}]},
+
+  "plan::channels::channelSubtype::91d5edff-f361-47aa-8d3c-b420681dcd5e": {"Own shop:kind28": [{"direct_sales": "own_shop"}]},
+  "plan::channels::channelSubtype::df0fa10f-05df-485a-9f90-aaae6cc11ebc": {"Direct visit:kind28": [{"direct_sales": "direct_visit"}]},
+  "plan::channels::channelSubtype::c06464ec-0248-4964-b09a-dd6fd7c6cc17": {"Market/Fairs:kind28": [{"direct_sales": "market_fairs"}]},
+
+  "plan::channels::subtypeType::65c4d434-7f22-44ce-b9a3-c9681ff199a8": {"Online:kind29": [{"own_shop_type": "online"}]},
+  "plan::channels::subtypeType::4152d046-a8a2-4adc-a6b3-b2de8c3cafbf": {"Physical:kind29": [{"own_shop_type": "physical"}]},
+
+  "plan::channels::locationType::404d16aa-f0f7-452a-88ce-13109e57724a": {"Own website:kind30": [{"store_location": "own_website"}]},
+  "plan::channels::locationType::3fe4a8e4-daa1-4edb-a209-2d9f6f9ced35": {"Platform:kind30": [{"store_location": "platform"}]},
+  "plan::channels::locationType::a82e9156-c03c-4815-80ca-35508e2371ad": {"Mobile:kind30": [{"store_location": "mobile"}]},
+  "plan::channels::locationType::2e4ee3fe-7f1b-4105-b37e-c1ee4d8d4d40": {"Fixed location:kind30": [{"store_location": "fixed_location"}]},
+
+  "plan::channels::distributionChannels::b2706a04-d62f-4103-ae40-6b5868029c73": {"Courier service:kind31": [{"distrubution_channels_courier_service": "yes"}]},
+  "plan::channels::distributionChannels::ee238326-5d11-4531-92b0-6565f42ae874": {"Courier service:kind31": [{"distrubution_channels_courier_service": "yes"}]},
+
+  "plan::channels::distributionChannels::e8f6e9d6-0e37-4182-9c47-33c9d119ac73": {"To the email:kind31": [{"distribution_channels_to_the_email": "yes"}]},
+  "plan::channels::distributionChannels::7ace64a6-77c6-44de-a675-78ff13ca0859": {"Delivery to home:kind31": [{"distribution_channels_delivery_to_home": "yes"}]},
+  "plan::channels::distributionChannels::f90efa9d-ff68-4fe7-b6b3-bf55850f7437": {"Self pickup:kind31": [{"distribution_channels_self_pickup": "yes"}]},
+  "plan::channels::distributionChannels::6dad8d59-0786-43e5-98a6-dd6d4fdc7688": {"Own delivery:kind31": [{"distribution_channels_own_delivery": "yes"}]}
+}
