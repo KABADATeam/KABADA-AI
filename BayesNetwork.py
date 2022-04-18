@@ -1,5 +1,6 @@
 import numpy as np
 import pysmile
+import os
 from os.path import join
 import pandas as pd
 from collections import defaultdict
@@ -29,10 +30,10 @@ class BayesNetwork:
         matching = ds.match_network(self.net)
         em = pysmile.learning.EM()
 
-        list_noisy_max = [node for node in self.net.get_all_nodes()
-                          if self.net.get_node_type(node) == pysmile.NodeType.NOISY_MAX]
+        list_noisy_max = [(node, self.net.get_node_type(node)) for node in self.net.get_all_nodes()
+                          if self.net.get_node_type(node) != pysmile.NodeType.CPT]
 
-        for node in list_noisy_max:
+        for node, _ in list_noisy_max:
             self.net.set_node_type(node, int(pysmile.NodeType.CPT))
 
         try:
@@ -44,28 +45,40 @@ class BayesNetwork:
             else:
                 raise e
 
-        for node in list_noisy_max:
-            self.net.set_node_type(node, int(pysmile.NodeType.NOISY_MAX))
+        for node, node_type in list_noisy_max:
+            self.net.set_node_type(node, node_type)
 
-    def learn_new_dependencies(self, path_newdata):
+    def learn_new_dependencies(self, path_newdata, flag_verbose=-1):
         ds = pysmile.learning.DataSet()
         ds.read_file(path_newdata)
         net_new = pysmile.learning.BayesianSearch().learn(ds)
         # net_new = pysmile.learning.TAN().learn(ds)
+        # net_new.write_file("temp.xdsl")
+        # net_new.read_file("temp.xdsl")
 
         for node in self.net.get_all_nodes():
+            node_type = self.net.get_node_type(node)
+            if node_type != pysmile.NodeType.CPT:
+                self.net.set_node_type(node, int(pysmile.NodeType.CPT))
+
             parents_new = {*net_new.get_parents(node)}
-            print(parents_new)
             if len(parents_new) > 0:
                 parents = {*self.net.get_parents(node)}
-                print(len(parents_new), len(parents))
+                for parent in parents_new - parents:
+                    if node not in self.net.get_parents(parent):
+                        parent_type = self.net.get_node_type(parent)
+                        if parent_type != pysmile.NodeType.CPT:
+                            self.net.set_node_type(parent, int(pysmile.NodeType.CPT))
 
-                exit()
+                        self.net.add_arc(parent, node)
 
+                        if parent_type != pysmile.NodeType.CPT:
+                            self.net.set_node_type(parent, parent_type)
 
+            if node_type != pysmile.NodeType.CPT:
+                self.net.set_node_type(node, node_type)
 
-        print(net_new)
-        exit()
+        self.learn(path_newdata, flag_verbose=flag_verbose)
 
     def add_evidence(self, varname, val, flag_verbose=-1, flag_update_beliefs=True):
         try:
@@ -168,7 +181,10 @@ class MultiNetwork:
 
     def add_net(self, bn_name):
         if bn_name not in self.bns:
-            self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + ".xdsl"), tresh_yes=self.tresh_yes)
+            if os.path.exists(join(net_dir, bn_name + "_trained.xdsl")):
+                self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + "_trained.xdsl"), tresh_yes=self.tresh_yes)
+            else:
+                self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + ".xdsl"), tresh_yes=self.tresh_yes)
             if bn_name not in self.random_variables_2_predict:
                 self.random_variables_2_predict[bn_name] = [_ for _ in self.bns[bn_name].get_node_names() if _!="is_added"]
 
@@ -184,7 +200,7 @@ class MultiNetwork:
             for varname, value in evidence.items():
                 self.bns[bn_name].clear_evidence(varname)
 
-    def learn_all(self, tabs_by_bn, min_size_training_set=10):
+    def learn_all(self, tabs_by_bn, min_size_training_set=10, flag_verbose=0):
         for bn_name, tab in tabs_by_bn.items():
 
             if tab.shape[0] < min_size_training_set:
@@ -195,7 +211,19 @@ class MultiNetwork:
                     if varname not in tab.columns:
                         tab[varname] = ['no'] * tab.shape[0]
                 tab.to_csv(path_temp_data_file, sep=" ", index=False)
-                self.bns[bn_name].learn(path_temp_data_file)
+                flag_bn_search_failed = False
+                try:
+                    self.bns[bn_name].learn_new_dependencies(path_temp_data_file)
+                except pysmile.SMILEException as e:
+                    flag_bn_search_failed = True
+                    if "ErrNo=-1" in str(e):
+                        if flag_verbose == 0:
+                            print(e)
+                    else:
+                        raise e
+                if flag_bn_search_failed:
+                    self.bns[bn_name].learn(path_temp_data_file)
+                self.bns[bn_name].net.write_file(f"{net_dir}/trained_graphs/{bn_name}_trained.xdsl")
 
     def sample_all(self):
         bp = []
@@ -264,10 +292,10 @@ if __name__ == "__main__":
     def single_bn_train_test():
         # np.random.seed(0)
         from config import path_temp_data_file
-        # mbn = MultiNetwork(tresh_yes=0.0)
-        # bn = mbn.bns["consumer_segments"]
+        mbn = MultiNetwork(tresh_yes=0.0)
+        bn = mbn.bns["consumer_segments"]
         # bn = BayesNetwork("bayesgraphs/business_plan.xdsl", tresh_yes=0.0)
-        bn = BayesNetwork("bayesgraphs/age_vs_edu.xdsl", tresh_yes=0.0)
+        # bn = BayesNetwork("bayesgraphs/age_vs_edu.xdsl", tresh_yes=0.0)
         # bn = BayesNetwork("bayesgraphs/business_plan_with_noisy_max.xdsl")
         bps = defaultdict(list)
         B = 100

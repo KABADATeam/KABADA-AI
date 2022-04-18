@@ -1,22 +1,10 @@
-import sys
-
 import numpy as np
-import pysmile
-from os.path import join
-import pandas as pd
-from collections import defaultdict
-# pysmile_license is your license key
-import smile_licence.pysmile_license
-from config import net_dir, epsilon, path_temp_data_file
-from collections import Counter
-import logging
 from copy import deepcopy
-from itertools import chain
-from Translator import Translator, Flattener
 
 
 class Beam:
     cnt = 0
+
     def __init__(self, *triple):
         node, val, self.prob = triple
         self.vals = [(node, val, self.prob)]
@@ -93,3 +81,27 @@ def beam_search(self, nodes, flag_noisy, num_beams):
     pairs = [(self.net.get_node_name(node), self.net.get_outcome_id(node, val)) for node, val, prob in beams[i_opt].vals
              if prob >= self.tresh_yes]
     return pairs
+
+
+if __name__ == "__main__":
+    import pysmile
+    from BayesNetwork import MultiNetwork
+    from config import path_temp_data_file
+    mbn = MultiNetwork(tresh_yes=0.0)
+    bn = mbn.bns["consumer_segments"]
+
+    for node in [2, 3, 4, 5, 6, 12, 17]:
+        bn.net.set_node_type(node, int(pysmile.NodeType.CPT))
+        bn.net.update_beliefs()
+        n_vals = len(bn.net.get_node_value(node))
+        parents = bn.net.get_parents(node)
+        print(bn.net.get_node_name(node), [bn.net.get_node_name(node) for node in parents])
+        cpt = np.asarray(bn.net.get_node_definition(node)).reshape(-1, n_vals)
+    exit()
+    for node in bn.net.get_all_nodes():
+        print(node, bn.net.get_parents(node), bn.net.get_node_name(node))
+
+
+
+
+

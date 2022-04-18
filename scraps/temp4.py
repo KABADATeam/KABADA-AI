@@ -13,13 +13,13 @@ from pprint import pprint
 # bn = BayesNetwork(join(net_dir, "consumer_segments.xdsl"))
 
 def just_generate(name="age_vs_edu"):
-    bn = BayesNetwork(join(net_dir, name + ".xdsl"))
+    bn = BayesNetwork(join(net_dir, name + ".xdsl"), tresh_yes=0.0)
     B = 1000
     tab = defaultdict(list)
     for i in range(B):
         # print(bn.generate_one_sample())
         # exit()
-        for colname, colval in bn.generate_one_sample():
+        for colname, colval in bn.generate_one_sample(flag_with_nos=True):
             tab[colname].append(colval)
         # exit()
         for k in tab.keys():
