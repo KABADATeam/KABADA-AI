@@ -84,12 +84,14 @@ class BayesNetwork:
     def add_evidence(self, varname, val, flag_verbose=-1, flag_update_beliefs=True):
 
         if isinstance(val, list):
-            valnames = self.net.get_outcome_ids(varname)
-            probs = np.zeros((len(valnames),))
-            for i, valname in enumerate(valnames):
-                if valname in val:
-                    probs[i] = 1.0 / len(val)
-            self.net.set_virtual_evidence(varname, list(probs))
+            if len(val) > 0:
+                valnames = self.net.get_outcome_ids(varname)
+                probs = np.zeros((len(valnames),))
+                for i, valname in enumerate(valnames):
+                    if valname in val:
+                        probs[i] += 1.0
+                probs = probs / np.sum(probs)
+                self.net.set_virtual_evidence(varname, list(probs))
         else:
             # print(varname, val, self.net.get_outcome_ids(varname))
             try:
@@ -272,6 +274,8 @@ class MultiNetwork:
                 other_guids_by_bn[bn_name].update(list_guids)
 
         for bn_name, list_guids, id_bp in guids_by_bn:
+
+            dict_evidence = defaultdict(list)
             for other_bn_name, other_guids in other_guids_by_bn.items():
                 if other_bn_name != bn_name:
                     list_evidence = self.translator(other_guids)
@@ -279,18 +283,12 @@ class MultiNetwork:
                         continue
                     assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
 
-                    dict_evidence = defaultdict(list)
                     for varname, value in list_evidence[other_bn_name]:
                         dict_evidence[varname].append(value)
-                        # self.bns["main"].add_evidence(varname, value, flag_update_beliefs=False)
 
-                    for varname, values in dict_evidence.items():
-                        values = values[0] if len(values) == 1 else values
-                        self.bns["main"].add_evidence(varname, values, flag_update_beliefs=False)
-
-                    # pprint(dict_evidence)
-                    # print(other_bn_name)
-                    # exit()
+            for varname, values in dict_evidence.items():
+                values = values[0] if len(values) == 1 else values
+                self.bns["main"].add_evidence(varname, values, flag_update_beliefs=False)
 
             list_evidence = self.translator(list_guids)
             if len(list_evidence) == 0:
