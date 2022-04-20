@@ -7,6 +7,7 @@ from copy import deepcopy
 from pprint import pprint
 from re import findall
 from ast import literal_eval
+from collections import defaultdict
 
 def traverse_leafs(translation):
     translation_flat = deepcopy(translation)
@@ -91,8 +92,24 @@ def check_bp_flattener():
     pprint(flattener.back(guids))
 
 
+def check_if_all_nets_in_main():
+    mbn = MultiNetwork()
+    main_k2v = defaultdict(set)
+    for node in mbn.bns["main"].get_node_names():
+        for i in range(mbn.bns["main"].net.get_outcome_count(node)):
+            main_k2v[node].add(mbn.bns["main"].net.get_outcome_id(node, i))
+
+    for bn_name in mbn.bns.keys():
+        if bn_name != "main":
+            for node in mbn.bns[bn_name].get_node_names():
+                assert node in main_k2v
+                for i in range(mbn.bns[bn_name].net.get_outcome_count(node)):
+                    val = mbn.bns[bn_name].net.get_outcome_id(node, i)
+                    assert val in main_k2v[node]
+
 if __name__ == "__main__":
     check_variable_names()
     validate_wrt_texter()
+    check_if_all_nets_in_main()
     # check_bp_flattener()
     print("everythings OK :)")

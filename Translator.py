@@ -221,7 +221,7 @@ class Translator:
                             pairs.append((varname, value))
                     self.lookup[guid] = (bn_name, pairs)
 
-        self.inverse_lookup = defaultdict(lambda :defaultdict(list))
+        self.inverse_lookup = defaultdict(lambda: defaultdict(list))
         for guid, (bn_name, pairs) in self.lookup.items():
             for varname, value in pairs:
                 self.inverse_lookup[bn_name][varname].append(value)

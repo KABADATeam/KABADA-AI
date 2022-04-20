@@ -65,6 +65,6 @@ def print_probable_flat_guids():
 
 if __name__ == "__main__":
     # check_value_counts()
-    print_kind_associated_guids(31)
+    print_kind_associated_guids(27)
     # print_value2kind("Delivery to home")
     # print_probable_flat_guids()

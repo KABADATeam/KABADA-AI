@@ -47,7 +47,7 @@ def predict():
 
         logging.info('received num %s bns idetified', len(guids_by_bn))
 
-        recomendations_by_bn = dict_sessions[id_session].predict_all(guids_by_bn)
+        recomendations_by_bn = dict_sessions[id_session].predict_all(guids_by_bn, location=location)
 
         bp = flattener.back(recomendations_by_bn)
 

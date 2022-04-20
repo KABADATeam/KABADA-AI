@@ -10,6 +10,7 @@ from config import net_dir, epsilon, path_temp_data_file
 from collections import Counter
 import logging
 from copy import deepcopy
+from pprint import pprint
 from itertools import chain
 from Translator import Translator, Flattener
 from BeamSearch import Beam, beam_search
@@ -81,14 +82,26 @@ class BayesNetwork:
         self.learn(path_newdata, flag_verbose=flag_verbose)
 
     def add_evidence(self, varname, val, flag_verbose=-1, flag_update_beliefs=True):
-        try:
-            self.net.set_evidence(varname, val)
-        except pysmile.SMILEException as e:
-            if "ErrNo=-26" in str(e):
-                if flag_verbose==0:
-                    print(f"Warning: not possible to add {varname} = {val}, value is not possible according to other evidence")
-            else:
-                raise e
+
+        if isinstance(val, list):
+            valnames = self.net.get_outcome_ids(varname)
+            probs = np.zeros((len(valnames),))
+            for i, valname in enumerate(valnames):
+                if valname in val:
+                    probs[i] = 1.0 / len(val)
+            self.net.set_virtual_evidence(varname, list(probs))
+        else:
+            # print(varname, val, self.net.get_outcome_ids(varname))
+            try:
+                self.net.set_evidence(varname, val)
+            except pysmile.SMILEException as e:
+                if "ErrNo=-26" in str(e) or "ErrNo=-2" in str(e):
+                    if flag_verbose == 0:
+                        print(
+                            f"Warning: not possible to add {varname} = {val}, value is not possible according to other evidence")
+                else:
+                    raise e
+
         if flag_update_beliefs:
             self.net.update_beliefs()
 
@@ -107,11 +120,10 @@ class BayesNetwork:
             self.net.update_beliefs()
         return self.net.get_node_value(node)
 
-    def get_node_iterator(self, list_evidence=None):
+    def get_node_iterator(self, list_evidence=None, targets=None):
         set_fixed_variables = set()
         if list_evidence is not None:
             for varname, value in list_evidence:
-                self.add_evidence(varname, value, flag_update_beliefs=False)
                 set_fixed_variables.add(varname)
 
         nodes = []
@@ -123,7 +135,12 @@ class BayesNetwork:
         levels_of_nodes = []
         while len(nodes) > 0:
             num_nodes_at_start = len(nodes)
-            levels_of_nodes.append([_ for _ in nodes if _ not in set_fixed_variables])
+            if targets is None:
+                levels_of_nodes.append([_ for _ in nodes if _ not in set_fixed_variables])
+            else:
+                levels_of_nodes.append([_ for _ in nodes
+                                        if (_ not in set_fixed_variables) and self.net.get_node_name(_) in targets])
+
             for node in nodes[:num_nodes_at_start]:
                 for child in self.net.get_children(node):
                     if child not in nodes:
@@ -131,8 +148,13 @@ class BayesNetwork:
             nodes = nodes[num_nodes_at_start:]
         return chain(*levels_of_nodes)
 
-    def predict_popup(self, list_evidence=None, flag_with_nos=False, flag_noisy=False, num_beams=1):
-        nodes = self.get_node_iterator(list_evidence)
+    def predict_popup(self, list_evidence=None, flag_with_nos=False, flag_noisy=False, num_beams=1, targets=None):
+
+        if list_evidence is not None:
+            for varname, value in list_evidence:
+                self.add_evidence(varname, value, flag_update_beliefs=False)
+
+        nodes = self.get_node_iterator(list_evidence, targets)
         if num_beams > 1:
             pairs = beam_search(self, nodes, flag_noisy, num_beams)
         else:
@@ -178,6 +200,8 @@ class MultiNetwork:
 
         for bn_name in self.translator.inverse_lookup.keys():
             self.add_net(bn_name)
+
+        self.add_net("main")
 
     def add_net(self, bn_name):
         if bn_name not in self.bns:
@@ -226,6 +250,7 @@ class MultiNetwork:
                 self.bns[bn_name].net.write_file(f"{net_dir}/trained_graphs/{bn_name}_trained.xdsl")
 
     def sample_all(self):
+        # TODO izmantojot main
         bp = []
         for bn_name, bn in self.bns.items():
             for _ in range(np.random.randint(1, 3)):
@@ -238,10 +263,35 @@ class MultiNetwork:
         bp = self.flattener.back(translations_by_bn)
         return bp
 
-    def predict_all(self, guids_by_bn):
-        # TODO handlot multi value guids (lai prob buutu joint)
+    def predict_all(self, guids_by_bn, location=None):
         bp = []
+
+        other_guids_by_bn = defaultdict(set)
         for bn_name, list_guids, id_bp in guids_by_bn:
+            if len(list_guids) > 0:
+                other_guids_by_bn[bn_name].update(list_guids)
+
+        for bn_name, list_guids, id_bp in guids_by_bn:
+            for other_bn_name, other_guids in other_guids_by_bn.items():
+                if other_bn_name != bn_name:
+                    list_evidence = self.translator(other_guids)
+                    if len(list_evidence) == 0:
+                        continue
+                    assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
+
+                    dict_evidence = defaultdict(list)
+                    for varname, value in list_evidence[other_bn_name]:
+                        dict_evidence[varname].append(value)
+                        # self.bns["main"].add_evidence(varname, value, flag_update_beliefs=False)
+
+                    for varname, values in dict_evidence.items():
+                        values = values[0] if len(values) == 1 else values
+                        self.bns["main"].add_evidence(varname, values, flag_update_beliefs=False)
+
+                    # pprint(dict_evidence)
+                    # print(other_bn_name)
+                    # exit()
+
             list_evidence = self.translator(list_guids)
             if len(list_evidence) == 0:
                 if bn_name in self.bns:
@@ -251,12 +301,14 @@ class MultiNetwork:
             assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
 
             list_evidence = list_evidence[bn_name]
-            recomendations = {*self.bns[bn_name].predict_popup(list_evidence)}
+            target_names = {*self.bns[bn_name].get_node_names()}
+
+            recomendations = {*self.bns["main"].predict_popup(list_evidence, targets=target_names)}
+
             bp.append((bn_name, recomendations, id_bp))
             self.bns[bn_name].clear_evidence()
 
         translations_by_bn = self.translator.back(bp)
-
         return translations_by_bn
 
 
@@ -275,8 +327,8 @@ if __name__ == "__main__":
 
         for _ in range(100):
             np.random.seed(_)
-            # bp = gen.generate_from_bn()
-            bp = gen()
+            bp = gen.generate_from_bn()
+            # bp = gen()
             guids_by_bn = flattener(bp)
             recomendations_by_bn = net.predict_all(guids_by_bn)
 
@@ -293,7 +345,8 @@ if __name__ == "__main__":
         # np.random.seed(0)
         from config import path_temp_data_file
         mbn = MultiNetwork(tresh_yes=0.0)
-        bn = mbn.bns["consumer_segments"]
+        # bn = mbn.bns["consumer_segments"]
+        bn = mbn.bns["value_propositions"]
         # bn = BayesNetwork("bayesgraphs/business_plan.xdsl", tresh_yes=0.0)
         # bn = BayesNetwork("bayesgraphs/age_vs_edu.xdsl", tresh_yes=0.0)
         # bn = BayesNetwork("bayesgraphs/business_plan_with_noisy_max.xdsl")
@@ -320,6 +373,6 @@ if __name__ == "__main__":
         # bn.learn("bayesgraphs/consumer_segments.txt")
         exit()
 
-    # check_recomendation_generation()
+    check_recomendation_generation()
     # generate_bn_sample()
-    single_bn_train_test()
+    # single_bn_train_test()

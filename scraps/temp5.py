@@ -8,6 +8,7 @@ with open("../bp.pickle", "rb") as conn:
 # print(findall('03f70344-c4f5-456a-bbfe-94dde489b31c', str(bp)))
 
 
-pprint(bp['plan']['channels'][1].keys())
+print(bp['plan'].keys())
 
-pprint(bp['plan']['channels'][1])
+# pprint(bp['plan']['channels'][1].keys())
+# pprint(bp['plan']['channels'][1])
