@@ -42,7 +42,11 @@
 	],
 		"channels": [
 			{
-
+				"channelType": ["3c81ac65-960e-44aa-b752-17808fa31c1f", "b0cb1000-5a92-47a0-a45b-499c5f580524", "e1915d59-a5a4-43bd-a5db-7c8ab320371a", "d57d1d34-e721-4d46-a5f4-a3f9e7d3a198", "97070765-ae68-4bb1-9b50-d99761807ef4"],
+				"channelSubtype": ["df0fa10f-05df-485a-9f90-aaae6cc11ebc", "91d5edff-f361-47aa-8d3c-b420681dcd5e", "c6a66809-c479-4563-95df-cb9396c37e35", "c06464ec-0248-4964-b09a-dd6fd7c6cc17"],
+				"subtypeType": ["4152d046-a8a2-4adc-a6b3-b2de8c3cafbf", "65c4d434-7f22-44ce-b9a3-c9681ff199a8"],
+				"locationType": ["404d16aa-f0f7-452a-88ce-13109e57724a", "3fe4a8e4-daa1-4edb-a209-2d9f6f9ced35", "a82e9156-c03c-4815-80ca-35508e2371ad", "2e4ee3fe-7f1b-4105-b37e-c1ee4d8d4d40"],
+				"distributionChannels": ["e8f6e9d6-0e37-4182-9c47-33c9d119ac73", "ee238326-5d11-4531-92b0-6565f42ae874", "b2706a04-d62f-4103-ae40-6b5868029c73", "7ace64a6-77c6-44de-a675-78ff13ca0859", "f90efa9d-ff68-4fe7-b6b3-bf55850f7437", "6dad8d59-0786-43e5-98a6-dd6d4fdc7688"]
 			}
 		]
 	}

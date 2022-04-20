@@ -19,7 +19,6 @@
 
   "plan::channels::distributionChannels::b2706a04-d62f-4103-ae40-6b5868029c73": {"Courier service:kind31": [{"distrubution_channels_courier_service": "yes"}]},
   "plan::channels::distributionChannels::ee238326-5d11-4531-92b0-6565f42ae874": {"Courier service:kind31": [{"distrubution_channels_courier_service": "yes"}]},
-
   "plan::channels::distributionChannels::e8f6e9d6-0e37-4182-9c47-33c9d119ac73": {"To the email:kind31": [{"distribution_channels_to_the_email": "yes"}]},
   "plan::channels::distributionChannels::7ace64a6-77c6-44de-a675-78ff13ca0859": {"Delivery to home:kind31": [{"distribution_channels_delivery_to_home": "yes"}]},
   "plan::channels::distributionChannels::f90efa9d-ff68-4fe7-b6b3-bf55850f7437": {"Self pickup:kind31": [{"distribution_channels_self_pickup": "yes"}]},
