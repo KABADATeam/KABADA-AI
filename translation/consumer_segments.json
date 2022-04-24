@@ -33,8 +33,5 @@
 	"plan::custSegs::consumer::geographic_location::197debde-3d72-4bae-89e5-e5d9010c8562": {"Foreign:kind35": [{"geo_location_foreign":  "yes"}]},
 	"plan::custSegs::consumer::geographic_location::5bf44939-b777-454a-86c2-280eea5fc6dd": {"Foreign Urban:kind35": [{"geo_location_foreign_urban":  "yes"}]},
 	"plan::custSegs::consumer::geographic_location::e59e3f4e-077f-4d34-9214-f5b93134cf44": {"Foreign Rural:kind35": [{"geo_location_foreign_rural":  "yes"}]},
-	"plan::custSegs::consumer::geographic_location::825d07dd-581b-4473-841c-9ec037746ae2": {"Transnational:kind35": [
-				{"geo_location_domestic":  "yes"},
-				{"geo_location_foreign":  "yes"}
-			]}
+	"plan::custSegs::consumer::geographic_location::825d07dd-581b-4473-841c-9ec037746ae2": {"Transnational:kind35": [{"geo_location_transnational":  "yes"}]}
 }

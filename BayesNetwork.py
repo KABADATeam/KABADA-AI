@@ -19,11 +19,27 @@ class BayesNetwork:
     def __init__(self, path, tresh_yes=0.5):
         self.tresh_yes = tresh_yes
         self.net = pysmile.Network()
-        # print("Importing net:", path)
         logging.info("Importing net: " + path)
         self.net.read_file(path)
-        self.net.update_beliefs()
+
+        for node in self.net.get_all_nodes():
+            current_node_type = self.net.get_node_type(node)
+            self.net.set_node_type(node, pysmile.NodeType.CPT)
+
+            n_vals = self.net.get_outcome_count(node)
+            cpt = np.asarray(self.net.get_node_definition(node)).reshape(-1, n_vals)
+            cpt[cpt < epsilon] = epsilon
+            for i in range(cpt.shape[0]):
+                s = np.sum(cpt[i, :])
+                if s == 0:
+                    cpt[i, :] = np.ones((n_vals,)) / n_vals
+                else:
+                    cpt[i, :] = cpt[i, :] / s
+            self.net.set_node_definition(node, list(cpt.flatten()))
+            self.net.set_node_type(node, current_node_type)
+
         self.net.set_zero_avoidance_enabled(True)
+        self.net.update_beliefs()
 
     def learn(self, path_newdata, flag_verbose=-1):
         ds = pysmile.learning.DataSet()
