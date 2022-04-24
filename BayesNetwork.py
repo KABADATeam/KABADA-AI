@@ -24,7 +24,7 @@ class BayesNetwork:
 
         for node in self.net.get_all_nodes():
             current_node_type = self.net.get_node_type(node)
-            self.net.set_node_type(node, pysmile.NodeType.CPT)
+            self.net.set_node_type(node, int(pysmile.NodeType.CPT))
 
             n_vals = self.net.get_outcome_count(node)
             cpt = np.asarray(self.net.get_node_definition(node)).reshape(-1, n_vals)
@@ -285,16 +285,32 @@ class MultiNetwork:
         bp = []
 
         other_guids_by_bn = defaultdict(set)
+        other_guids_by_id = {}
         for bn_name, list_guids, id_bp in guids_by_bn:
             if len(list_guids) > 0:
+                if id_bp is not None:
+                    other_guids_by_id[id_bp] = (bn_name, {*list_guids})
                 other_guids_by_bn[bn_name].update(list_guids)
 
         for bn_name, list_guids, id_bp in guids_by_bn:
 
+            # looking for some BFF
+            dict_guids_bffs = {}
+            for potential_id in list_guids:
+                potential_id = potential_id.split("::")[-1]
+                if potential_id in other_guids_by_id:
+                    dict_guids_bffs[other_guids_by_id[potential_id][0]] = other_guids_by_id[potential_id][1]
+
             dict_evidence = defaultdict(list)
             for other_bn_name, other_guids in other_guids_by_bn.items():
                 if other_bn_name != bn_name:
-                    list_evidence = self.translator(other_guids)
+
+                    # if any BFF found it gets special care
+                    if other_bn_name in dict_guids_bffs:
+                        list_evidence = self.translator(dict_guids_bffs[other_bn_name])
+                    else:
+                        list_evidence = self.translator(other_guids)
+
                     if len(list_evidence) == 0:
                         continue
                     assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
