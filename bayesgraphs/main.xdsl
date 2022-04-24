@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
+<smile version="1.0" id="Network1" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="type_goods">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="type_services">
+			<state id="yes" />
+			<state id="no" />
+			<parents>type_goods</parents>
+			<probabilities>0.95 0.05 0.05 0.95</probabilities>
+		</cpt>
+		<cpt id="bus_geo_location_foreign_rural">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="bus_geo_location_foreign_urban">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="bus_geo_location_domestic_rural">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="bus_geo_location_domestic_urban">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<noisymax id="company_size_small">
+			<state id="yes" />
+			<state id="no" />
+			<parents>bus_geo_location_foreign_rural bus_geo_location_foreign_urban bus_geo_location_domestic_rural bus_geo_location_domestic_urban</parents>
+			<strengths>0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.2 0.8 0 1 0.8 0.2 0 1 0.2 0.8 0 1 0.8 0.2 0 1 0.329755859375 0.670244140625</parameters>
+		</noisymax>
+		<noisymax id="company_size_medium">
+			<state id="yes" />
+			<state id="no" />
+			<parents>bus_geo_location_foreign_rural bus_geo_location_foreign_urban bus_geo_location_domestic_rural bus_geo_location_domestic_urban</parents>
+			<strengths>0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.4 0.6 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.6 0.4 0 1 0.329755859375 0.670244140625</parameters>
+		</noisymax>
+		<noisymax id="company_size_large">
+			<state id="yes" />
+			<state id="no" />
+			<parents>bus_geo_location_foreign_rural bus_geo_location_foreign_urban bus_geo_location_domestic_rural bus_geo_location_domestic_urban</parents>
+			<strengths>0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.329755859375 0.670244140625</parameters>
+		</noisymax>
+		<cpt id="bus_geo_location_domestic">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="bus_geo_location_foreign">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="product_type">
+			<state id="physical_good" />
+			<state id="service" />
+			<state id="no" />
+			<probabilities>0.495 0.495 0.01</probabilities>
+		</cpt>
+		<cpt id="product_features_has_an_improved_poduction_delivery_process">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.05 0.95</probabilities>
+		</cpt>
+		<noisymax id="price_level">
+			<state id="free" />
+			<state id="economy" />
+			<state id="market" />
+			<state id="high_end" />
+			<state id="no" />
+			<parents>product_features_has_an_improved_poduction_delivery_process</parents>
+			<strengths>0 1</strengths>
+			<parameters>0.04999965009938789 0.85 0.04999965009938784 0.04999938767622431 1.312125e-06 0 0 0 0 1 0.2475000000000001 0.257498687875 0.2475 0.2475 1.312125e-06</parameters>
+		</noisymax>
+		<cpt id="age_under_12">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="age_12_17">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_under_12</parents>
+			<probabilities>0 1 0.16 0.84</probabilities>
+		</cpt>
+		<cpt id="age_18_24">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_12_17 age_under_12</parents>
+			<probabilities>0 1 0 1 0 1 0.2 0.8</probabilities>
+		</cpt>
+		<cpt id="age_25_34">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_18_24 age_under_12 age_12_17</parents>
+			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.25 0.75</probabilities>
+		</cpt>
+		<cpt id="age_35_64">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_25_34 age_under_12 age_18_24 age_12_17</parents>
+			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.33 0.67</probabilities>
+		</cpt>
+		<cpt id="age_65_74">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_35_64 age_25_34 age_18_24 age_12_17 age_under_12</parents>
+			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="age_75_over">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_65_74 age_35_64 age_25_34 age_18_24 age_12_17 age_under_12</parents>
+			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</probabilities>
+		</cpt>
+		<noisymax id="education_primary">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.09999999999999998 0.9 0 1 0.8 0.2 0 1 0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
+		</noisymax>
+		<cpt id="type_municipality">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.1 0.9</probabilities>
+		</cpt>
+		<noisymax id="channel">
+			<state id="direct_sales" />
+			<state id="retailers" />
+			<state id="wholesalers" />
+			<state id="agents" />
+			<state id="other" />
+			<state id="no" />
+			<parents>product_type price_level education_primary type_goods type_services type_municipality</parents>
+			<strengths>0 1 2 0 1 2 3 4 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.1585715871430158 0.2537145394288253 0.2695716981431267 0.1585715871430157 0.1585715871430157 0.0009990009990008542 0.2421820603638786 0.2421820603638786 0.1513637877274241 0.2119093028183937 0.1513637877274241 0.0009990009990009652 0 0 0 0 0 1 0.1998001998001998 0.1998001998001998 0.1998001998001999 0.1998001998001998 0.1998001998001998 0.0009990009990008542 0.1998001998001998 0.1998001998001998 0.1998001998001999 0.1998001998001998 0.1998001998001998 0.0009990009990008542 0.1998001998001998 0.1998001998001998 0.1998001998001999 0.1998001998001998 0.1998001998001998 0.0009990009990008542 0.2979476663687189 0.17526333315807 0.17526333315807 0.17526333315807 0.17526333315807 0.0009990009990010762 0 0 0 0 0 1 0.2979476663687189 0.17526333315807 0.17526333315807 0.17526333315807 0.17526333315807 0.0009990009990010762 0 0 0 0 0 1 0.17526333315807 0.17526333315807 0.297947666368719 0.17526333315807 0.17526333315807 0.0009990009990010762 0 0 0 0 0 1 0.1700427232342125 0.1700427232342125 0.1700427232342126 0.3188301060641486 0.1700427232342126 0.0009990009990008542 0 0 0 0 0 1 0.1850001850001849 0.185000185000185 0.185000185000185 0.259000259000259 0.1850001850001851 0.0009990009990009652 0 0 0 0 0 1 0.1998001998001998 0.1998001998001998 0.1998001998001999 0.1998001998001998 0.1998001998001998 0.0009990009990008542</parameters>
+		</noisymax>
+		<cpt id="geo_location_domestic_rural">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="nace">
+			<state id="A_Agriculture__forestry_and_fishing" />
+			<state id="B_Mining_and_quarrying" />
+			<state id="C_Manufacturing" />
+			<state id="D_Electricity__gas__steam_and_air_conditioning_supply" />
+			<state id="E_Water_supply__sewerage__waste_managment_and_remediation_activities" />
+			<state id="F_Construction" />
+			<state id="G_Wholesale_and_retail_trade__repair_of_motor_vehicles_and_motorcycles" />
+			<state id="H_Transporting_and_storage" />
+			<state id="I_Accommodation_and_food_service_activities" />
+			<state id="J_Information_and_communication" />
+			<state id="K_Financial_and_insurance_activities" />
+			<state id="L_Real_estate_activities" />
+			<state id="M_Professional__scientific_and_technical_activities" />
+			<state id="N_Administrative_and_support_service_activities" />
+			<state id="O_Public_administration_and_defence__compulsory_social_security" />
+			<state id="P_Education" />
+			<state id="Q_Human_health_and_social_work_activities" />
+			<state id="R_Arts__entertainment_and_recreation" />
+			<state id="S_Other_services_activities" />
+			<state id="T_Activities_of_households_as_employers__undifferentiated_goods_and_services_producing_activities_of_households_for_own_use" />
+			<state id="U_Activities_of_extraterritorial_organisations_and_bodies" />
+			<probabilities>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</probabilities>
+		</cpt>
+		<cpt id="product_features_is_exclusive">
+			<state id="yes" />
+			<state id="no" />
+			<parents>price_level</parents>
+			<probabilities>0.01 0.99 0.01 0.99 0.01 0.99 0.8 0.2 0.5 0.5</probabilities>
+		</cpt>
+		<noisymax id="product_features_is_a_niche">
+			<state id="yes" />
+			<state id="no" />
+			<parents>price_level product_features_is_exclusive</parents>
+			<strengths>0 1 2 3 4 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0.05000000000000004 0.95 0.05000000000000004 0.95 0.872412109375 0.127587890625 0 1 0.85 0.15 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<noisymax id="product_features_is_more_eco_friendly">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_is_a_niche</parents>
+			<strengths>0 1</strengths>
+			<parameters>0.75 0.25 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<noisymax id="direct_sales">
+			<state id="own_shop" />
+			<state id="market_fairs" />
+			<state id="direct_visit" />
+			<state id="no" />
+			<parents>channel geo_location_domestic_rural nace product_features_is_more_eco_friendly</parents>
+			<strengths>0 1 2 3 4 5 0 1 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 0 1</strengths>
+			<parameters>0.4236675700090333 0.4841915085817526 0.09214092140921409 0 0.33 0.33 0.34 0 0.33 0.33 0.34 0 0.33 0.33 0.34 0 0.33 0.33 0.34 0 0 0 0 1 0.25 0.5 0.25 0 0 0 0 1 0.2857142857142856 0.4285714285714286 0.2857142857142857 1.110223024625157e-16 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0.3333333333333334 0.3333333333333333 0.3333333333333333 0 0 0 0 1 0.2777777777777777 0.4444444444444445 0.2777777777777778 0 0 0 0 1 0.3333333333333334 0.3333333333333333 0.3333333333333333 0</parameters>
+		</noisymax>
+		<noisymax id="education_secondary">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over education_primary</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0 1 0 1 0.3 0.7 0 1 0.95 0.05 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="education_higher">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over education_primary education_secondary</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0 1 0 1 0 1 0 1 0.4 0.6 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
+		</noisymax>
+		<cpt id="gender_male">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="gender_female">
+			<state id="yes" />
+			<state id="no" />
+			<parents>gender_male</parents>
+			<probabilities>0.05 0.95 0.95 0.05</probabilities>
+		</cpt>
+		<cpt id="geo_location_foreign_rural">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<noisymax id="income_low">
+			<state id="yes" />
+			<state id="no" />
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_foreign_rural geo_location_domestic_rural</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.95 0.05 0 1 0.8 0.2 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.6 0.4 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="income_medium">
+			<state id="yes" />
+			<state id="no" />
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural income_low</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.2 0.8 0 1 0.2 0.8 0 1 0.7 0.3 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.5 0.5 0 1 0.05000000000000004 0.95 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="income_high">
+			<state id="yes" />
+			<state id="no" />
+			<parents>education_primary education_secondary education_higher gender_male gender_female geo_location_domestic_rural geo_location_foreign_rural income_low income_medium</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.3 0.7 0 1 0.7 0.3 0 1 0.6 0.4 0 1 0.4 0.6 0 1 0.3 0.7 0 1 0.3 0.7 0 1 0.05000000000000004 0.95 0 1 0.05000000000000004 0.95 0 1 0 1</parameters>
+		</noisymax>
+		<cpt id="geo_location_transnational">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<noisymax id="own_shop_type">
+			<state id="physical" />
+			<state id="online" />
+			<state id="no" />
+			<parents>direct_sales channel age_65_74 income_high geo_location_transnational</parents>
+			<strengths>0 1 2 3 0 1 2 3 4 5 0 1 0 1 0 1</strengths>
+			<parameters>0.4799 0.52 0.0001 0.53 0.4699 0.0001 0.53 0.4699 0.0001 0 0 1 0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0 0 1 0.6296296296296295 0.3703703703703703 1.110223024625157e-16 0 0 1 0.3333333333333334 0.6666666666666666 0 0 0 1 0.25 0.75 0 0 0 1 0 0 1</parameters>
+		</noisymax>
+		<noisymax id="store_location">
+			<state id="fixed_location" />
+			<state id="mobile" />
+			<state id="own_website" />
+			<state id="platform" />
+			<state id="no" />
+			<parents>own_shop_type geo_location_domestic_rural geo_location_foreign_rural</parents>
+			<strengths>0 1 2 0 1 0 1</strengths>
+			<parameters>0.7 0.3 0 0 0 0 0 0.8 0.2 0 0 0 0 0 1 0.2 0.4 0.2 0.2 0 0 0 0 0 1 0.2 0.4 0.2 0.2 0 0 0 0 0 1 0.2 0.2000000000000001 0.2 0.2 0.2</parameters>
+		</noisymax>
+		<noisymax id="distribution_channels_self_pickup">
+			<state id="yes" />
+			<state id="no" />
+			<parents>own_shop_type</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.95 0.05 0 1 0 1 0 1</parameters>
+		</noisymax>
+		<noisymax id="distribution_channels_delivery_to_home">
+			<state id="yes" />
+			<state id="no" />
+			<parameters>0.5 0.5</parameters>
+		</noisymax>
+		<noisymax id="distrubution_channels_courier_service">
+			<state id="yes" />
+			<state id="no" />
+			<parents>own_shop_type store_location</parents>
+			<strengths>0 1 2 0 1 2 3 4</strengths>
+			<parameters>0.2 0.8 0.9 0.1 0 1 0.5 0.5 0.5 0.5 0.5 0.5 1 0 0 1 0.5 0.5</parameters>
+		</noisymax>
+		<noisymax id="distribution_channels_own_delivery">
+			<state id="yes" />
+			<state id="no" />
+			<parents>store_location</parents>
+			<strengths>0 1 2 3 4</strengths>
+			<parameters>0 1 0 1 0.7 0.3 0 1 0 1 0.5 0.5</parameters>
+		</noisymax>
+		<noisymax id="distribution_channels_to_the_email">
+			<state id="yes" />
+			<state id="no" />
+			<parameters>0.5 0.5</parameters>
+		</noisymax>
+		<noisymax id="has_children">
+			<state id="yes" />
+			<state id="no" />
+			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over</parents>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.000244140625 0.999755859375 0 1 0.05000000000000004 0.95 0 1 0.09999999999999998 0.9 0 1 0.4 0.6 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0 1</parameters>
+		</noisymax>
+		<cpt id="geo_location_domestic">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="geo_location_foreign_urban">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="geo_location_foreign">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="geo_location_domestic_urban">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="type_international">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.1 0.9</probabilities>
+		</cpt>
+		<cpt id="type_national">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.4 0.6</probabilities>
+		</cpt>
+		<cpt id="type_ngo">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.1 0.9</probabilities>
+		</cpt>
+		<cpt id="income_source_non_time_limited_usage">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="income_source_additional_functions">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="income_source_paid_plans">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_type</parents>
+			<probabilities>0.14 0.86 0.8 0.2 0.5 0.5</probabilities>
+		</cpt>
+		<noisymax id="income_source_different_price_for_business">
+			<state id="yes" />
+			<state id="no" />
+			<parents>price_level</parents>
+			<strengths>0 1 2 3 4</strengths>
+			<parameters>0.14 0.86 0.14 0.86 0.14 0.86 0.9 0.09999999999999998 0 1 0.3174072265625 0.6825927734375</parameters>
+		</noisymax>
+		<noisymax id="income_source_different_price_for_individuals">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_type price_level</parents>
+			<strengths>0 1 2 0 1 2 3 4</strengths>
+			<parameters>0.14 0.86 0.76 0.24 0 1 0.14 0.86 0.14 0.86 0.14 0.86 0.9 0.09999999999999998 0 1 0.3583984375 0.6416015625</parameters>
+		</noisymax>
+		<cpt id="income_source_fees_come_from_another_product">
+			<state id="yes" />
+			<state id="no" />
+			<parents>price_level</parents>
+			<probabilities>0.99 0.01 0.14 0.86 0.14 0.86 0.14 0.86 0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="income_source_other">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.14 0.86</probabilities>
+		</cpt>
+		<cpt id="product_features_is_a_fundamentally_new_product_or_serivce">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.05 0.95</probabilities>
+		</cpt>
+		<cpt id="product_features_is_more_user_friendly">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.05 0.95</probabilities>
+		</cpt>
+		<noisymax id="product_features_is_more_comfortable_usable">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_is_exclusive product_features_is_more_user_friendly</parents>
+			<strengths>0 1 0 1</strengths>
+			<parameters>0.7 0.3 0 1 0.8 0.2 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<cpt id="product_features_is_safer_to_use">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.05 0.95</probabilities>
+		</cpt>
+		<cpt id="product_features_is_more_durable">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.05 0.95</probabilities>
+		</cpt>
+		<cpt id="product_features_is_more_adaptive_versatile">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.05 0.95</probabilities>
+		</cpt>
+		<noisymax id="product_features_is_an_improvement_of_an_existing_product_or_service">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_is_more_comfortable_usable product_features_is_safer_to_use product_features_is_more_durable product_features_is_more_adaptive_versatile</parents>
+			<strengths>0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.8 0.2 0 1 0.85 0.15 0 1 0.8 0.2 0 1 0.8 0.2 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<cpt id="product_features_has_a_different_visual_design">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_is_an_improvement_of_an_existing_product_or_service</parents>
+			<probabilities>0.8 0.2 0.05 0.95</probabilities>
+		</cpt>
+		<cpt id="product_features_aims_to_set_a_trend">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.05 0.95</probabilities>
+		</cpt>
+		<cpt id="product_features_is_a_different_variant_of_a_current_product">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.05 0.95</probabilities>
+		</cpt>
+		<noisymax id="product_features_is_the_result_of_r_d">
+			<state id="yes" />
+			<state id="no" />
+			<parents>price_level product_features_is_a_fundamentally_new_product_or_serivce product_features_aims_to_set_a_trend product_features_is_a_different_variant_of_a_current_product</parents>
+			<strengths>0 1 2 3 4 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0.05000000000000004 0.95 0.05000000000000004 0.95 0.75 0.25 0 1 0.8 0.2 0 1 0.85 0.15 0 1 0.85 0.15 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<noisymax id="product_features_has_a_new_set_of_features">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_has_a_different_visual_design product_features_is_the_result_of_r_d product_features_is_a_different_variant_of_a_current_product</parents>
+			<strengths>0 1 0 1 0 1</strengths>
+			<parameters>0.73 0.27 0 1 0.8 0.2 0 1 0.85 0.15 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+		<noisymax id="product_features_is_mote_customisable">
+			<state id="yes" />
+			<state id="no" />
+			<parents>product_features_has_a_new_set_of_features</parents>
+			<strengths>0 1</strengths>
+			<parameters>0.8 0.2 0 1 0.05000000000000004 0.95</parameters>
+		</noisymax>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="main">
+			<node id="type_goods">
+				<name>type_goods</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>394 87 521 127</position>
+			</node>
+			<node id="type_services">
+				<name>type_services</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>488 135 615 175</position>
+			</node>
+			<node id="company_size_small">
+				<name>company_size_small</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>63 73 243 113</position>
+			</node>
+			<node id="company_size_medium">
+				<name>company_size_medium</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>80 134 253 182</position>
+			</node>
+			<node id="company_size_large">
+				<name>company_size_large</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>85 194 271 234</position>
+			</node>
+			<node id="bus_geo_location_domestic">
+				<name>bus_geo_location_domestic</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>749 215 990 260</position>
+			</node>
+			<node id="bus_geo_location_foreign_rural">
+				<name>bus_geo_location_foreign_rural</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>694 265 952 310</position>
+			</node>
+			<node id="bus_geo_location_foreign_urban">
+				<name>bus_geo_location_foreign_urban</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>660 314 912 359</position>
+			</node>
+			<node id="bus_geo_location_foreign">
+				<name>bus_geo_location_foreign</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>549 355 798 400</position>
+			</node>
+			<node id="bus_geo_location_domestic_rural">
+				<name>bus_geo_location_domestic_rural</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>473 404 730 449</position>
+			</node>
+			<node id="bus_geo_location_domestic_urban">
+				<name>bus_geo_location_domestic_urban</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>453 452 717 497</position>
+			</node>
+			<node id="channel">
+				<name>channel</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1228 205 1368 229</position>
+			</node>
+			<node id="direct_sales">
+				<name>direct_sales</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1390 110 1461 154</position>
+			</node>
+			<node id="own_shop_type">
+				<name>own_shop_type</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1496 180 1648 221</position>
+			</node>
+			<node id="store_location">
+				<name>store_location</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1670 157 1856 181</position>
+			</node>
+			<node id="distribution_channels_self_pickup">
+				<name>distribution_channels_self_pickup</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1346 273 1576 306</position>
+			</node>
+			<node id="distribution_channels_delivery_to_home">
+				<name>distribution_channels_delivery_to_home</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1277 352 1526 395</position>
+			</node>
+			<node id="distrubution_channels_courier_service">
+				<name>distrubution_channels_courier_service</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1457 417 1722 457</position>
+			</node>
+			<node id="distribution_channels_own_delivery">
+				<name>distribution_channels_own_delivery</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1730 255 1984 300</position>
+			</node>
+			<node id="distribution_channels_to_the_email">
+				<name>distribution_channels_to_the_email</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1716 342 1936 389</position>
+			</node>
+			<node id="age_under_12">
+				<name>age_under_12</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>976 845 1113 869</position>
+			</node>
+			<node id="age_35_64">
+				<name>age_35_64</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>984 1120 1121 1144</position>
+			</node>
+			<node id="age_25_34">
+				<name>age_25_34</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1077 1049 1214 1073</position>
+			</node>
+			<node id="age_18_24">
+				<name>age_18_24</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1096 984 1233 1008</position>
+			</node>
+			<node id="age_12_17">
+				<name>age_12_17</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1086 912 1223 936</position>
+			</node>
+			<node id="age_65_74">
+				<name>age_65_74</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>818 1116 955 1140</position>
+			</node>
+			<node id="age_75_over">
+				<name>age_75_over</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>738 1052 875 1076</position>
+			</node>
+			<node id="gender_male">
+				<name>gender_male</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>38 787 169 822</position>
+			</node>
+			<node id="gender_female">
+				<name>gender_female</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>16 907 147 942</position>
+			</node>
+			<node id="has_children">
+				<name>has_children</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1309 984 1449 1018</position>
+			</node>
+			<node id="education_primary">
+				<name>education_primary</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>562 661 704 687</position>
+			</node>
+			<node id="education_secondary">
+				<name>education_secondary</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>707 695 868 721</position>
+			</node>
+			<node id="education_higher">
+				<name>education_higher</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>621 771 755 797</position>
+			</node>
+			<node id="income_low">
+				<name>income_low</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>362 794 465 819</position>
+			</node>
+			<node id="income_high">
+				<name>income_high</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>351 954 454 979</position>
+			</node>
+			<node id="income_medium">
+				<name>income_medium</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>200 848 327 873</position>
+			</node>
+			<node id="geo_location_domestic">
+				<name>geo_location_domestic</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>537 1198 687 1228</position>
+			</node>
+			<node id="geo_location_foreign_rural">
+				<name>geo_location_foreign_rural</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>516 1079 724 1109</position>
+			</node>
+			<node id="geo_location_foreign_urban">
+				<name>geo_location_foreign_urban</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>503 1138 725 1168</position>
+			</node>
+			<node id="geo_location_foreign">
+				<name>geo_location_foreign</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>505 1108 723 1138</position>
+			</node>
+			<node id="geo_location_domestic_rural">
+				<name>geo_location_domestic_rural</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>510 1047 727 1077</position>
+			</node>
+			<node id="geo_location_domestic_urban">
+				<name>geo_location_domestic_urban</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>507 1168 721 1198</position>
+			</node>
+			<node id="type_international">
+				<name>type_international</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>130 478 329 518</position>
+			</node>
+			<node id="type_national">
+				<name>type_national</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>122 527 321 567</position>
+			</node>
+			<node id="type_municipality">
+				<name>type_municipality</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>113 571 312 611</position>
+			</node>
+			<node id="type_ngo">
+				<name>type_ngo</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>109 615 308 655</position>
+			</node>
+			<node id="product_type">
+				<name>product_type</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1623 818 1724 859</position>
+			</node>
+			<node id="price_level">
+				<name>price_level</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2100 729 2186 769</position>
+			</node>
+			<node id="income_source_non_time_limited_usage">
+				<name>income_source_non_time_limited_usage</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1623 616 1858 650</position>
+			</node>
+			<node id="income_source_additional_functions">
+				<name>income_source_additional_functions</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1607 571 1868 609</position>
+			</node>
+			<node id="income_source_paid_plans">
+				<name>income_source_paid_plans</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1632 696 1848 724</position>
+			</node>
+			<node id="income_source_different_price_for_business">
+				<name>income_source_different_price_for_business</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2130 880 2357 911</position>
+			</node>
+			<node id="income_source_different_price_for_individuals">
+				<name>income_source_different_price_for_individuals</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1751 769 2076 806</position>
+			</node>
+			<node id="income_source_fees_come_from_another_product">
+				<name>income_source_fees_come_from_another_product</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1751 895 2069 931</position>
+			</node>
+			<node id="income_source_other">
+				<name>income_source_other</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1626 657 1838 684</position>
+			</node>
+			<node id="product_features_is_a_fundamentally_new_product_or_serivce">
+				<name>product_features_is_a_fundamentally_new_product_or_serivce</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2158 572 2539 610</position>
+			</node>
+			<node id="product_features_is_an_improvement_of_an_existing_product_or_service">
+				<name>product_features_is_an_improvement_of_an_existing_product_or_service</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2858 988 3178 1015</position>
+			</node>
+			<node id="product_features_has_a_different_visual_design">
+				<name>product_features_has_a_different_visual_design</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2654 922 2974 950</position>
+			</node>
+			<node id="product_features_is_the_result_of_r_d">
+				<name>product_features_is_the_result_of_r_d</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2278 729 2564 766</position>
+			</node>
+			<node id="product_features_has_a_new_set_of_features">
+				<name>product_features_has_a_new_set_of_features</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2635 660 2918 693</position>
+			</node>
+			<node id="product_features_aims_to_set_a_trend">
+				<name>product_features_aims_to_set_a_trend</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2372 844 2685 874</position>
+			</node>
+			<node id="product_features_has_an_improved_poduction_delivery_process">
+				<name>product_features_has_an_improved_poduction_delivery_process</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1979 622 2368 664</position>
+			</node>
+			<node id="product_features_is_exclusive">
+				<name>product_features_is_exclusive</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2349 909 2568 942</position>
+			</node>
+			<node id="product_features_is_more_comfortable_usable">
+				<name>product_features_is_more_comfortable_usable</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2473 983 2730 1011</position>
+			</node>
+			<node id="product_features_is_more_user_friendly">
+				<name>product_features_is_more_user_friendly</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2171 1010 2445 1043</position>
+			</node>
+			<node id="product_features_is_safer_to_use">
+				<name>product_features_is_safer_to_use</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2867 830 3166 867</position>
+			</node>
+			<node id="product_features_is_more_durable">
+				<name>product_features_is_more_durable</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3015 768 3275 801</position>
+			</node>
+			<node id="product_features_is_a_niche">
+				<name>product_features_is_a_niche</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1905 975 2154 1012</position>
+			</node>
+			<node id="product_features_is_more_eco_friendly">
+				<name>product_features_is_more_eco_friendly</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1795 441 2127 472</position>
+			</node>
+			<node id="product_features_is_more_adaptive_versatile">
+				<name>product_features_is_more_adaptive_versatile</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3030 893 3325 930</position>
+			</node>
+			<node id="product_features_is_mote_customisable">
+				<name>product_features_is_mote_customisable</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2612 595 2935 629</position>
+			</node>
+			<node id="product_features_is_a_different_variant_of_a_current_product">
+				<name>product_features_is_a_different_variant_of_a_current_product</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2561 772 2909 813</position>
+			</node>
+			<node id="geo_location_transnational">
+				<name>geo_location_transnational</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>504 1228 717 1262</position>
+			</node>
+			<node id="nace">
+				<name>nace</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1882 83 2079 123</position>
+				<defcomment row="0" col="0">Agriculture, forestry and fishing</defcomment>
+				<defcomment row="1" col="0">Mining and quarrying</defcomment>
+				<defcomment row="2" col="0">Manufacturing</defcomment>
+				<defcomment row="3" col="0">Electricity, gas, steam and air conditioning supply</defcomment>
+				<defcomment row="4" col="0">Water supply; sewerage; waste managment and remediation activities</defcomment>
+				<defcomment row="5" col="0">Construction</defcomment>
+				<defcomment row="6" col="0">Wholesale and retail trade; repair of motor vehicles and motorcycles</defcomment>
+				<defcomment row="7" col="0">Transporting and storage</defcomment>
+				<defcomment row="8" col="0">Accommodation and food service activities</defcomment>
+				<defcomment row="9" col="0">Information and communication</defcomment>
+				<defcomment row="10" col="0">Financial and insurance activities</defcomment>
+				<defcomment row="11" col="0">Real estate activities</defcomment>
+				<defcomment row="12" col="0">Professional, scientific and technical activities</defcomment>
+				<defcomment row="13" col="0">Administrative and support service activities</defcomment>
+				<defcomment row="14" col="0">Public administration and defence; compulsory social security</defcomment>
+				<defcomment row="15" col="0">Education</defcomment>
+				<defcomment row="16" col="0">Human health and social work activities</defcomment>
+				<defcomment row="17" col="0">Arts, entertainment and recreation</defcomment>
+				<defcomment row="18" col="0">Other services activities</defcomment>
+				<defcomment row="19" col="0">Activities of households as employers; undifferentiated goods-and services-producing activities of households for own use</defcomment>
+				<defcomment row="20" col="0">Activities of extraterritorial organisations and bodies</defcomment>
+			</node>
+		</genie>
+	</extensions>
+</smile>
