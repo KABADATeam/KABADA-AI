@@ -290,7 +290,6 @@ class MultiNetwork:
 
         other_guids_by_bn = defaultdict(set)
         other_guids_by_id = {}
-        print(guids_by_bn)
         for bn_name, list_guids, id_bp in guids_by_bn:
             if len(list_guids) > 0:
                 if id_bp is not None:
@@ -308,8 +307,6 @@ class MultiNetwork:
             dict_evidence = defaultdict(list)
             for other_bn_name, other_guids in other_guids_by_bn.items():
                 if other_bn_name != bn_name:
-                    print(111111111111111111111111111111111111111111111111111111)
-                    # print(other_guids)
 
                     # if any BFF found it gets special care
                     if other_bn_name in dict_guids_bffs:
@@ -318,7 +315,6 @@ class MultiNetwork:
                         list_evidence = self.translator(other_guids)
                     if len(list_evidence) == 0:
                         continue
-                    print(other_bn_name, list_evidence.keys())
 
                     assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
 
@@ -364,8 +360,8 @@ if __name__ == "__main__":
 
         for _ in range(100):
             np.random.seed(_)
-            bp = gen.generate_from_bn()
-            # bp = gen()
+            # bp = gen.generate_from_bn()
+            bp = gen()
             guids_by_bn = flattener(bp)
             recomendations_by_bn = net.predict_all(guids_by_bn)
 
