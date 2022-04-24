@@ -61,9 +61,9 @@ def predict():
 
 if __name__ == "__main__":
 
-    # if os.path.exists(path_pid):
-    #     print("pid file exists, daemon already running, if not - delete pid file")
-    #     sys.exit(1)
+    if os.path.exists(path_pid):
+        print("pid file exists, daemon already running, if not - delete pid file")
+        sys.exit(1)
 
     with open(path_pid, "w") as conn:
         conn.write(str(os.getpid()))

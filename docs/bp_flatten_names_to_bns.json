@@ -3,5 +3,9 @@
 	"plan::custSegs::business": "business_segments",
 	"plan::custSegs::publicNgo": "public_bodies_and_ngo",
 	"plan::valueProposition": "value_propositions",
-	"plan::channels": "channels"
+	"plan::channels": "channels",
+
+	"plan::custRelationship::keepCust": "keep_customers",
+	"plan::custRelationship::getCust": "get_new_customers",
+	"plan::custRelationship::convCust": "convince_existing_to_spend_more"
 }

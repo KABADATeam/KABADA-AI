@@ -4,7 +4,6 @@ import os
 from os.path import join
 import pandas as pd
 from collections import defaultdict
-# pysmile_license is your license key
 import smile_licence.pysmile_license
 from config import net_dir, epsilon, path_temp_data_file
 from collections import Counter
@@ -13,7 +12,8 @@ from copy import deepcopy
 from pprint import pprint
 from itertools import chain
 from Translator import Translator, Flattener
-from BeamSearch import Beam, beam_search
+from BeamSearch import beam_search
+
 
 class BayesNetwork:
     def __init__(self, path, tresh_yes=0.5):
@@ -267,15 +267,19 @@ class MultiNetwork:
                     self.bns[bn_name].learn(path_temp_data_file)
                 self.bns[bn_name].net.write_file(f"{net_dir}/trained_graphs/{bn_name}_trained.xdsl")
 
-    def sample_all(self):
-        # TODO izmantojot main
-        bp = []
-        for bn_name, bn in self.bns.items():
-            for _ in range(np.random.randint(1, 3)):
-                recomendations = bn.generate_one_sample()
-                bp.append((bn_name, recomendations, None))
-        translations_by_bn = self.translator.back(bp)
+    def sample_all(self, mode="seperately"):
+        if mode == "seperately":
+            bp = []
+            for bn_name, bn in self.bns.items():
+                for _ in range(np.random.randint(1, 3)):
+                    recomendations = bn.generate_one_sample()
+                    bp.append((bn_name, recomendations, None))
 
+        elif mode == "main":
+            # TODO izmantojot main
+            raise NotImplemented
+
+        translations_by_bn = self.translator.back(bp)
         if self.flattener is None:
             self.flattener = Flattener()
         bp = self.flattener.back(translations_by_bn)
@@ -286,6 +290,7 @@ class MultiNetwork:
 
         other_guids_by_bn = defaultdict(set)
         other_guids_by_id = {}
+        print(guids_by_bn)
         for bn_name, list_guids, id_bp in guids_by_bn:
             if len(list_guids) > 0:
                 if id_bp is not None:
@@ -293,26 +298,28 @@ class MultiNetwork:
                 other_guids_by_bn[bn_name].update(list_guids)
 
         for bn_name, list_guids, id_bp in guids_by_bn:
-
             # looking for some BFF
-            dict_guids_bffs = {}
+            dict_guids_bffs = defaultdict(set)
             for potential_id in list_guids:
                 potential_id = potential_id.split("::")[-1]
                 if potential_id in other_guids_by_id:
-                    dict_guids_bffs[other_guids_by_id[potential_id][0]] = other_guids_by_id[potential_id][1]
+                    dict_guids_bffs[other_guids_by_id[potential_id][0]].update(other_guids_by_id[potential_id][1])
 
             dict_evidence = defaultdict(list)
             for other_bn_name, other_guids in other_guids_by_bn.items():
                 if other_bn_name != bn_name:
+                    print(111111111111111111111111111111111111111111111111111111)
+                    # print(other_guids)
 
                     # if any BFF found it gets special care
                     if other_bn_name in dict_guids_bffs:
                         list_evidence = self.translator(dict_guids_bffs[other_bn_name])
                     else:
                         list_evidence = self.translator(other_guids)
-
                     if len(list_evidence) == 0:
                         continue
+                    print(other_bn_name, list_evidence.keys())
+
                     assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
 
                     for varname, value in list_evidence[other_bn_name]:

@@ -7,7 +7,9 @@ from copy import deepcopy
 from pprint import pprint
 from re import findall
 from ast import literal_eval
-from collections import defaultdict
+from collections import defaultdict, Counter
+import os
+from Translator import Flattener
 
 def traverse_leafs(translation):
     translation_flat = deepcopy(translation)
@@ -44,6 +46,7 @@ def check_variable_names():
                 raise ValueError(f"{varname} not a note name for {bn_name}")
         # net.predict(bn_name, leafs)
 
+
 def parse_texter():
     with open("../docs/Texter.txt", "r", encoding="cp866") as conn:
         codes = conn.read().split("\n")
@@ -61,6 +64,7 @@ def parse_texter():
 
         dict_guid2stuff[a["Id"]] = a["Value"], a["Kind"]
     return dict_guid2stuff
+
 
 def validate_wrt_texter():
     dict_guid2stuff = parse_texter()
@@ -81,7 +85,6 @@ def validate_wrt_texter():
 
 
 def check_bp_flattener():
-    from Translator import Flattener
     flattener = Flattener()
     guids = flattener({
             "a": {"a1": ["a11", "a12"], "a2": ["a21", "a22"]},
@@ -107,7 +110,60 @@ def check_if_all_nets_in_main():
                     val = mbn.bns[bn_name].net.get_outcome_id(node, i)
                     assert val in main_k2v[node]
 
+
+def check_translations_or_bns_not_missing():
+    fs_trans = {os.path.basename(f).replace(".json", "") for f in glob(join(repo_dir, "translation", "*.json"))}
+    fs_bns = {os.path.basename(f).replace(".xdsl", "") for f in glob(join(repo_dir, "bayesgraphs", "*.xdsl"))}
+    # print(fs_bns.difference(fs_trans))
+    # print(fs_trans.difference(fs_bns))
+    assert fs_trans.issubset(fs_bns)
+
+def no_translation_same_key():
+    fs = sorted(glob(join(repo_dir, "translation", "*.json")))
+    counter = Counter()
+    for f in fs:
+        with open(f, "r") as conn:
+            translation = json.load(conn)
+        counter.update(translation.keys())
+    assert counter.most_common()[0][1] == 1
+
+def check_all_translationalble_guids_in_full_bp():
+    flattener = Flattener()
+    guids_by_bn = flattener(flattener.full_bp)
+    counter1 = Counter()
+    for bn_name, guids, id_bp in guids_by_bn:
+        counter1.update(guids)
+
+    assert counter1.most_common()[0][1] == 1
+
+    fs = sorted(glob(join(repo_dir, "translation", "*.json")))
+    counter2 = Counter()
+    for f in fs:
+        with open(f, "r") as conn:
+            translation = json.load(conn)
+        counter2.update(translation.keys())
+    assert counter2.most_common()[0][1] == 1
+
+    # print(sorted(set(counter1.keys()).difference(counter2.keys())))
+    # print(sorted(set(counter2.keys()).difference(counter1.keys())))
+    # exit()
+    assert counter1.keys() == counter2.keys()
+
+def check_bp_flatten_names_to_bns():
+    flattener = Flattener()
+    mbn = MultiNetwork()
+    guids_by_bn = flattener(flattener.full_bp)
+    bn_names = {_[0] for _ in guids_by_bn}
+    for bn_name in bn_names:
+        if bn_name in mbn.bns:
+            assert bn_name in flattener.bn2bp
+
+
 if __name__ == "__main__":
+    check_bp_flatten_names_to_bns()
+    no_translation_same_key()
+    check_translations_or_bns_not_missing()
+    check_all_translationalble_guids_in_full_bp()
     check_variable_names()
     validate_wrt_texter()
     check_if_all_nets_in_main()

@@ -471,6 +471,73 @@
 			<strengths>0 1</strengths>
 			<parameters>0.8 0.2 0 1 0.05000000000000004 0.95</parameters>
 		</noisymax>
+		<cpt id="num_business_segments">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<cpt id="num_public_bodies_and_ngo">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<cpt id="num_consumer_segments">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<cpt id="num_value_propositions">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<cpt id="num_channels">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<parents>num_value_propositions</parents>
+			<probabilities>0.5454545454545453 0.09090909090909088 0.09090909090909088 0.09090909090909088 0.09090909090909088 0.09090909090909127 0.09090909090909088 0.5454545454545453 0.09090909090909088 0.09090909090909088 0.09090909090909088 0.09090909090909127 0.0909090909090909 0.0909090909090909 0.5454545454545454 0.0909090909090909 0.0909090909090909 0.09090909090909094 0.0909090909090909 0.0909090909090909 0.0909090909090909 0.5454545454545454 0.0909090909090909 0.09090909090909094 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.5454545454545455 0.09090909090909083 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.5454545454545454</probabilities>
+		</cpt>
+		<cpt id="keep_customer_relationship_mechanism">
+			<state id="word_of_mouth" />
+			<state id="ads_and_commercials" />
+			<state id="printed_promotional_informative_materials" />
+			<state id="other" />
+			<probabilities>0.25 0.25 0.25 0.25</probabilities>
+		</cpt>
+		<cpt id="new_customer_relationship_mechanism">
+			<state id="word_of_mouth" />
+			<state id="ads_and_commercials" />
+			<state id="printed_promotional_informative_materials" />
+			<state id="other" />
+			<probabilities>0.25 0.25 0.25 0.25</probabilities>
+		</cpt>
+		<cpt id="spend_more_customer_relationship_mechanism">
+			<state id="word_of_mouth" />
+			<state id="ads_and_commercials" />
+			<state id="printed_promotional_informative_materials" />
+			<state id="other" />
+			<probabilities>0.25 0.25 0.25 0.25</probabilities>
+		</cpt>
 	</nodes>
 	<extensions>
 		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="main">
@@ -479,518 +546,518 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>394 87 521 127</position>
+				<position>414 87 541 127</position>
 			</node>
 			<node id="type_services">
 				<name>type_services</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>488 135 615 175</position>
+				<position>508 135 635 175</position>
 			</node>
 			<node id="company_size_small">
 				<name>company_size_small</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>63 73 243 113</position>
+				<position>83 73 263 113</position>
 			</node>
 			<node id="company_size_medium">
 				<name>company_size_medium</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>80 134 253 182</position>
+				<position>100 134 273 182</position>
 			</node>
 			<node id="company_size_large">
 				<name>company_size_large</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>85 194 271 234</position>
+				<position>105 194 291 234</position>
 			</node>
 			<node id="bus_geo_location_domestic">
 				<name>bus_geo_location_domestic</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>749 215 990 260</position>
+				<position>769 215 1010 260</position>
 			</node>
 			<node id="bus_geo_location_foreign_rural">
 				<name>bus_geo_location_foreign_rural</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>694 265 952 310</position>
+				<position>714 265 972 310</position>
 			</node>
 			<node id="bus_geo_location_foreign_urban">
 				<name>bus_geo_location_foreign_urban</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>660 314 912 359</position>
+				<position>680 314 932 359</position>
 			</node>
 			<node id="bus_geo_location_foreign">
 				<name>bus_geo_location_foreign</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>549 355 798 400</position>
+				<position>569 355 818 400</position>
 			</node>
 			<node id="bus_geo_location_domestic_rural">
 				<name>bus_geo_location_domestic_rural</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>473 404 730 449</position>
+				<position>493 404 750 449</position>
 			</node>
 			<node id="bus_geo_location_domestic_urban">
 				<name>bus_geo_location_domestic_urban</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>453 452 717 497</position>
+				<position>473 452 737 497</position>
 			</node>
 			<node id="channel">
 				<name>channel</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1228 205 1368 229</position>
+				<position>1133 215 1273 239</position>
 			</node>
 			<node id="direct_sales">
 				<name>direct_sales</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1390 110 1461 154</position>
+				<position>1295 120 1366 164</position>
 			</node>
 			<node id="own_shop_type">
 				<name>own_shop_type</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1496 180 1648 221</position>
+				<position>1401 190 1553 231</position>
 			</node>
 			<node id="store_location">
 				<name>store_location</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1670 157 1856 181</position>
+				<position>1575 167 1761 191</position>
 			</node>
 			<node id="distribution_channels_self_pickup">
 				<name>distribution_channels_self_pickup</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1346 273 1576 306</position>
+				<position>1251 283 1481 316</position>
 			</node>
 			<node id="distribution_channels_delivery_to_home">
 				<name>distribution_channels_delivery_to_home</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1277 352 1526 395</position>
+				<position>1182 362 1431 405</position>
 			</node>
 			<node id="distrubution_channels_courier_service">
 				<name>distrubution_channels_courier_service</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1457 417 1722 457</position>
+				<position>1362 427 1627 467</position>
 			</node>
 			<node id="distribution_channels_own_delivery">
 				<name>distribution_channels_own_delivery</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1730 255 1984 300</position>
+				<position>1635 265 1889 310</position>
 			</node>
 			<node id="distribution_channels_to_the_email">
 				<name>distribution_channels_to_the_email</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1716 342 1936 389</position>
+				<position>1621 352 1841 399</position>
 			</node>
 			<node id="age_under_12">
 				<name>age_under_12</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>976 845 1113 869</position>
+				<position>996 845 1133 869</position>
 			</node>
 			<node id="age_35_64">
 				<name>age_35_64</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>984 1120 1121 1144</position>
+				<position>1004 1120 1141 1144</position>
 			</node>
 			<node id="age_25_34">
 				<name>age_25_34</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1077 1049 1214 1073</position>
+				<position>1097 1049 1234 1073</position>
 			</node>
 			<node id="age_18_24">
 				<name>age_18_24</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1096 984 1233 1008</position>
+				<position>1116 984 1253 1008</position>
 			</node>
 			<node id="age_12_17">
 				<name>age_12_17</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1086 912 1223 936</position>
+				<position>1106 912 1243 936</position>
 			</node>
 			<node id="age_65_74">
 				<name>age_65_74</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>818 1116 955 1140</position>
+				<position>838 1116 975 1140</position>
 			</node>
 			<node id="age_75_over">
 				<name>age_75_over</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>738 1052 875 1076</position>
+				<position>758 1052 895 1076</position>
 			</node>
 			<node id="gender_male">
 				<name>gender_male</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>38 787 169 822</position>
+				<position>58 787 189 822</position>
 			</node>
 			<node id="gender_female">
 				<name>gender_female</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>16 907 147 942</position>
+				<position>36 907 167 942</position>
 			</node>
 			<node id="has_children">
 				<name>has_children</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1309 984 1449 1018</position>
+				<position>1329 984 1469 1018</position>
 			</node>
 			<node id="education_primary">
 				<name>education_primary</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>562 661 704 687</position>
+				<position>582 661 724 687</position>
 			</node>
 			<node id="education_secondary">
 				<name>education_secondary</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>707 695 868 721</position>
+				<position>727 695 888 721</position>
 			</node>
 			<node id="education_higher">
 				<name>education_higher</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>621 771 755 797</position>
+				<position>641 771 775 797</position>
 			</node>
 			<node id="income_low">
 				<name>income_low</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>362 794 465 819</position>
+				<position>382 794 485 819</position>
 			</node>
 			<node id="income_high">
 				<name>income_high</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>351 954 454 979</position>
+				<position>371 954 474 979</position>
 			</node>
 			<node id="income_medium">
 				<name>income_medium</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>200 848 327 873</position>
+				<position>220 848 347 873</position>
 			</node>
 			<node id="geo_location_domestic">
 				<name>geo_location_domestic</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>537 1198 687 1228</position>
+				<position>557 1198 707 1228</position>
 			</node>
 			<node id="geo_location_foreign_rural">
 				<name>geo_location_foreign_rural</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>516 1079 724 1109</position>
+				<position>536 1079 744 1109</position>
 			</node>
 			<node id="geo_location_foreign_urban">
 				<name>geo_location_foreign_urban</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>503 1138 725 1168</position>
+				<position>523 1138 745 1168</position>
 			</node>
 			<node id="geo_location_foreign">
 				<name>geo_location_foreign</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>505 1108 723 1138</position>
+				<position>525 1108 743 1138</position>
 			</node>
 			<node id="geo_location_domestic_rural">
 				<name>geo_location_domestic_rural</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>510 1047 727 1077</position>
+				<position>530 1047 747 1077</position>
 			</node>
 			<node id="geo_location_domestic_urban">
 				<name>geo_location_domestic_urban</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>507 1168 721 1198</position>
+				<position>527 1168 741 1198</position>
 			</node>
 			<node id="type_international">
 				<name>type_international</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>130 478 329 518</position>
+				<position>150 478 349 518</position>
 			</node>
 			<node id="type_national">
 				<name>type_national</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>122 527 321 567</position>
+				<position>142 527 341 567</position>
 			</node>
 			<node id="type_municipality">
 				<name>type_municipality</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>113 571 312 611</position>
+				<position>133 571 332 611</position>
 			</node>
 			<node id="type_ngo">
 				<name>type_ngo</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>109 615 308 655</position>
+				<position>129 615 328 655</position>
 			</node>
 			<node id="product_type">
 				<name>product_type</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1623 818 1724 859</position>
+				<position>1376 842 1477 883</position>
 			</node>
 			<node id="price_level">
 				<name>price_level</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2100 729 2186 769</position>
+				<position>1853 753 1939 793</position>
 			</node>
 			<node id="income_source_non_time_limited_usage">
 				<name>income_source_non_time_limited_usage</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1623 616 1858 650</position>
+				<position>1376 640 1611 674</position>
 			</node>
 			<node id="income_source_additional_functions">
 				<name>income_source_additional_functions</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1607 571 1868 609</position>
+				<position>1360 595 1621 633</position>
 			</node>
 			<node id="income_source_paid_plans">
 				<name>income_source_paid_plans</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1632 696 1848 724</position>
+				<position>1385 720 1601 748</position>
 			</node>
 			<node id="income_source_different_price_for_business">
 				<name>income_source_different_price_for_business</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2130 880 2357 911</position>
+				<position>1883 904 2110 935</position>
 			</node>
 			<node id="income_source_different_price_for_individuals">
 				<name>income_source_different_price_for_individuals</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1751 769 2076 806</position>
+				<position>1504 793 1829 830</position>
 			</node>
 			<node id="income_source_fees_come_from_another_product">
 				<name>income_source_fees_come_from_another_product</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1751 895 2069 931</position>
+				<position>1504 919 1822 955</position>
 			</node>
 			<node id="income_source_other">
 				<name>income_source_other</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1626 657 1838 684</position>
+				<position>1379 681 1591 708</position>
 			</node>
 			<node id="product_features_is_a_fundamentally_new_product_or_serivce">
 				<name>product_features_is_a_fundamentally_new_product_or_serivce</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2158 572 2539 610</position>
+				<position>1911 596 2292 634</position>
 			</node>
 			<node id="product_features_is_an_improvement_of_an_existing_product_or_service">
 				<name>product_features_is_an_improvement_of_an_existing_product_or_service</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2858 988 3178 1015</position>
+				<position>2611 1012 2931 1039</position>
 			</node>
 			<node id="product_features_has_a_different_visual_design">
 				<name>product_features_has_a_different_visual_design</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2654 922 2974 950</position>
+				<position>2407 946 2727 974</position>
 			</node>
 			<node id="product_features_is_the_result_of_r_d">
 				<name>product_features_is_the_result_of_r_d</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2278 729 2564 766</position>
+				<position>2031 753 2317 790</position>
 			</node>
 			<node id="product_features_has_a_new_set_of_features">
 				<name>product_features_has_a_new_set_of_features</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2635 660 2918 693</position>
+				<position>2388 684 2671 717</position>
 			</node>
 			<node id="product_features_aims_to_set_a_trend">
 				<name>product_features_aims_to_set_a_trend</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2372 844 2685 874</position>
+				<position>2125 868 2438 898</position>
 			</node>
 			<node id="product_features_has_an_improved_poduction_delivery_process">
 				<name>product_features_has_an_improved_poduction_delivery_process</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1979 622 2368 664</position>
+				<position>1732 646 2121 688</position>
 			</node>
 			<node id="product_features_is_exclusive">
 				<name>product_features_is_exclusive</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2349 909 2568 942</position>
+				<position>2102 933 2321 966</position>
 			</node>
 			<node id="product_features_is_more_comfortable_usable">
 				<name>product_features_is_more_comfortable_usable</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2473 983 2730 1011</position>
+				<position>2226 1007 2483 1035</position>
 			</node>
 			<node id="product_features_is_more_user_friendly">
 				<name>product_features_is_more_user_friendly</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2171 1010 2445 1043</position>
+				<position>1924 1034 2198 1067</position>
 			</node>
 			<node id="product_features_is_safer_to_use">
 				<name>product_features_is_safer_to_use</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2867 830 3166 867</position>
+				<position>2620 854 2919 891</position>
 			</node>
 			<node id="product_features_is_more_durable">
 				<name>product_features_is_more_durable</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3015 768 3275 801</position>
+				<position>2768 792 3028 825</position>
 			</node>
 			<node id="product_features_is_a_niche">
 				<name>product_features_is_a_niche</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1905 975 2154 1012</position>
+				<position>1658 999 1907 1036</position>
 			</node>
 			<node id="product_features_is_more_eco_friendly">
 				<name>product_features_is_more_eco_friendly</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1795 441 2127 472</position>
+				<position>1700 451 2032 482</position>
 			</node>
 			<node id="product_features_is_more_adaptive_versatile">
 				<name>product_features_is_more_adaptive_versatile</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3030 893 3325 930</position>
+				<position>3050 893 3345 930</position>
 			</node>
 			<node id="product_features_is_mote_customisable">
 				<name>product_features_is_mote_customisable</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2612 595 2935 629</position>
+				<position>2365 619 2688 653</position>
 			</node>
 			<node id="product_features_is_a_different_variant_of_a_current_product">
 				<name>product_features_is_a_different_variant_of_a_current_product</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2561 772 2909 813</position>
+				<position>2314 796 2662 837</position>
 			</node>
 			<node id="geo_location_transnational">
 				<name>geo_location_transnational</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>504 1228 717 1262</position>
+				<position>524 1228 737 1262</position>
 			</node>
 			<node id="nace">
 				<name>nace</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1882 83 2079 123</position>
+				<position>1787 93 1984 133</position>
 				<defcomment row="0" col="0">Agriculture, forestry and fishing</defcomment>
 				<defcomment row="1" col="0">Mining and quarrying</defcomment>
 				<defcomment row="2" col="0">Manufacturing</defcomment>
@@ -1012,6 +1079,62 @@
 				<defcomment row="18" col="0">Other services activities</defcomment>
 				<defcomment row="19" col="0">Activities of households as employers; undifferentiated goods-and services-producing activities of households for own use</defcomment>
 				<defcomment row="20" col="0">Activities of extraterritorial organisations and bodies</defcomment>
+			</node>
+			<node id="num_business_segments">
+				<name>num_business_segments</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2448 163 2694 211</position>
+			</node>
+			<node id="num_public_bodies_and_ngo">
+				<name>num_public_bodies_and_ngo</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2264 204 2510 252</position>
+			</node>
+			<node id="num_consumer_segments">
+				<name>num_consumer_segments</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2263 126 2509 174</position>
+			</node>
+			<node id="num_channels">
+				<name>num_channels</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2514 227 2760 275</position>
+			</node>
+			<node id="num_value_propositions">
+				<name>num_value_propositions</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2318 285 2564 333</position>
+			</node>
+			<node id="keep_customer_relationship_mechanism">
+				<name>keep_customer_relationship_mechanism</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3027 148 3240 176</position>
+			</node>
+			<node id="new_customer_relationship_mechanism">
+				<name>new_customer_relationship_mechanism</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3031 183 3244 211</position>
+			</node>
+			<node id="spend_more_customer_relationship_mechanism">
+				<name>spend_more_customer_relationship_mechanism</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3032 218 3245 246</position>
 			</node>
 		</genie>
 	</extensions>

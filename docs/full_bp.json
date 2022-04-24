@@ -1,10 +1,6 @@
 {
 	"plan":
 	{
-	"nace":"00000000-0000-0000-0000-000000000000",
-	"language":"00000000-0000-0000-0000-000000000000",
-	"country":"00000000-0000-0000-0000-000000000000",
-
 	"custSegs":
 	{
 		"consumer":
@@ -37,17 +33,22 @@
 			"prodType": ["c64ed84d-db99-4a25-95f1-79bb99fa6936", "3f2faea5-f8f6-43b4-80f2-db55874a5c4b"],
 			"priceLevel":  ["3325759e-8add-4b30-a00c-10ce7fbbd330", "4261a424-6b58-467c-a5da-1844827950b5", "1245994e-b52c-4c9a-9060-8c4856742197", "10f4eb49-006c-4f56-89d4-fb1743313707"],
 			"addIncomeSource":  ["87ffbf10-1f99-4d0b-ae5a-202736ed5a4e", "085df303-2e4d-4dd0-9e9f-204085352597", "75bcee28-686d-47e6-82b2-5c2a32168377", "95f441a5-2f4e-4c6e-93e7-5e18cbe26749", "67cdf9e6-acc0-404a-a189-78325e83f547", "93916775-80bd-4355-bfda-907e8a737cbe", "fe928bb7-8ef0-4f01-b40b-f7da62c1c084"],
-			"productFeatures": ["2984418a-638e-4da9-be1d-12ba94d8ffaf", "d39c0155-1419-4a48-962f-2e42d5aca11b", "f2424d76-d25a-430a-ab55-3c0480a1f56c", "bdf69fe7-c3e3-44e1-a984-41041ea08e96", "adcdc439-8170-4fab-a70d-457c1b98bc92", "8f79391b-d687-4515-9292-5b4958ef0589", "0ff6b626-a1ff-4184-b1bb-5bf2992091bd", "58b41b4d-da41-4f9b-9cec-5da895a0b502", "f9862c29-9a20-4cbe-8fa2-5e1660f6b8da", "4cb290b2-7fbc-4846-be7b-79f9e3efbb46", "aae57ccf-f33c-4a0e-925a-7a65d8ca171e", "96f638ad-c41f-492f-982a-7f4018bcb3a6", "ae7c712d-f780-429f-aed6-87509c0bc43c", "07d5452f-6ea6-4ae6-9395-89fd1d0eeab0", "7da1cdc9-d7e4-4234-b31b-9e0570e5e9c6", "49ac2e9c-ecbb-4a14-aa35-a35efb4ff919", "cf6361ec-886e-4b0a-b53b-af9a477f334b", "121f0a92-8b35-4890-8384-b66f48db9ac5", "7baa945c-4bcb-46b9-8e95-c72fe5b49778", "2ad13e8d-672f-4eb7-87eb-ca33891eeffb", "b00a4df7-4b4e-41b6-a2ac-cabf1e75ce5d", "5eb6013b-0cca-4f89-b39d-e711477a972f", "dfe881a2-cd69-4295-a16a-edfb2c8fc0bf", "5365d22f-9372-4471-baab-f1175d25ae0f", "187d8314-5350-4f30-a68c-fde38021a178"]
+			"productFeatures": ["2984418a-638e-4da9-be1d-12ba94d8ffaf", "d39c0155-1419-4a48-962f-2e42d5aca11b", "bdf69fe7-c3e3-44e1-a984-41041ea08e96", "adcdc439-8170-4fab-a70d-457c1b98bc92", "0ff6b626-a1ff-4184-b1bb-5bf2992091bd", "f9862c29-9a20-4cbe-8fa2-5e1660f6b8da", "4cb290b2-7fbc-4846-be7b-79f9e3efbb46", "aae57ccf-f33c-4a0e-925a-7a65d8ca171e", "96f638ad-c41f-492f-982a-7f4018bcb3a6", "ae7c712d-f780-429f-aed6-87509c0bc43c", "07d5452f-6ea6-4ae6-9395-89fd1d0eeab0", "49ac2e9c-ecbb-4a14-aa35-a35efb4ff919", "121f0a92-8b35-4890-8384-b66f48db9ac5", "7baa945c-4bcb-46b9-8e95-c72fe5b49778", "5eb6013b-0cca-4f89-b39d-e711477a972f", "dfe881a2-cd69-4295-a16a-edfb2c8fc0bf", "5365d22f-9372-4471-baab-f1175d25ae0f"]
 		}
 	],
 		"channels": [
 			{
 				"channelType": ["3c81ac65-960e-44aa-b752-17808fa31c1f", "b0cb1000-5a92-47a0-a45b-499c5f580524", "e1915d59-a5a4-43bd-a5db-7c8ab320371a", "d57d1d34-e721-4d46-a5f4-a3f9e7d3a198", "97070765-ae68-4bb1-9b50-d99761807ef4"],
-				"channelSubtype": ["df0fa10f-05df-485a-9f90-aaae6cc11ebc", "91d5edff-f361-47aa-8d3c-b420681dcd5e", "c6a66809-c479-4563-95df-cb9396c37e35", "c06464ec-0248-4964-b09a-dd6fd7c6cc17"],
+				"channelSubtype": ["df0fa10f-05df-485a-9f90-aaae6cc11ebc", "91d5edff-f361-47aa-8d3c-b420681dcd5e", "c06464ec-0248-4964-b09a-dd6fd7c6cc17"],
 				"subtypeType": ["4152d046-a8a2-4adc-a6b3-b2de8c3cafbf", "65c4d434-7f22-44ce-b9a3-c9681ff199a8"],
 				"locationType": ["404d16aa-f0f7-452a-88ce-13109e57724a", "3fe4a8e4-daa1-4edb-a209-2d9f6f9ced35", "a82e9156-c03c-4815-80ca-35508e2371ad", "2e4ee3fe-7f1b-4105-b37e-c1ee4d8d4d40"],
 				"distributionChannels": ["e8f6e9d6-0e37-4182-9c47-33c9d119ac73", "ee238326-5d11-4531-92b0-6565f42ae874", "b2706a04-d62f-4103-ae40-6b5868029c73", "7ace64a6-77c6-44de-a675-78ff13ca0859", "f90efa9d-ff68-4fe7-b6b3-bf55850f7437", "6dad8d59-0786-43e5-98a6-dd6d4fdc7688"]
 			}
-		]
+		],
+		"custRelationship": {
+			"convCust": [{"action": ["bf6b3a07-2578-4ab2-8ca8-21209388c38e", "ce619ee3-d636-497f-8238-2ac9c9e79b49", "fd203ec9-9519-4adb-8c98-314cab2b4689", "2fc70a56-27b6-442b-938c-9c13fb36e316"]}],
+			"getCust": [{"action": ["bf6b3a07-2578-4ab2-8ca8-21209388c38e", "ce619ee3-d636-497f-8238-2ac9c9e79b49", "fd203ec9-9519-4adb-8c98-314cab2b4689", "2fc70a56-27b6-442b-938c-9c13fb36e316"]}],
+			"keepCust": [{"action": ["bf6b3a07-2578-4ab2-8ca8-21209388c38e", "ce619ee3-d636-497f-8238-2ac9c9e79b49", "fd203ec9-9519-4adb-8c98-314cab2b4689", "2fc70a56-27b6-442b-938c-9c13fb36e316"]}]
+		}
 	}
 }

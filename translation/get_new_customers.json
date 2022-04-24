@@ -1,0 +1,6 @@
+{
+  "plan::custRelationship::getCust::action::2fc70a56-27b6-442b-938c-9c13fb36e316": {"Word of Mouth:kind40": [{"new_customer_relationship_mechanism": "word_of_mouth"}]},
+  "plan::custRelationship::getCust::action::ce619ee3-d636-497f-8238-2ac9c9e79b49": {"Ads and Commercials:kind40": [{"new_customer_relationship_mechanism": "ads_and_commercials"}]},
+  "plan::custRelationship::getCust::action::fd203ec9-9519-4adb-8c98-314cab2b4689": {"Printed Promotional/informative materials:kind40": [{"new_customer_relationship_mechanism": "printed_promotional_informative_materials"}]},
+  "plan::custRelationship::getCust::action::bf6b3a07-2578-4ab2-8ca8-21209388c38e": {"Other:kind40": [{"new_customer_relationship_mechanism": "other"}]}
+}
