@@ -203,6 +203,7 @@ def is_bps_identical(bp1, bp2, flattener=None):
             return False
     return True
 
+
 class Translator:
     def __init__(self):
         fs = sorted(glob(join(repo_dir, "translation", "*.json")))
@@ -215,10 +216,10 @@ class Translator:
 
             for guid, trans in translation.items():
                 for _, kw_dicts in trans.items():
-                    pairs = []
+                    pairs = set()
                     for kw_dict in kw_dicts:
                         for varname, value in kw_dict.items():
-                            pairs.append((varname, value))
+                            pairs.add((varname, value))
                     self.lookup[guid] = (bn_name, pairs)
 
         self.inverse_lookup = defaultdict(lambda: defaultdict(list))
@@ -241,9 +242,8 @@ class Translator:
         guids_by_bn = []
         for bn_name0, values0, id_bp in bp:
             guids = []
-            for guid, (bn_name, values) in self.lookup.items():
+            for guid, (bn_name, necessary_condition) in self.lookup.items():
                 if bn_name == bn_name0:
-                    necessary_condition = {*values}
                     if necessary_condition.issubset(values0):
                         guids.append(guid)
             guids_by_bn.append((bn_name0, guids, id_bp))

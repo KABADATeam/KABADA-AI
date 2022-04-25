@@ -1,5 +1,5 @@
 {
   "channels": [
-    {"value_propositions": "1_to_n"}
+    {"value_propositions": ["1_to_n", "products"]}
   ]
 }

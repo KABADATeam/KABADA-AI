@@ -8,11 +8,14 @@ import smile_licence.pysmile_license
 from config import net_dir, epsilon, path_temp_data_file
 from collections import Counter
 import logging
+import json
 from copy import deepcopy
 from pprint import pprint
+from uuid import uuid4
 from itertools import chain
 from Translator import Translator, Flattener
 from BeamSearch import beam_search
+from config import repo_dir
 
 
 class BayesNetwork:
@@ -206,15 +209,33 @@ class BayesNetwork:
 
 
 class MultiNetwork:
-    def __init__(self, translator=None, tresh_yes=0.5):
+    def __init__(self, translator=None, tresh_yes=0.5, flattener=None):
         self.tresh_yes = tresh_yes
-        self.translator = Translator()
-        self.flattener = None
+
+        self.translator = translator
+        if translator is None:
+            self.translator = Translator()
+
+        self.flattener = flattener
+        if flattener is None:
+            self.flattener = Flattener()
+
         self.bns = {}
         self.random_variables_2_predict = {}
+        self.sampling_order = ["value_propositions", "consumer_segments", "business_segments", "public_bodies_and_ngo",
+            "channels", "get_new_customers", "keep_customers", "convince_existing_to_spend_more"]
+
+        with open(join(repo_dir, "docs", "sub_bn_relations.json"), "r") as conn:
+            self.sub_bn_relations = json.load(conn)
+            for child in list(self.sub_bn_relations.keys()):
+                relations = {}
+                for kw in self.sub_bn_relations[child]:
+                    for parent, relation in kw.items():
+                        relations[parent] = relation
+                self.sub_bn_relations[child] = relations
 
         if translator is not None:
-            self.random_variables_2_predict = {bn_name: [_ for _ in vars.keys() if _!="is_added"] for bn_name, vars in translator.inverse_lookup.items()}
+            self.random_variables_2_predict = {bn_name: [_ for _ in vars.keys() if _ != "is_added"] for bn_name, vars in translator.inverse_lookup.items()}
 
         for bn_name in self.translator.inverse_lookup.keys():
             self.add_net(bn_name)
@@ -267,7 +288,7 @@ class MultiNetwork:
                     self.bns[bn_name].learn(path_temp_data_file)
                 self.bns[bn_name].net.write_file(f"{net_dir}/trained_graphs/{bn_name}_trained.xdsl")
 
-    def sample_all(self, mode="seperately"):
+    def sample_all(self, mode="main"):
         if mode == "seperately":
             bp = []
             for bn_name, bn in self.bns.items():
@@ -276,20 +297,63 @@ class MultiNetwork:
                     bp.append((bn_name, recomendations, None))
 
         elif mode == "main":
-            # TODO izmantojot main
-            raise NotImplemented
+            bp = []
+            # TODO samplot nace
 
-        translations_by_bn = self.translator.back(bp)
-        if self.flattener is None:
-            self.flattener = Flattener()
-        bp = self.flattener.back(translations_by_bn)
+            # sagjeneree guids_by_bn formaa
+            for bn_name in self.sampling_order:
+                num_node_name = "num_" + bn_name
+                if not self.bns['main'].net.is_value_valid(num_node_name):
+                    self.bns['main'].net.update_beliefs()
+                probs = self.bns['main'].net.get_node_value(num_node_name)
+
+                i = np.digitize(np.random.uniform(), np.cumsum(probs))
+                outcome = self.bns['main'].net.get_outcome_id(num_node_name, i)
+                outcome = outcome.replace("num", "")
+                n = int(5 if outcome == "_more" else outcome)
+
+                if bn_name in self.sub_bn_relations:
+                    dict_parents_by_name = defaultdict(list)
+                    for parent, _ in self.sub_bn_relations[bn_name].items():
+                        for bn_name1, list_guids, id_bp in bp:
+                            if bn_name1 == parent:
+                                dict_parents_by_name[parent].append(id_bp)
+
+                    bp_new = []
+                    if len(dict_parents_by_name) > 0:
+                        for parent, id_bps in dict_parents_by_name.items():
+                            relation_type, field_name = self.sub_bn_relations[bn_name][parent]
+                            field_name = f"{self.flattener.bn2bp[bn_name]}::{field_name}"
+                            if relation_type == "1_to_n":
+                                n = int(np.clip(n, 1, len(id_bps)))
+                                a = 0
+                                for i in range(n):
+                                    b = a + (len(id_bps) // n) + int((len(id_bps) % n) > i)
+                                    bp_new.append((bn_name,
+                                                   [f"{field_name}::{id_bp}" for id_bp in id_bps[a:b]],
+                                                   str(uuid4())))
+                                    a = b
+                            elif self.sub_bn_relations[bn_name][parent] == "1_to_1":
+                                raise NotImplemented
+                            elif self.sub_bn_relations[bn_name][parent] == "n_to_1":
+                                raise NotImplemented
+                            else:
+                                raise ValueError
+                else:
+                    bp_new = [(bn_name, [], str(uuid4())) for _ in range(n)]
+                bp_monte_carlo = self.predict_all(bp + bp_new, flag_noisy=True, target_bns=[bn_name])
+                for i in range(len(bp_new)):
+                    bn_name, list_parent_ids, id_bp = bp_new[i]
+                    _, list_guids, _ = bp_monte_carlo[i]
+                    bp_new[i] = bn_name, list_parent_ids + list_guids, id_bp
+                bp.extend((_ for _ in bp_new if len(_[1]) > 0))
+                # bp.extend(bp_new)
         return bp
 
-    def predict_all(self, guids_by_bn, location=None):
+    def predict_all(self, guids_by_bn, flag_noisy=False, target_bns=None):
         bp = []
-
-        other_guids_by_bn = defaultdict(set)
         other_guids_by_id = {}
+        other_guids_by_bn = defaultdict(set)
         for bn_name, list_guids, id_bp in guids_by_bn:
             if len(list_guids) > 0:
                 if id_bp is not None:
@@ -297,6 +361,12 @@ class MultiNetwork:
                 other_guids_by_bn[bn_name].update(list_guids)
 
         for bn_name, list_guids, id_bp in guids_by_bn:
+            if bn_name not in self.bns:
+                continue
+            if target_bns is not None:
+                if bn_name not in target_bns:
+                    continue
+
             # looking for some BFF
             dict_guids_bffs = defaultdict(set)
             for potential_id in list_guids:
@@ -326,20 +396,20 @@ class MultiNetwork:
                 self.bns["main"].add_evidence(varname, values, flag_update_beliefs=False)
 
             list_evidence = self.translator(list_guids)
-            if len(list_evidence) == 0:
-                if bn_name in self.bns:
-                    recomendations = self.bns[bn_name].generate_one_sample()
-                    bp.append((bn_name, recomendations, id_bp))
-                continue
-            assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
-
+            # print(1111111, bn_name, len(list_evidence))
+            # if len(list_evidence) == 0:
+            #     if bn_name in self.bns:
+            #         # TODO this is not conditioned on rest of the main
+            #         recomendations = self.bns[bn_name].generate_one_sample()
+            #         bp.append((bn_name, recomendations, id_bp))
+            #     continue
+            assert len(list_evidence) <= 1, "pa tiikliem tika sadaliits ar flattener"
             list_evidence = list_evidence[bn_name]
             target_names = {*self.bns[bn_name].get_node_names()}
-
-            recomendations = {*self.bns["main"].predict_popup(list_evidence, targets=target_names)}
+            recomendations = {*self.bns["main"].predict_popup(list_evidence, targets=target_names, flag_noisy=flag_noisy)}
 
             bp.append((bn_name, recomendations, id_bp))
-            self.bns[bn_name].clear_evidence()
+            self.bns["main"].clear_evidence()
 
         translations_by_bn = self.translator.back(bp)
         return translations_by_bn
@@ -370,8 +440,11 @@ if __name__ == "__main__":
         print(recomendations_by_bn)
 
     def generate_bn_sample():
-        net = BayesNetwork(join(net_dir, "consumer_segments.xdsl"))
-        net.generate_one_sample()
+        mnt = MultiNetwork()
+        for _ in range(100):
+            translations_by_bn = mnt.sample_all()
+            bp = mnt.flattener.back(translations_by_bn)
+        pprint(bp)
         exit()
 
     def single_bn_train_test():
@@ -407,5 +480,5 @@ if __name__ == "__main__":
         exit()
 
     check_recomendation_generation()
-    # generate_bn_sample()
+    generate_bn_sample()
     # single_bn_train_test()

@@ -41,13 +41,13 @@ def predict():
         id_bp = json['plan']['businessPlan_id']
         logging.info(f"received business plan with id {id_bp}")
         if id_session not in dict_sessions:
-            dict_sessions[id_session] = MultiNetwork()
+            dict_sessions[id_session] = MultiNetwork(translator=translator, flattener=flattener)
 
         guids_by_bn = flattener(json, flag_generate_plus_one=True)
 
         logging.info('received num %s bns idetified', len(guids_by_bn))
 
-        recomendations_by_bn = dict_sessions[id_session].predict_all(guids_by_bn, location=location)
+        recomendations_by_bn = dict_sessions[id_session].predict_all(guids_by_bn)
 
         bp = flattener.back(recomendations_by_bn)
 

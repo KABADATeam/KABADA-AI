@@ -499,23 +499,21 @@
 			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
 		</cpt>
 		<cpt id="num_value_propositions">
-			<state id="num0" />
 			<state id="num1" />
 			<state id="num2" />
 			<state id="num3" />
 			<state id="num4" />
 			<state id="num_more" />
-			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+			<probabilities>0.2 0.2 0.2 0.2 0.2000000000000001</probabilities>
 		</cpt>
 		<cpt id="num_channels">
-			<state id="num0" />
 			<state id="num1" />
 			<state id="num2" />
 			<state id="num3" />
 			<state id="num4" />
 			<state id="num_more" />
 			<parents>num_value_propositions</parents>
-			<probabilities>0.5454545454545453 0.09090909090909088 0.09090909090909088 0.09090909090909088 0.09090909090909088 0.09090909090909127 0.09090909090909088 0.5454545454545453 0.09090909090909088 0.09090909090909088 0.09090909090909088 0.09090909090909127 0.0909090909090909 0.0909090909090909 0.5454545454545454 0.0909090909090909 0.0909090909090909 0.09090909090909094 0.0909090909090909 0.0909090909090909 0.0909090909090909 0.5454545454545454 0.0909090909090909 0.09090909090909094 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.5454545454545455 0.09090909090909083 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.09090909090909091 0.5454545454545454</probabilities>
+			<probabilities>0.5999999999999998 0.09999999999999996 0.09999999999999996 0.09999999999999996 0.1000000000000003 0.09999999999999998 0.5999999999999999 0.09999999999999998 0.09999999999999998 0.1000000000000002 0.09999999999999999 0.09999999999999999 0.6 0.09999999999999999 0.1000000000000001 0.1 0.1 0.1 0.6000000000000001 0.09999999999999987 0.1 0.1 0.1 0.1 0.6</probabilities>
 		</cpt>
 		<cpt id="keep_customer_relationship_mechanism">
 			<state id="word_of_mouth" />
@@ -537,6 +535,33 @@
 			<state id="printed_promotional_informative_materials" />
 			<state id="other" />
 			<probabilities>0.25 0.25 0.25 0.25</probabilities>
+		</cpt>
+		<cpt id="num_convince_existing_to_spend_more">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<cpt id="num_get_new_customers">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<cpt id="num_keep_customers">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
 		</cpt>
 	</nodes>
 	<extensions>
@@ -1085,7 +1110,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2448 163 2694 211</position>
+				<position>2472 117 2718 165</position>
 			</node>
 			<node id="num_public_bodies_and_ngo">
 				<name>num_public_bodies_and_ngo</name>
@@ -1099,7 +1124,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2263 126 2509 174</position>
+				<position>2177 118 2423 166</position>
 			</node>
 			<node id="num_channels">
 				<name>num_channels</name>
@@ -1135,6 +1160,27 @@
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
 				<position>3032 218 3245 246</position>
+			</node>
+			<node id="num_convince_existing_to_spend_more">
+				<name>num_convince_existing_to_spend_more</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2529 329 2819 365</position>
+			</node>
+			<node id="num_get_new_customers">
+				<name>num_get_new_customers</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2325 368 2612 408</position>
+			</node>
+			<node id="num_keep_customers">
+				<name>num_keep_customers</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2567 405 2850 444</position>
 			</node>
 		</genie>
 	</extensions>

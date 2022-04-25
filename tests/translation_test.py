@@ -159,7 +159,23 @@ def check_bp_flatten_names_to_bns():
             assert bn_name in flattener.bn2bp
 
 
+def check_sub_bn_cnts():
+    mbn = MultiNetwork()
+    node_names = {*mbn.bns['main'].get_node_names()}
+    for bn_name in mbn.bns:
+        if bn_name != "main":
+            assert "num_" + bn_name in node_names
+            assert bn_name in mbn.sampling_order
+
+    for child, parents in mbn.sub_bn_relations.items():
+        i_child = mbn.sampling_order.index(child)
+        for parent, relation in parents.items():
+            i_parent = mbn.sampling_order.index(parent)
+            assert i_child > i_parent
+
+
 if __name__ == "__main__":
+    check_sub_bn_cnts()
     check_bp_flatten_names_to_bns()
     no_translation_same_key()
     check_translations_or_bns_not_missing()
