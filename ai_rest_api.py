@@ -66,10 +66,10 @@ def learn():
         logging.info('receive_status == success')
         json = request.json
 
-        id_session = json['plan']['learningSessionId']
-        is_first = json['plan']['isFirst']
-        is_last = json['plan']['isLast']
-        logging.info(f"id_session={id_session}, is_first={is_first}, is_last={is_last}")
+        # id_session = json['plan']['learningSessionId']
+        # is_first = json['plan']['isFirst']
+        # is_last = json['plan']['isLast']
+        # logging.info(f"id_session={id_session}, is_first={is_first}, is_last={is_last}")
         return {'receive_status': 'success'}
     else:
         logging.info('receive_status == failed')
@@ -78,9 +78,9 @@ def learn():
 
 if __name__ == "__main__":
 
-    # if os.path.exists(path_pid):
-    #     print("pid file exists, daemon already running, if not - delete pid file")
-    #     sys.exit(1)
+    if os.path.exists(path_pid):
+        print("pid file exists, daemon already running, if not - delete pid file")
+        sys.exit(1)
 
     with open(path_pid, "w") as conn:
         conn.write(str(os.getpid()))

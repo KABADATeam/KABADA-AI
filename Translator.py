@@ -238,12 +238,12 @@ class Translator:
             translation[bn_name] = list(translation[bn_name])
         return translation
 
-    def back(self, bp):
+    def back(self, bp, flag_dont_check_bn_name=False):
         guids_by_bn = []
         for bn_name0, values0, id_bp in bp:
             guids = []
             for guid, (bn_name, necessary_condition) in self.lookup.items():
-                if bn_name == bn_name0:
+                if bn_name == bn_name0 or flag_dont_check_bn_name:
                     if necessary_condition.issubset(values0):
                         guids.append(guid)
             guids_by_bn.append((bn_name0, guids, id_bp))

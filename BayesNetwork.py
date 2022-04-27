@@ -147,27 +147,16 @@ class BayesNetwork:
             for varname, value in list_evidence:
                 set_fixed_variables.add(varname)
 
-        nodes = []
-        for node in self.net.get_all_nodes():
-            if len(self.net.get_parents(node)) == 0:
-                nodes.append(node)
+        nodes = filter(lambda node:
+                       self.net.get_node_name(node) not in set_fixed_variables,
+                       self.net.get_all_nodes())
 
-        # putting nodes in a sequence of causality
-        levels_of_nodes = []
-        while len(nodes) > 0:
-            num_nodes_at_start = len(nodes)
-            if targets is None:
-                levels_of_nodes.append([_ for _ in nodes if _ not in set_fixed_variables])
-            else:
-                levels_of_nodes.append([_ for _ in nodes
-                                        if (_ not in set_fixed_variables) and self.net.get_node_name(_) in targets])
+        if targets is not None:
+            nodes = filter(lambda node:
+                           self.net.get_node_name(node) in targets,
+                           nodes)
 
-            for node in nodes[:num_nodes_at_start]:
-                for child in self.net.get_children(node):
-                    if child not in nodes:
-                        nodes.append(child)
-            nodes = nodes[num_nodes_at_start:]
-        return chain(*levels_of_nodes)
+        return nodes
 
     def predict_popup(self, list_evidence=None, flag_with_nos=False, flag_noisy=False, num_beams=1, targets=None):
 
@@ -350,7 +339,8 @@ class MultiNetwork:
                 # bp.extend(bp_new)
         return bp
 
-    def predict_all(self, guids_by_bn, flag_noisy=False, target_bns=None):
+    def predict_all(self, guids_by_bn, flag_noisy=False, target_bns=None,
+                    flag_translate_output=True, flag_with_nos=False):
         bp = []
         other_guids_by_id = {}
         other_guids_by_bn = defaultdict(set)
@@ -406,11 +396,13 @@ class MultiNetwork:
             assert len(list_evidence) <= 1, "pa tiikliem tika sadaliits ar flattener"
             list_evidence = list_evidence[bn_name]
             target_names = {*self.bns[bn_name].get_node_names()}
-            recomendations = {*self.bns["main"].predict_popup(list_evidence, targets=target_names, flag_noisy=flag_noisy)}
-
+            recomendations = {*self.bns["main"].predict_popup(list_evidence, targets=target_names,
+                                                              flag_noisy=flag_noisy, flag_with_nos=flag_with_nos)}
             bp.append((bn_name, recomendations, id_bp))
             self.bns["main"].clear_evidence()
 
+        if not flag_translate_output:
+            return bp
         translations_by_bn = self.translator.back(bp)
         return translations_by_bn
 

@@ -6,14 +6,13 @@ from Translator import Flattener
 
 with open("../bp.pickle", "rb") as conn:
     bp = pickle.load(conn)
-
-# flattener = Flattener()
-# mbn = MultiNetwork()
-# guids_by_bn = flattener(bp, flag_generate_plus_one=True)
+flattener = Flattener()
+mbn = MultiNetwork()
+guids_by_bn = flattener(bp, flag_generate_plus_one=True)
 # pprint(guids_by_bn)
 # exit()
-# out = mbn.predict_all(guids_by_bn)
-# pprint(out)
+out = mbn.predict_all(guids_by_bn)
+pprint(out)
 
 # print(findall('03f70344-c4f5-456a-bbfe-94dde489b31c', str(bp)))
 # print(bp['plan'].keys())
