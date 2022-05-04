@@ -144,8 +144,7 @@ class BayesNetwork:
     def get_node_iterator(self, list_evidence=None, targets=None):
         set_fixed_variables = set()
         if list_evidence is not None:
-            for varname, value in list_evidence:
-                set_fixed_variables.add(varname)
+            set_fixed_variables.update((varname for varname, value in list_evidence))
 
         nodes = filter(lambda node:
                        self.net.get_node_name(node) not in set_fixed_variables,
@@ -165,6 +164,7 @@ class BayesNetwork:
                 self.add_evidence(varname, value, flag_update_beliefs=False)
 
         nodes = self.get_node_iterator(list_evidence, targets)
+        nodes = list(nodes)
         if num_beams > 1:
             pairs = beam_search(self, nodes, flag_noisy, num_beams)
         else:
@@ -179,7 +179,7 @@ class BayesNetwork:
                 val = self.net.get_outcome_id(node, i)
                 if probs[i] > self.tresh_yes:
                     pairs.append((self.net.get_node_name(node), val))
-                self.net.set_evidence(node, val)
+                self.net.set_evidence(node, i)
 
         if not flag_with_nos:
             pairs = [(varname, value) for varname, value in pairs if value != "no"]
@@ -212,7 +212,8 @@ class MultiNetwork:
         self.bns = {}
         self.random_variables_2_predict = {}
         self.sampling_order = ["value_propositions", "consumer_segments", "business_segments", "public_bodies_and_ngo",
-            "channels", "get_new_customers", "keep_customers", "convince_existing_to_spend_more"]
+            "channels", "get_new_customers", "keep_customers", "convince_existing_to_spend_more",
+            "revenue_streams_consumers", "revenue_streams_business", "revenue_streams_ngo"]
 
         with open(join(repo_dir, "docs", "sub_bn_relations.json"), "r") as conn:
             self.sub_bn_relations = json.load(conn)
@@ -230,6 +231,8 @@ class MultiNetwork:
             self.add_net(bn_name)
 
         self.add_net("main")
+        self.set_only_main_variables = {*self.bns['main'].get_node_names()}.difference(
+            chain(*(bn.get_node_names() for bn_name, bn in self.bns.items() if bn_name != 'main')))
 
     def add_net(self, bn_name):
         if bn_name not in self.bns:
@@ -242,7 +245,6 @@ class MultiNetwork:
 
     def add_evidence(self, bn_name, list_evidence):
         # if two identical evidence provided - there will be smile error
-        list_evidence = {*list_evidence}
         self.bns[bn_name].clear_evidence()
         for varname, value in list_evidence:
             self.bns[bn_name].add_evidence(varname, value)
@@ -339,8 +341,8 @@ class MultiNetwork:
                 # bp.extend(bp_new)
         return bp
 
-    def predict_all(self, guids_by_bn, flag_noisy=False, target_bns=None,
-                    flag_translate_output=True, flag_with_nos=False):
+    def predict_all(self, guids_by_bn, flag_noisy=False, target_bns=None, target_variables=None,
+                    flag_translate_output=True, flag_with_nos=False, flag_assume_full=False):
         bp = []
         other_guids_by_id = {}
         other_guids_by_bn = defaultdict(set)
@@ -385,17 +387,14 @@ class MultiNetwork:
                 values = values[0] if len(values) == 1 else values
                 self.bns["main"].add_evidence(varname, values, flag_update_beliefs=False)
 
-            list_evidence = self.translator(list_guids)
-            # print(1111111, bn_name, len(list_evidence))
-            # if len(list_evidence) == 0:
-            #     if bn_name in self.bns:
-            #         # TODO this is not conditioned on rest of the main
-            #         recomendations = self.bns[bn_name].generate_one_sample()
-            #         bp.append((bn_name, recomendations, id_bp))
-            #     continue
+            list_evidence = self.translator(list_guids, flag_assume_full=flag_assume_full)
             assert len(list_evidence) <= 1, "pa tiikliem tika sadaliits ar flattener"
             list_evidence = list_evidence[bn_name]
             target_names = {*self.bns[bn_name].get_node_names()}
+            if target_variables is not None:
+                target_names = (target_names | self.set_only_main_variables) & target_variables
+            list_evidence = {_ for _ in list_evidence if _[0] not in target_names}
+            # print(bn_name, len(list_evidence), len(self.bns[bn_name].get_node_names()))
             recomendations = {*self.bns["main"].predict_popup(list_evidence, targets=target_names,
                                                               flag_noisy=flag_noisy, flag_with_nos=flag_with_nos)}
             bp.append((bn_name, recomendations, id_bp))

@@ -1,0 +1,20 @@
+{
+  "plan::revenue::publicNgo::category::6d62227c-94dc-4ad8-a89c-240fe74f26d6": {"Lending, renting, leasing:kind24": [{"ngo_revenue_stream_name":  "lending_renting_leasing"}]},
+  "plan::revenue::publicNgo::category::a5a126b8-fb9a-413c-a5fa-53870b90df77": {"Asset sale:kind24": [{"ngo_revenue_stream_name":  "asset_sale"}]},
+  "plan::revenue::publicNgo::category::ab606dbd-08d6-49be-8bc6-844812d8b214": {"Brokerage fees:kind24": [{"ngo_revenue_stream_name":  "brokerage_fees"}]},
+  "plan::revenue::publicNgo::category::d050dc8f-aa16-47f8-ab35-ae6fc8d7a3ae": {"Usage fee:kind24": [{"ngo_revenue_stream_name":  "usage_fee"}]},
+  "plan::revenue::publicNgo::category::bf7c1d8a-7240-4c81-84e2-b96709e3c3ba": {"Subscription fee:kind24": [{"ngo_revenue_stream_name":  "subscription_fee"}]},
+  "plan::revenue::publicNgo::category::80b218db-fd97-43a7-9945-dbe555990934": {"Advertising:kind24": [{"ngo_revenue_stream_name":  "advertising"}]},
+  "plan::revenue::publicNgo::category::5393af35-4b9f-49f4-a366-e1430860ee49": {"Licensing:kind24": [{"ngo_revenue_stream_name":  "licensing"}]},
+
+  "plan::revenue::publicNgo::pricingType::266f43d7-8b45-4880-bd3c-88dcbd017fb4": {"Fixed pricing:kind25": [{"ngo_prices":  "fixed_pricing"}]},
+  "plan::revenue::publicNgo::pricingType::363f16df-3f11-4643-9c93-cd64242c0bf5": {"Dynamic pricing:kind25": [{"ngo_prices":  "dynamic_pricing"}]},
+
+  "plan::revenue::publicNgo::price::75c81e8e-aa76-4f81-895e-0465da7b6d7a": {"List price:kind26": [{"ngo_types_of_pricing":  "list_price"}]},
+  "plan::revenue::publicNgo::price::fef1c6f8-493c-4641-9f0c-1141cb762605": {"Volume dependent:kind26": [{"ngo_types_of_pricing":  "list_price"}]},
+  "plan::revenue::publicNgo::price::2897fd3b-afad-47e5-8407-3582fb0cdf07": {"Negotiation:kind26": [{"ngo_types_of_pricing":  "negotiation"}]},
+  "plan::revenue::publicNgo::price::e1d977e9-0c83-4f69-8bfe-3f2689b6cec2": {"Real time market:kind26": [{"ngo_types_of_pricing":  "real_time_market"}]},
+  "plan::revenue::publicNgo::price::925f1189-56f9-4cc3-ae1e-50ddbab2a29d": {"Auctions:kind26": [{"ngo_types_of_pricing":  "auctions"}]},
+  "plan::revenue::publicNgo::price::be31e251-6784-4472-a771-86c159b3f9fb": {"Yield management:kind26": [{"ngo_types_of_pricing":  "yield_management"}]},
+  "plan::revenue::publicNgo::price::2483ee5b-da92-4400-aa64-88eb8a1ea152": {"Product feature dependent:kind26": [{"ngo_types_of_pricing":  "product_feature_dependent"}]}
+}

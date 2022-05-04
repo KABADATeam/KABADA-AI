@@ -312,13 +312,6 @@
 			<state id="no" />
 			<parameters>0.5 0.5</parameters>
 		</noisymax>
-		<noisymax id="has_children">
-			<state id="yes" />
-			<state id="no" />
-			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over</parents>
-			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
-			<parameters>0.000244140625 0.999755859375 0 1 0.05000000000000004 0.95 0 1 0.09999999999999998 0.9 0 1 0.4 0.6 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0.9 0.1 0 1 0 1</parameters>
-		</noisymax>
 		<cpt id="geo_location_domestic">
 			<state id="yes" />
 			<state id="no" />
@@ -563,6 +556,111 @@
 			<state id="num_more" />
 			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
 		</cpt>
+		<cpt id="consumer_revenue_stream_name">
+			<state id="lending_renting_leasing" />
+			<state id="asset_sale" />
+			<state id="brokerage_fees" />
+			<state id="usage_fee" />
+			<state id="subscription_fee" />
+			<state id="advertising" />
+			<state id="licensing" />
+			<probabilities>0.1428571428571428 0.1428571428571428 0.1428571428571428 0.1428571428571428 0.1428571428571428 0.1428571428571428 0.142857142857143</probabilities>
+		</cpt>
+		<cpt id="consumer_prices">
+			<state id="fixed_pricing" />
+			<state id="dynamic_pricing" />
+			<probabilities>0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="consumer_types_of_pricing">
+			<state id="negotiation" />
+			<state id="yield_management" />
+			<state id="real_time_market" />
+			<state id="auctions" />
+			<state id="list_price" />
+			<state id="product_feature_dependent" />
+			<state id="volume_dependent" />
+			<parents>consumer_prices</parents>
+			<probabilities>0 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333334 0.25 0.25 0.25 0.25 0 0 0</probabilities>
+		</cpt>
+		<cpt id="num_revenue_streams_consumers">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<cpt id="business_revenue_stream_name">
+			<state id="lending_renting_leasing" />
+			<state id="asset_sale" />
+			<state id="brokerage_fees" />
+			<state id="usage_fee" />
+			<state id="subscription_fee" />
+			<state id="advertising" />
+			<state id="licensing" />
+			<probabilities>0.1428571428571428 0.1428571428571428 0.1428571428571428 0.1428571428571428 0.1428571428571428 0.1428571428571428 0.142857142857143</probabilities>
+		</cpt>
+		<cpt id="business_prices">
+			<state id="fixed_pricing" />
+			<state id="dynamic_pricing" />
+			<probabilities>0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="business_types_of_pricing">
+			<state id="negotiation" />
+			<state id="yield_management" />
+			<state id="real_time_market" />
+			<state id="auctions" />
+			<state id="list_price" />
+			<state id="product_feature_dependent" />
+			<state id="volume_dependent" />
+			<parents>business_prices</parents>
+			<probabilities>0 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333334 0.25 0.25 0.25 0.25 0 0 0</probabilities>
+		</cpt>
+		<cpt id="num_revenue_streams_business">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<cpt id="num_revenue_streams_ngo">
+			<state id="num0" />
+			<state id="num1" />
+			<state id="num2" />
+			<state id="num3" />
+			<state id="num4" />
+			<state id="num_more" />
+			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
+		</cpt>
+		<cpt id="ngo_revenue_stream_name">
+			<state id="lending_renting_leasing" />
+			<state id="asset_sale" />
+			<state id="brokerage_fees" />
+			<state id="usage_fee" />
+			<state id="subscription_fee" />
+			<state id="advertising" />
+			<state id="licensing" />
+			<probabilities>0.1428571428571428 0.1428571428571428 0.1428571428571428 0.1428571428571428 0.1428571428571428 0.1428571428571428 0.142857142857143</probabilities>
+		</cpt>
+		<cpt id="ngo_prices">
+			<state id="fixed_pricing" />
+			<state id="dynamic_pricing" />
+			<probabilities>0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="ngo_types_of_pricing">
+			<state id="negotiation" />
+			<state id="yield_management" />
+			<state id="real_time_market" />
+			<state id="auctions" />
+			<state id="list_price" />
+			<state id="product_feature_dependent" />
+			<state id="volume_dependent" />
+			<parents>ngo_prices</parents>
+			<probabilities>0 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333334 0.25 0.25 0.25 0.25 0 0 0</probabilities>
+		</cpt>
 	</nodes>
 	<extensions>
 		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="main">
@@ -683,14 +781,14 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1182 362 1431 405</position>
+				<position>1849 308 2098 351</position>
 			</node>
 			<node id="distrubution_channels_courier_service">
 				<name>distrubution_channels_courier_service</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1362 427 1627 467</position>
+				<position>1367 427 1632 467</position>
 			</node>
 			<node id="distribution_channels_own_delivery">
 				<name>distribution_channels_own_delivery</name>
@@ -768,13 +866,6 @@
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
 				<position>36 907 167 942</position>
-			</node>
-			<node id="has_children">
-				<name>has_children</name>
-				<interior color="e5f6f7" />
-				<outline color="000080" />
-				<font color="000000" name="Arial" size="8" />
-				<position>1329 984 1469 1018</position>
 			</node>
 			<node id="education_primary">
 				<name>education_primary</name>
@@ -1110,7 +1201,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2472 117 2718 165</position>
+				<position>2459 143 2705 191</position>
 			</node>
 			<node id="num_public_bodies_and_ngo">
 				<name>num_public_bodies_and_ngo</name>
@@ -1124,7 +1215,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2177 118 2423 166</position>
+				<position>2217 135 2463 183</position>
 			</node>
 			<node id="num_channels">
 				<name>num_channels</name>
@@ -1181,6 +1272,90 @@
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
 				<position>2567 405 2850 444</position>
+			</node>
+			<node id="consumer_revenue_stream_name">
+				<name>consumer_revenue_stream_name</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3165 472 3327 501</position>
+			</node>
+			<node id="consumer_prices">
+				<name>consumer_prices</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3115 517 3192 541</position>
+			</node>
+			<node id="consumer_types_of_pricing">
+				<name>consumer_types_of_pricing</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3268 520 3457 556</position>
+			</node>
+			<node id="num_revenue_streams_consumers">
+				<name>num_revenue_streams_consumers</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2428 84 2674 132</position>
+			</node>
+			<node id="business_revenue_stream_name">
+				<name>business_revenue_stream_name</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3502 720 3664 749</position>
+			</node>
+			<node id="business_prices">
+				<name>business_prices</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3466 755 3543 779</position>
+			</node>
+			<node id="business_types_of_pricing">
+				<name>business_types_of_pricing</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3646 751 3835 787</position>
+			</node>
+			<node id="num_revenue_streams_business">
+				<name>num_revenue_streams_business</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2173 79 2419 127</position>
+			</node>
+			<node id="num_revenue_streams_ngo">
+				<name>num_revenue_streams_ngo</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>2339 423 2585 471</position>
+			</node>
+			<node id="ngo_revenue_stream_name">
+				<name>ngo_revenue_stream_name</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3632 481 3794 510</position>
+			</node>
+			<node id="ngo_prices">
+				<name>ngo_prices</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3581 525 3658 549</position>
+			</node>
+			<node id="ngo_types_of_pricing">
+				<name>ngo_types_of_pricing</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>3735 529 3924 565</position>
 			</node>
 		</genie>
 	</extensions>

@@ -174,7 +174,44 @@ def check_sub_bn_cnts():
             assert i_child > i_parent
 
 
+def check_correct_binary_variable_detection():
+    from itertools import chain
+    mbn = MultiNetwork()
+    set_binary_variables = set()
+    for node in mbn.bns['main'].get_node_names():
+        if {*mbn.bns['main'].net.get_outcome_ids(node)} == {'no', 'yes'}:
+            set_binary_variables.add(node)
+    set_binary_variables_from_translator = set(chain(*(_.keys() for _ in mbn.translator.dict_binary_nodes.values())))
+    # print(set_binary_variables_from_translator.difference(set_binary_variables))
+    # print(set_binary_variables.difference(set_binary_variables_from_translator))
+    # print(len(set_binary_variables_from_translator), len(set_binary_variables))
+    assert set_binary_variables == set_binary_variables_from_translator
+
+
+def check_variable_names_in_translations():
+    mbn = MultiNetwork()
+
+    fs_translations = sorted(glob(join(repo_dir, "translation", "*.json")))
+    dict_bn2varnames = defaultdict(set)
+
+    for f in fs_translations:
+        bn_name = basename(f).replace(".json", "")
+        with open(f, "r") as conn:
+            translation = json.load(conn)
+            for guid, trans in translation.items():
+                for _, kw_dicts in trans.items():
+                    for kw_dict in kw_dicts:
+                        for varname, value in kw_dict.items():
+                            dict_bn2varnames[bn_name].add(varname)
+
+    for bn_name, bn in mbn.bns.items():
+        if bn_name != "main":
+            assert {*bn.get_node_names()} == dict_bn2varnames[bn_name]
+
+
 if __name__ == "__main__":
+    check_variable_names_in_translations()
+    check_correct_binary_variable_detection()
     check_sub_bn_cnts()
     check_bp_flatten_names_to_bns()
     no_translation_same_key()

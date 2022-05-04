@@ -209,8 +209,10 @@ class Translator:
         fs = sorted(glob(join(repo_dir, "translation", "*.json")))
 
         self.lookup = {}
+        self.dict_binary_nodes = {}
         for f in fs:
             bn_name = basename(f).replace(".json", "")
+            self.dict_binary_nodes[bn_name] = {}
             with open(f, "r") as conn:
                 translation = json.load(conn)
 
@@ -220,6 +222,9 @@ class Translator:
                     for kw_dict in kw_dicts:
                         for varname, value in kw_dict.items():
                             pairs.add((varname, value))
+                            if value in ("yes", "no") and varname not in self.dict_binary_nodes:
+                                self.dict_binary_nodes[bn_name][varname] = {"yes", "no"}
+
                     self.lookup[guid] = (bn_name, pairs)
 
         self.inverse_lookup = defaultdict(lambda: defaultdict(list))
@@ -227,15 +232,18 @@ class Translator:
             for varname, value in pairs:
                 self.inverse_lookup[bn_name][varname].append(value)
 
-    def __call__(self, bag_guids, *args, **kwargs):
+    def __call__(self, bag_guids, flag_assume_full=False, *args, **kwargs):
         translation = defaultdict(set)
         for guid in bag_guids:
             if guid in self.lookup:
                 bn_name, evidence = self.lookup[guid]
                 translation[bn_name].update(evidence)
 
-        for bn_name in translation:
-            translation[bn_name] = list(translation[bn_name])
+        if flag_assume_full:
+            for bn_name in translation.keys():
+                for varname in {*self.dict_binary_nodes[bn_name].keys()} - {_[0] for _ in translation[bn_name]}:
+                    translation[bn_name].add((varname, 'no'))
+
         return translation
 
     def back(self, bp, flag_dont_check_bn_name=False):

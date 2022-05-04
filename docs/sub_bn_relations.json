@@ -1,5 +1,14 @@
 {
   "channels": [
     {"value_propositions": ["1_to_n", "products"]}
+  ],
+  "revenue_streams_consumers": [
+    {"consumer_segments": ["1_to_n", "segments"]}
+  ],
+  "revenue_streams_business": [
+    {"business_segments": ["1_to_n", "segments"]}
+  ],
+  "revenue_streams_ngo": [
+    {"public_bodies_and_ngo": ["1_to_n", "segments"]}
   ]
 }

@@ -7,5 +7,7 @@
 
 	"plan::custRelationship::keepCust": "keep_customers",
 	"plan::custRelationship::getCust": "get_new_customers",
-	"plan::custRelationship::convCust": "convince_existing_to_spend_more"
+	"plan::custRelationship::convCust": "convince_existing_to_spend_more",
+
+	"plan::revenue::consumer": "revenue_streams_consumers"
 }
