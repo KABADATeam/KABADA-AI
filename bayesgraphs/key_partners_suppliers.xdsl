@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
+<smile version="1.0" id="Network3" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="is_supplier_priority">
+			<state id="True" />
+			<state id="False" />
+			<probabilities>0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="supplier_type">
+			<state id="raw_materials_finished_or_semi_finished_goods" />
+			<state id="equipment_and_real_estate" />
+			<state id="outsourced_services" />
+			<state id="financiers" />
+			<state id="human_resources" />
+			<probabilities>0.2 0.2 0.2 0.2 0.2</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="key_partners_suppliers">
+			<node id="is_supplier_priority">
+				<name>is_supplier_priority</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>196 56 343 81</position>
+			</node>
+			<node id="supplier_type">
+				<name>supplier_type</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>87 56 194 80</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>

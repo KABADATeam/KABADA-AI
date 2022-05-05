@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
+<smile version="1.0" id="Network2" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="nace">
+			<state id="A_Agriculture__forestry_and_fishing" />
+			<state id="B_Mining_and_quarrying" />
+			<state id="C_Manufacturing" />
+			<state id="D_Electricity__gas__steam_and_air_conditioning_supply" />
+			<state id="E_Water_supply__sewerage__waste_managment_and_remediation_activities" />
+			<state id="F_Construction" />
+			<state id="G_Wholesale_and_retail_trade__repair_of_motor_vehicles_and_motorcycles" />
+			<state id="H_Transporting_and_storage" />
+			<state id="I_Accommodation_and_food_service_activities" />
+			<state id="J_Information_and_communication" />
+			<state id="K_Financial_and_insurance_activities" />
+			<state id="L_Real_estate_activities" />
+			<state id="M_Professional__scientific_and_technical_activities" />
+			<state id="N_Administrative_and_support_service_activities" />
+			<state id="O_Public_administration_and_defence__compulsory_social_security" />
+			<state id="P_Education" />
+			<state id="Q_Human_health_and_social_work_activities" />
+			<state id="R_Arts__entertainment_and_recreation" />
+			<state id="S_Other_services_activities" />
+			<state id="T_Activities_of_households_as_employers__undifferentiated_goods_and_services_producing_activities_of_households_for_own_use" />
+			<state id="U_Activities_of_extraterritorial_organisations_and_bodies" />
+			<probabilities>0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904762 0.04761904761904723</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="edit_business_plan">
+			<node id="nace">
+				<name>nace</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>102 92 299 132</position>
+				<defcomment row="0" col="0">Agriculture, forestry and fishing</defcomment>
+				<defcomment row="1" col="0">Mining and quarrying</defcomment>
+				<defcomment row="2" col="0">Manufacturing</defcomment>
+				<defcomment row="3" col="0">Electricity, gas, steam and air conditioning supply</defcomment>
+				<defcomment row="4" col="0">Water supply; sewerage; waste managment and remediation activities</defcomment>
+				<defcomment row="5" col="0">Construction</defcomment>
+				<defcomment row="6" col="0">Wholesale and retail trade; repair of motor vehicles and motorcycles</defcomment>
+				<defcomment row="7" col="0">Transporting and storage</defcomment>
+				<defcomment row="8" col="0">Accommodation and food service activities</defcomment>
+				<defcomment row="9" col="0">Information and communication</defcomment>
+				<defcomment row="10" col="0">Financial and insurance activities</defcomment>
+				<defcomment row="11" col="0">Real estate activities</defcomment>
+				<defcomment row="12" col="0">Professional, scientific and technical activities</defcomment>
+				<defcomment row="13" col="0">Administrative and support service activities</defcomment>
+				<defcomment row="14" col="0">Public administration and defence; compulsory social security</defcomment>
+				<defcomment row="15" col="0">Education</defcomment>
+				<defcomment row="16" col="0">Human health and social work activities</defcomment>
+				<defcomment row="17" col="0">Arts, entertainment and recreation</defcomment>
+				<defcomment row="18" col="0">Other services activities</defcomment>
+				<defcomment row="19" col="0">Activities of households as employers; undifferentiated goods-and services-producing activities of households for own use</defcomment>
+				<defcomment row="20" col="0">Activities of extraterritorial organisations and bodies</defcomment>
+			</node>
+		</genie>
+	</extensions>
+</smile>

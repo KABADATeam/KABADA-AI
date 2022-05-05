@@ -1,0 +1,19 @@
+{
+	"plan::costs::variableCosts::category::a560bf73-2db4-46de-a121-17756a2cd4ad": {"Manufacturing building:kind23": [{"variable_cost_subtype":  "rent_short_term_manufacturing_building"}]},
+	"plan::costs::variableCosts::category::5087771d-cce4-4521-a3cb-a14b1891abba": {"Office:kind23": [{"variable_cost_subtype":  "rent_short_term_office"}]},
+	"plan::costs::variableCosts::category::eed82f80-4e74-435d-9371-fba9683b33ad": {"Equipment:kind23": [{"variable_cost_subtype":  "rent_short_term_equipment"}]},
+	"plan::costs::variableCosts::category::08871a1a-331b-44af-8395-9bdf2287ed8c": {"Employees directly involved in production / service:kind23": [{"variable_cost_subtype":  "salaries_employees_directly_involved_in_production_service"}]},
+	"plan::costs::variableCosts::category::bbe1a5d6-d7d1-4d70-a5cf-00589419ce8d": {"Cost of warehouse:kind23": [{"variable_cost_subtype":  "distribution_cost_of_warehouse"}]},
+	"plan::costs::variableCosts::category::c267cba0-ef66-48d5-96bd-74d4efd1b52b": {"Fees to distributors:kind23": [{"variable_cost_subtype":  "distribution_fee_to_distributors"}]},
+
+	"plan::costs::variableCosts::category::?": {"Other:kind23": [{"variable_cost_subtype":  "rent_short_term_other"}]},
+	"plan::costs::variableCosts::category::??": {"Other:kind23": [{"variable_cost_subtype":  "resources_default"}]},
+	"plan::costs::variableCosts::category::???": {"other:kind23": [{"variable_cost_subtype":  "packaging_default"}]},
+	"plan::costs::variableCosts::category::????": {"Other:kind23": [{"variable_cost_subtype":  "salaries_other"}]},
+	"plan::costs::variableCosts::category::?????": {"Other:kind23": [{"variable_cost_subtype":  "oursourcing_of_specified_services_default"}]},
+	"plan::costs::variableCosts::category::??????": {"Other:kind23": [{"variable_cost_subtype":  "permits_and_licences_default"}]},
+	"plan::costs::variableCosts::category::???????": {"Other:kind23": [{"variable_cost_subtype":  "marketing_default"}]},
+	"plan::costs::variableCosts::category::????????": {"Transport:kind23": [{"variable_cost_subtype":  "distribution_transport"}]},
+	"plan::costs::variableCosts::category::?????????": {"Other:kind23": [{"variable_cost_subtype":  "distribution_other"}]},
+	"plan::costs::variableCosts::category::??????????": {"Other:kind23": [{"variable_cost_subtype":  "other_default"}]}
+}

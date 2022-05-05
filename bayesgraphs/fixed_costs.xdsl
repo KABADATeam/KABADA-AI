@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
+<smile version="1.0" id="Network5" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="fixed_cost_subtype">
+			<state id="rent_of_buildings_manufacturing_buildings" />
+			<state id="rent_of_buildings_inventory_buildings" />
+			<state id="rent_of_buildings_sales_buildings_shops" />
+			<state id="rent_of_buildings_other" />
+			<state id="rent_of_equipment_it_office_equipment" />
+			<state id="rent_of_equipment_production_equipment_and_machinery" />
+			<state id="rent_of_equipment_transport" />
+			<state id="utilities_electricity" />
+			<state id="utilities_water" />
+			<state id="utilities_gas" />
+			<state id="utilities_heat" />
+			<state id="utilities_maintenance" />
+			<state id="utilities_communication" />
+			<state id="outsourcing_of_services_accountant" />
+			<state id="outsourcing_of_services_it_support" />
+			<state id="salaries_management" />
+			<state id="salaries_factory_workers_service" />
+			<state id="salaries_finance_management" />
+			<state id="salaries_marketing" />
+			<state id="rent_of_equipment_other" />
+			<state id="utilities_other" />
+			<state id="outsourcing_of_services_other" />
+			<state id="outsourcing_of_specified_services_default" />
+			<state id="salaries_other" />
+			<state id="rent_of_office_default" />
+			<state id="permits_and_licences_default" />
+			<state id="marketing_default" />
+			<state id="other_default" />
+			<probabilities>0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428571 0.03571428571428603</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="fixed_costs">
+			<node id="fixed_cost_subtype">
+				<name>fixed_cost_subtype</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>49 157 213 185</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>

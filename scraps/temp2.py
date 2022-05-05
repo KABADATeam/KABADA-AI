@@ -1,23 +1,16 @@
-from Translator import Flattener, Translator, BPMerger
-import json
-from config import repo_dir
-from pprint import pprint
-from BayesNetwork import MultiNetwork
-from os.path import join
-import hashlib
-flattener = Flattener()
-net = MultiNetwork()
+import pandas as pd
+from sklearn.metrics import confusion_matrix
+from collections import Counter
+import pickle
 
-with open(repo_dir + "/test_bps/test_bp.json", "r") as conn:
-    bp = json.load(conn)
-# with open(repo_dir + "/docs/full_bp.json", "r") as conn:
-#     bp = json.load(conn)
+tab = pd.read_csv(f"../bayesgraphs/main.txt", sep=" ")
+tab1 = pd.read_csv(f"../bayesgraphs/main1.txt", sep=" ")
 
-# pprint(bp)
-guids_by_bn = flattener(bp, flag_generate_plus_one=True)
-recomendations_by_bn = net.predict_all(guids_by_bn)
-# pprint(recomendations_by_bn)
+varname = 'nace'
+counter = Counter(tab[varname])
+print(confusion_matrix(tab[varname], tab1[varname], labels=[_[0] for _ in counter.most_common()]))
 
-
-bp = flattener.back(recomendations_by_bn)
-pprint(bp)
+# with open("../tests/temp.pickle", "rb") as conn:
+#     sampled, exp = pickle.load(conn)
+#
+# print(confusion_matrix(exp, sampled))

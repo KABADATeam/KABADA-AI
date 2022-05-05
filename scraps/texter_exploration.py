@@ -65,6 +65,6 @@ def print_probable_flat_guids():
 
 if __name__ == "__main__":
     # check_value_counts()
-    # print_kind_associated_guids(40)
-    print_value2kind("C.11.05 Manufacture of beer")
+    print_kind_associated_guids(1)
+    # print_value2kind("Accessibility of financial resources")
     # print_probable_flat_guids()

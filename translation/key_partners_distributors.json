@@ -1,0 +1,11 @@
+{
+	"plan::keyPartners::distributors::partnerType::4ae078f2-21a9-4f01-b11d-92eace60e38e": {"Self distribution:kind11": [{"distributor_type":  "self_distribution"}]},
+	"plan::keyPartners::distributors::partnerType::e83d8ad7-c709-41b3-b1cd-15e1871fb374": {"Highly diversified distributors:kind11": [{"distributor_type":  "highly_diversified_distributors"}]},
+	"plan::keyPartners::distributors::partnerType::88fa173b-e9a8-44a7-be1a-43fab1989a02": {"Agents:kind11": [{"distributor_type":  "agents"}]},
+	"plan::keyPartners::distributors::partnerType::cc3cddf7-c4fa-4679-8feb-58935864f5b2": {"Wholesalers:kind11": [{"distributor_type":  "wholesalers"}]},
+	"plan::keyPartners::distributors::partnerType::4c53b804-2392-4744-a1ce-c11d424d7aab": {"Others:kind11": [{"distributor_type":  "others"}]},
+	"plan::keyPartners::distributors::partnerType::9c1015a6-00a0-4d86-a723-c56bb7da4df5": {"Retailers:kind11": [{"distributor_type":  "retailers"}]},
+
+	"plan::keyPartners::distributors::priority::True": {"True:kind11": [{"is_distributor_priority":  "True"}]},
+	"plan::keyPartners::distributors::priority::False": {"False:kind11": [{"is_distributor_priority":  "False"}]}
+}

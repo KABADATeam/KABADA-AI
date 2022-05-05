@@ -77,6 +77,13 @@ def validate_wrt_texter():
         for guid, stuff in translation.items():
             # print(dict_guid2stuff[guid])
             guid = guid.split("::")[-1]
+            if {*guid} == {"?"}:
+                continue
+            try:
+                literal_eval(guid)
+                continue
+            except:
+                pass
             val1, kind1 = dict_guid2stuff[guid]
             s = list(stuff.keys())[0]
             val, kind = s.split(":kind")
@@ -108,6 +115,7 @@ def check_if_all_nets_in_main():
                 assert node in main_k2v
                 for i in range(mbn.bns[bn_name].net.get_outcome_count(node)):
                     val = mbn.bns[bn_name].net.get_outcome_id(node, i)
+                    # print(bn_name, val, main_k2v[node])
                     assert val in main_k2v[node]
 
 
@@ -163,9 +171,9 @@ def check_sub_bn_cnts():
     mbn = MultiNetwork()
     node_names = {*mbn.bns['main'].get_node_names()}
     for bn_name in mbn.bns:
-        if bn_name != "main":
-            assert "num_" + bn_name in node_names
-            assert bn_name in mbn.sampling_order
+        if bn_name not in ("main", "swot"):
+            assert "num_" + bn_name in node_names, f"no num node for {bn_name}"
+            assert bn_name in mbn.sampling_order, f"{bn_name} not in sampling_order"
 
     for child, parents in mbn.sub_bn_relations.items():
         i_child = mbn.sampling_order.index(child)
@@ -216,9 +224,9 @@ if __name__ == "__main__":
     check_bp_flatten_names_to_bns()
     no_translation_same_key()
     check_translations_or_bns_not_missing()
-    check_all_translationalble_guids_in_full_bp()
     check_variable_names()
     validate_wrt_texter()
     check_if_all_nets_in_main()
+    check_all_translationalble_guids_in_full_bp()
     # check_bp_flattener()
     print("everythings OK :)")

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
+<smile version="1.0" id="Network6" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="variable_cost_subtype">
+			<state id="rent_short_term_manufacturing_building" />
+			<state id="rent_short_term_office" />
+			<state id="rent_short_term_equipment" />
+			<state id="rent_short_term_other" />
+			<state id="resources_default" />
+			<state id="packaging_default" />
+			<state id="salaries_employees_directly_involved_in_production_service" />
+			<state id="salaries_other" />
+			<state id="oursourcing_of_specified_services_default" />
+			<state id="permits_and_licenses_default" />
+			<state id="marketing_default" />
+			<state id="distribution_transport" />
+			<state id="distribution_cost_of_warehouse" />
+			<state id="distribution_fees_to_distributors" />
+			<state id="distribution_other" />
+			<state id="other_default" />
+			<probabilities>0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="variable_costs">
+			<node id="variable_cost_subtype">
+				<name>variable_cost_subtype</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>23 34 199 64</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>

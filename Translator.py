@@ -76,7 +76,7 @@ class BPMerger:
 
 
 def rec_accumulate_guids(bp, path, guids, bp2bn, sep="::"):
-    if isinstance(bp, str) or isinstance(bp, int) or isinstance(bp, float):
+    if isinstance(bp, str) or isinstance(bp, int) or isinstance(bp, float) or isinstance(bp, bool):
         guids.append(path + sep + str(bp))
 
     if isinstance(bp, dict):
@@ -102,7 +102,7 @@ def rec_delete_missing(bp, path, set_guids, sep="::"):
     if isinstance(bp, dict):
         for k in tuple(bp.keys()):
             v = bp[k]
-            if isinstance(v, str) or isinstance(v, int) or isinstance(v, float):
+            if isinstance(v, str) or isinstance(v, int) or isinstance(v, float) or isinstance(v, bool):
                 if sep.join(path + [str(v)]) not in set_guids:
                     del bp[k]
             else:
@@ -113,7 +113,7 @@ def rec_delete_missing(bp, path, set_guids, sep="::"):
     if isinstance(bp, list):
         inds_drop = []
         for i in range(len(bp)):
-            if isinstance(bp[i], str) or isinstance(bp[i], int) or isinstance(bp[i], float):
+            if isinstance(bp[i], str) or isinstance(bp[i], int) or isinstance(bp[i], float) or isinstance(bp[i], bool):
                 if sep.join(path + [str(bp[i])]) not in set_guids:
                     inds_drop.append(i)
             else:
@@ -223,6 +223,7 @@ class Translator:
                         for varname, value in kw_dict.items():
                             pairs.add((varname, value))
                             if value in ("yes", "no") and varname not in self.dict_binary_nodes:
+                                # TODO vnk skatit vai "no" ir kads no stavoklu nosaukumiem
                                 self.dict_binary_nodes[bn_name][varname] = {"yes", "no"}
 
                     self.lookup[guid] = (bn_name, pairs)

@@ -1,0 +1,42 @@
+{
+	"plan::costs::fixedCosts::category::df741ccc-d2ef-4797-8c96-8b5be0344f88": {"Rent of office:kind21": [{"fixed_cost_subtype":  "rent_of_office_default"}]},
+	"plan::costs::fixedCosts::category::4bf467d0-1c9d-469d-9dad-45b6bf4b7f47": {"Permits & Licenses:kind21": [{"fixed_cost_subtype":  "permits_and_licences_default"}]},
+	"plan::costs::fixedCosts::category::f61f60ab-7991-4dac-b40e-c742dcef878b": {"Marketing:kind21": [{"fixed_cost_subtype":  "marketing_default"}]},
+	"plan::costs::fixedCosts::category::5a7a66cb-25f4-462b-b1f7-47b97735d7da": {"Other:kind21": [{"fixed_cost_subtype":  "other_default"}]},
+
+	"plan::costs::fixedCosts::subCategory::2d9ebc0f-7a82-4891-8dc6-1fa64b5fa22d": {"Manufacturing buildings:kind23": [{"fixed_cost_subtype":  "rent_of_buildings_manufacturing_buildings"}]},
+	"plan::costs::fixedCosts::subCategory::c5acf766-38a0-4cf2-8649-6074f10a6b9f": {"Inventory buildings:kind23": [{"fixed_cost_subtype":  "rent_of_buildings_inventory_buildings"}]},
+	"plan::costs::fixedCosts::subCategory::c7250794-8be0-4cdb-99e7-37337b2e8fc1": {"Sales buildings (shops):kind23": [{"fixed_cost_subtype":  "rent_of_buildings_sales_buildings_shops"}]},
+
+	"plan::costs::fixedCosts::subCategory::5cb61693-d73a-40fd-9664-01921eeba8cc": {"Other:kind23": [{"fixed_cost_subtype":  "outsourcing_of_specified_services_default"}]},
+	"plan::costs::fixedCosts::subCategory::e1371329-8c9e-4ab3-95fe-654e7f64dfc4": {"Other:kind23": [{"fixed_cost_subtype":  "marketing_default"}]},
+	"plan::costs::fixedCosts::subCategory::e221190c-00bc-404f-a540-708d0e673454": {"Other:kind23": [{"fixed_cost_subtype":  "rent_of_office_default"}]},
+
+	"plan::costs::fixedCosts::subCategory::?????": {"Other:kind23": [{"fixed_cost_subtype":  "rent_of_buildings_other"}]},
+	"plan::costs::fixedCosts::subCategory::???????": {"Other:kind23": [{"fixed_cost_subtype":  "rent_of_equipment_other"}]},
+	"plan::costs::fixedCosts::subCategory::????????": {"Transport:kind23": [{"fixed_cost_subtype":  "rent_of_equipment_transport"}]},
+	"plan::costs::fixedCosts::subCategory::?????????": {"Other:kind23": [{"fixed_cost_subtype":  "utilities_other"}]},
+	"plan::costs::fixedCosts::subCategory::??????????": {"Other:kind23": [{"fixed_cost_subtype":  "outsourcing_of_services_other"}]},
+	"plan::costs::fixedCosts::subCategory::???????????": {"Other:kind23": [{"fixed_cost_subtype":  "salaries_other"}]},
+	"plan::costs::fixedCosts::subCategory::????????????": {"Other:kind23": [{"fixed_cost_subtype":  "permits_and_licences_default"}]},
+	"plan::costs::fixedCosts::subCategory::?????????????": {"Other:kind23": [{"fixed_cost_subtype":  "other_default"}]},
+
+	"plan::costs::fixedCosts::subCategory::e673e497-be75-4692-952c-8cdf3d5a9714": {"IT (office) equipment:kind23": [{"fixed_cost_subtype":  "rent_of_equipment_it_office_equipment"}]},
+	"plan::costs::fixedCosts::subCategory::db69b609-d71a-417a-9142-f8b5dbeb7cb3": {"Production equipment and machinery:kind23": [{"fixed_cost_subtype":  "rent_of_equipment_production_equipment_and_machinery"}]},
+
+	"plan::costs::fixedCosts::subCategory::e6aaacaf-9550-4937-bf13-0d1ff0b69874": {"Electricity:kind23": [{"fixed_cost_subtype":  "utilities_electricity"}]},
+	"plan::costs::fixedCosts::subCategory::a4e19cfd-e63d-4eaf-b45e-8a298a3be406": {"Water:kind23": [{"fixed_cost_subtype":  "utilities_water"}]},
+	"plan::costs::fixedCosts::subCategory::36c027b7-849b-4466-bafa-8e3441a53fb9": {"Gas:kind23": [{"fixed_cost_subtype":  "utilities_gas"}]},
+	"plan::costs::fixedCosts::subCategory::2bb3f65a-5c77-4482-9fa3-8b7c2ce555bd": {"Heat:kind23": [{"fixed_cost_subtype":  "utilities_heat"}]},
+	"plan::costs::fixedCosts::subCategory::7d87bb63-1cd8-4ec0-a46d-487c77da365f": {"Maintenance:kind23": [{"fixed_cost_subtype":  "utilities_maintenance"}]},
+	"plan::costs::fixedCosts::subCategory::d54aefa4-bd1c-4c73-b0f1-8e3c58eb29bc": {"Communication:kind23": [{"fixed_cost_subtype":  "utilities_communication"}]},
+
+	"plan::costs::fixedCosts::subCategory::eaee254e-e4c3-4ebd-86eb-ed38a54c238b": {"Accountant:kind23": [{"fixed_cost_subtype":  "outsourcing_of_services_accountant"}]},
+	"plan::costs::fixedCosts::subCategory::fc510839-c0c3-4883-a917-e35a2b9ea22e": {"IT support:kind23": [{"fixed_cost_subtype":  "outsourcing_of_services_it_support"}]},
+
+	"plan::costs::fixedCosts::subCategory::c804bad3-0387-44fb-9817-93085d14ccf9": {"Management:kind23": [{"fixed_cost_subtype":  "salaries_management"}]},
+	"plan::costs::fixedCosts::subCategory::860adbf1-baf5-4cf2-8b55-a5baca045e60": {"Factory workers / service:kind23": [{"fixed_cost_subtype":  "salaries_factory_workers_service"}]},
+	"plan::costs::fixedCosts::subCategory::fb4a4c08-a17d-444c-9776-92c54acd6940": {"Finance management:kind23": [{"fixed_cost_subtype":  "salaries_finance_management"}]},
+
+	"plan::costs::fixedCosts::subCategory::ac1f0f22-1958-45fd-851b-130a155e86c3": {"Marketing:kind23": [{"fixed_cost_subtype":  "salaries_marketing"}]}
+}

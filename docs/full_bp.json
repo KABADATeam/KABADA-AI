@@ -66,6 +66,42 @@
 				"pricingType": ["266f43d7-8b45-4880-bd3c-88dcbd017fb4", "363f16df-3f11-4643-9c93-cd64242c0bf5"],
 				"price": ["75c81e8e-aa76-4f81-895e-0465da7b6d7a", "fef1c6f8-493c-4641-9f0c-1141cb762605", "2897fd3b-afad-47e5-8407-3582fb0cdf07", "e1d977e9-0c83-4f69-8bfe-3f2689b6cec2", "925f1189-56f9-4cc3-ae1e-50ddbab2a29d", "be31e251-6784-4472-a771-86c159b3f9fb", "2483ee5b-da92-4400-aa64-88eb8a1ea152"]
 			}]
+		},
+		"keyPartners": {
+			"distributors": [
+				{
+					"partnerType": ["e83d8ad7-c709-41b3-b1cd-15e1871fb374", "88fa173b-e9a8-44a7-be1a-43fab1989a02", "cc3cddf7-c4fa-4679-8feb-58935864f5b2", "4ae078f2-21a9-4f01-b11d-92eace60e38e", "4c53b804-2392-4744-a1ce-c11d424d7aab", "9c1015a6-00a0-4d86-a723-c56bb7da4df5"],
+					"priority": ["True", "False"]
+				}
+			],
+			"suppliers": [
+				{
+					"partnerType": ["578b2d6c-608f-4bd7-9e38-1f888650e6b0", "57edccf6-bc5a-4679-8a9a-99f8c2f97a4e", "3bb18f50-91bf-4c73-ad1f-9cdd924127fb", "50477479-4b86-4ce1-bcea-c3e7b075f5c8", "22ab4468-869c-4f8a-94c9-e2f5c3974718"],
+					"priority": ["True", "False"]
+				}
+			],
+			"others": [
+				{
+					"partnerType": ["37c1161f-aac3-4e5e-81df-3cce00e3b25c", "da250714-2420-4d57-8015-44fe1e1ff294", "1947e5da-01ea-4d22-8e37-72264d47d9b8", "fbaa6538-cedd-43f9-b739-bffcf4f00e96", "7a82656a-a993-4a54-b8e6-c69224642dd1"],
+					"priority": ["True", "False"]
+				}
+			]
+		},
+		"costs": {
+			"fixedCosts": [{
+				"category": [],
+				"subCategory": []
+			}],
+			"variableCosts": [{
+				"category": [],
+				"subCategory": []
+			}]
+		},
+		"swot": {
+			"strengths": ["e93d16a1-fc41-4443-b88b-023d051103bf", "c6e60be8-eef9-41fe-948b-133375a3c43b", "0ea957e0-d54e-4729-b7a7-1a4ac6b0b9fc", "8e07b533-f25e-4227-8fd8-1b2f19a7b4f3", "42c22ecb-1f79-467a-8b1f-2e709de5a5e2", "17063605-ce9b-4e92-9d41-52ea1cee6632", "651a1fcd-0ad6-4311-9bb0-61cb8b210146", "2f2f8c7f-ac0c-4115-a3b8-714e0d6529d9", "d89128ed-072e-4f22-aea3-7f058c855888", "acb3829b-c7e2-45eb-810d-80cd3d4f5f39", "92455eb0-dd6b-4c56-a883-8a39f2dafbae", "fee1bca2-317f-4b5d-9c8b-9414a16a4d0f", "4820dc72-7756-4510-9d6a-9a062e2fc22e", "a80edb58-5f37-4410-891f-9c0446982131", "7d1df83e-9bdd-47eb-8fad-ad7f7b1a8329", "9f62a58d-00b7-43ee-8374-ae679f5d68af", "1afacd96-1b6b-4958-bffd-af953759ee25", "e8daf129-e055-4683-b4aa-c1ebd5934e25", "7322bf24-fee2-4a31-bcda-c4e7a762c162", "9d608883-4f26-4303-9903-d8de46433f04", "f782da7f-d1e2-4cf8-9267-ea403651f58d", "7cb479d5-c8e5-40c3-909c-fbde2188b593", "e0c84bf6-dbc3-450e-95ac-fe42299e05df"],
+			"weaknesses": ["e93d16a1-fc41-4443-b88b-023d051103bf", "c6e60be8-eef9-41fe-948b-133375a3c43b", "0ea957e0-d54e-4729-b7a7-1a4ac6b0b9fc", "8e07b533-f25e-4227-8fd8-1b2f19a7b4f3", "42c22ecb-1f79-467a-8b1f-2e709de5a5e2", "17063605-ce9b-4e92-9d41-52ea1cee6632", "651a1fcd-0ad6-4311-9bb0-61cb8b210146", "2f2f8c7f-ac0c-4115-a3b8-714e0d6529d9", "d89128ed-072e-4f22-aea3-7f058c855888", "acb3829b-c7e2-45eb-810d-80cd3d4f5f39", "92455eb0-dd6b-4c56-a883-8a39f2dafbae", "fee1bca2-317f-4b5d-9c8b-9414a16a4d0f", "4820dc72-7756-4510-9d6a-9a062e2fc22e", "a80edb58-5f37-4410-891f-9c0446982131", "7d1df83e-9bdd-47eb-8fad-ad7f7b1a8329", "9f62a58d-00b7-43ee-8374-ae679f5d68af", "1afacd96-1b6b-4958-bffd-af953759ee25", "e8daf129-e055-4683-b4aa-c1ebd5934e25", "7322bf24-fee2-4a31-bcda-c4e7a762c162", "9d608883-4f26-4303-9903-d8de46433f04", "f782da7f-d1e2-4cf8-9267-ea403651f58d", "7cb479d5-c8e5-40c3-909c-fbde2188b593", "e0c84bf6-dbc3-450e-95ac-fe42299e05df"],
+			"opportunities": ["c48b255a-2451-42e2-a889-0a76e5b850e0", "e3773f81-fa98-4ad4-b235-2bab8369e22b", "75ccb567-91f3-4966-91f6-30565cb59ba0", "ab5ffc0e-da10-4ed8-a7fb-369785911381", "70fad897-dcb6-4818-a9b1-39b2b08dd93c", "62d8c572-b4b2-45e7-be6d-607de423b903", "f71ce8b4-dbd8-4280-a216-66677e115f74", "5a78cb95-3eb4-432a-a0cc-68886ae692da", "316e0636-3ce5-4ba0-b72f-7223698fb8fb", "e04a476c-a409-472a-beb4-819b104d9731", "457f681a-f052-408d-a7f6-8979f6c47063", "3861b60b-1598-4b1e-be5a-8d815e6674a7", "e436274e-cbea-42e0-be23-8dcf0804daf0", "adb303c0-23af-4eca-948c-9f09142bf015", "cdc1a197-fb79-42b9-a7cb-9ff8fd0e1622", "6a08ddad-1878-46da-a843-a1856a93dd91", "9ee57d37-6425-409e-b7fd-aa97f3010e9f", "a3935a3c-ad19-4395-8020-c7c73a9587f3", "f611bf2d-3089-4e53-b362-cf740f1f102a", "636b2c40-cfd3-4eb3-9003-dac709ff860b", "90e3590d-b9d4-4e07-87cf-e45659e486f0", "7a4a57fd-79e7-4141-88b5-e57a22d7ef9a", "eea606be-c02d-41a6-a35e-e8701086869c", "ed7c4844-5ab2-431f-b765-ea94db35952d", "f5e69507-6f10-49bd-a3aa-edd3b0845e67"],
+			"threats": ["c48b255a-2451-42e2-a889-0a76e5b850e0", "e3773f81-fa98-4ad4-b235-2bab8369e22b", "75ccb567-91f3-4966-91f6-30565cb59ba0", "ab5ffc0e-da10-4ed8-a7fb-369785911381", "70fad897-dcb6-4818-a9b1-39b2b08dd93c", "62d8c572-b4b2-45e7-be6d-607de423b903", "f71ce8b4-dbd8-4280-a216-66677e115f74", "5a78cb95-3eb4-432a-a0cc-68886ae692da", "316e0636-3ce5-4ba0-b72f-7223698fb8fb", "e04a476c-a409-472a-beb4-819b104d9731", "457f681a-f052-408d-a7f6-8979f6c47063", "3861b60b-1598-4b1e-be5a-8d815e6674a7", "e436274e-cbea-42e0-be23-8dcf0804daf0", "adb303c0-23af-4eca-948c-9f09142bf015", "cdc1a197-fb79-42b9-a7cb-9ff8fd0e1622", "6a08ddad-1878-46da-a843-a1856a93dd91", "9ee57d37-6425-409e-b7fd-aa97f3010e9f", "a3935a3c-ad19-4395-8020-c7c73a9587f3", "f611bf2d-3089-4e53-b362-cf740f1f102a", "636b2c40-cfd3-4eb3-9003-dac709ff860b", "90e3590d-b9d4-4e07-87cf-e45659e486f0", "7a4a57fd-79e7-4141-88b5-e57a22d7ef9a", "eea606be-c02d-41a6-a35e-e8701086869c", "ed7c4844-5ab2-431f-b765-ea94db35952d", "f5e69507-6f10-49bd-a3aa-edd3b0845e67"]
 		}
 	}
 }

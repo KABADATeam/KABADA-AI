@@ -1,0 +1,10 @@
+{
+	"plan::keyPartners::suppliers::partnerType::578b2d6c-608f-4bd7-9e38-1f888650e6b0": {"Raw materials, finished or semi-finished goods:kind12": [{"supplier_type":  "raw_materials_finished_or_semi_finished_goods"}]},
+	"plan::keyPartners::suppliers::partnerType::50477479-4b86-4ce1-bcea-c3e7b075f5c8": {"Equipment and real estate:kind12": [{"supplier_type":  "equipment_and_real_estate"}]},
+	"plan::keyPartners::suppliers::partnerType::57edccf6-bc5a-4679-8a9a-99f8c2f97a4e": {"Outsourced services:kind12": [{"supplier_type":  "outsourced_services"}]},
+	"plan::keyPartners::suppliers::partnerType::3bb18f50-91bf-4c73-ad1f-9cdd924127fb": {"Financiers:kind12": [{"supplier_type":  "financiers"}]},
+	"plan::keyPartners::suppliers::partnerType::22ab4468-869c-4f8a-94c9-e2f5c3974718": {"Human resources:kind12": [{"supplier_type":  "human_resources"}]},
+
+	"plan::keyPartners::suppliers::priority::True": {"True:kind12": [{"is_supplier_priority":  "True"}]},
+	"plan::keyPartners::suppliers::priority::False": {"False:kind12": [{"is_supplier_priority":  "False"}]}
+}
