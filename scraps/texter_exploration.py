@@ -65,6 +65,6 @@ def print_probable_flat_guids():
 
 if __name__ == "__main__":
     # check_value_counts()
-    print_kind_associated_guids(1)
-    # print_value2kind("Accessibility of financial resources")
+    print_kind_associated_guids(5)
+    # print_value2kind("Physical resources")
     # print_probable_flat_guids()

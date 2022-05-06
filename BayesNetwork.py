@@ -212,9 +212,10 @@ class MultiNetwork:
         self.bns = {}
         self.random_variables_2_predict = {}
         self.sampling_order = ["value_propositions", "consumer_segments", "business_segments", "public_bodies_and_ngo",
-            "channels", "get_new_customers", "keep_customers", "convince_existing_to_spend_more",
-            "revenue_streams_consumers", "revenue_streams_business", "revenue_streams_ngo", "key_partners_distributors",
-            "key_partners_suppliers", "key_partners_others", "fixed_costs", "variable_costs", "swot"]
+                               "channels", "get_new_customers", "keep_customers", "convince_existing_to_spend_more",
+                               "revenue_streams_consumers", "revenue_streams_business", "revenue_streams_ngo",
+                               "key_resources", "key_partners_distributors", "key_partners_suppliers",
+                               "key_partners_others", "fixed_costs", "variable_costs", "swot"]
 
         with open(join(repo_dir, "docs", "sub_bn_relations.json"), "r") as conn:
             self.sub_bn_relations = json.load(conn)

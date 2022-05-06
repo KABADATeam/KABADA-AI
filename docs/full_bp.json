@@ -67,6 +67,7 @@
 				"price": ["75c81e8e-aa76-4f81-895e-0465da7b6d7a", "fef1c6f8-493c-4641-9f0c-1141cb762605", "2897fd3b-afad-47e5-8407-3582fb0cdf07", "e1d977e9-0c83-4f69-8bfe-3f2689b6cec2", "925f1189-56f9-4cc3-ae1e-50ddbab2a29d", "be31e251-6784-4472-a771-86c159b3f9fb", "2483ee5b-da92-4400-aa64-88eb8a1ea152"]
 			}]
 		},
+
 		"keyPartners": {
 			"distributors": [
 				{
@@ -89,12 +90,12 @@
 		},
 		"costs": {
 			"fixedCosts": [{
-				"category": [],
-				"subCategory": []
+				"category": ["df741ccc-d2ef-4797-8c96-8b5be0344f88", "da2dac96-650b-4d54-a984-9c6bae0653c7", "e4c57d7e-a1c6-462a-8f83-35aa7e989ddb", "25532174-0c07-4293-99c2-10c954ad6367", "507b8ec3-8687-4c2c-a6e2-80833c1da93e", "abdbd71b-4c23-4cc1-aacb-2dac249540f3", "f5d95c3b-4894-41b1-98b8-b1eb44ef436a", "4bf467d0-1c9d-469d-9dad-45b6bf4b7f47", "f61f60ab-7991-4dac-b40e-c742dcef878b", "5a7a66cb-25f4-462b-b1f7-47b97735d7da"],
+				"subCategory": ["2d9ebc0f-7a82-4891-8dc6-1fa64b5fa22d", "c5acf766-38a0-4cf2-8649-6074f10a6b9f", "c7250794-8be0-4cdb-99e7-37337b2e8fc1", "5cb61693-d73a-40fd-9664-01921eeba8cc", "e1371329-8c9e-4ab3-95fe-654e7f64dfc4", "e221190c-00bc-404f-a540-708d0e673454", "373f6176-6eef-4866-96ff-2c4efe5c4a76", "a571bc0b-8f30-4070-b16b-cd873a2deab7", "1b776dfa-533e-4511-8185-5c576db8dcec", "cf1657e0-d4eb-430c-8185-fc80c20aa25c", "31ca9e3a-ff44-41db-8833-2661abddb353", "fe7ff7a5-af48-4eb2-b60e-0d76c808a43f", "aa2e4a07-25cf-454b-9505-118ee9077477", "3253125f-cc5c-4269-a6e2-d9e95f0d4c3a", "e673e497-be75-4692-952c-8cdf3d5a9714", "db69b609-d71a-417a-9142-f8b5dbeb7cb3", "e6aaacaf-9550-4937-bf13-0d1ff0b69874", "a4e19cfd-e63d-4eaf-b45e-8a298a3be406", "36c027b7-849b-4466-bafa-8e3441a53fb9", "2bb3f65a-5c77-4482-9fa3-8b7c2ce555bd", "7d87bb63-1cd8-4ec0-a46d-487c77da365f", "d54aefa4-bd1c-4c73-b0f1-8e3c58eb29bc", "eaee254e-e4c3-4ebd-86eb-ed38a54c238b", "fc510839-c0c3-4883-a917-e35a2b9ea22e", "c804bad3-0387-44fb-9817-93085d14ccf9", "860adbf1-baf5-4cf2-8b55-a5baca045e60", "fb4a4c08-a17d-444c-9776-92c54acd6940", "ac1f0f22-1958-45fd-851b-130a155e86c3"]
 			}],
 			"variableCosts": [{
-				"category": [],
-				"subCategory": []
+				"category": ["09b845a4-df9c-4f53-b833-1f69ae6d1835", "fb2a304a-f8fb-4fc2-ae29-eb95cd44bf6c", "0bff5c28-137c-4890-90df-ba7e0746431c", "c7b32094-6538-4e72-ad49-6ea1fda21562", "67dc4bec-4276-44df-a573-e95b64864a7e", "ef60cdef-d5b1-421a-aa36-10463faf9f6e", "7ac334c8-cafd-4f64-8414-00c61aa80cb7", "e50d6201-cd2e-46bb-b9b0-3a723ab72a79", "4a3658fb-71ac-4feb-9104-7761fdd5cc9b"],
+				"subCategory": ["a560bf73-2db4-46de-a121-17756a2cd4ad", "5087771d-cce4-4521-a3cb-a14b1891abba", "eed82f80-4e74-435d-9371-fba9683b33ad", "08871a1a-331b-44af-8395-9bdf2287ed8c", "bbe1a5d6-d7d1-4d70-a5cf-00589419ce8d", "c267cba0-ef66-48d5-96bd-74d4efd1b52b", "e77f9a30-6e69-432d-9c8e-88380ba63de2", "90a35599-3c47-4389-b571-c9d3c7957daf", "aa02701e-c0d0-4c27-a09d-7a4987629640", "69646d5e-0e73-4056-9dac-70ff0d0a9ebe", "54afad44-3157-4521-90df-543d4686355a", "03af662c-036c-43d8-95c7-e07b9388495c", "a4b8b286-4fc6-4021-ab42-3952154ffeba", "e31f5678-6604-47a6-ac67-724b8d0d54e8", "de834ef4-a990-4a17-9385-e6a6c226189c", "7c36e454-f5df-4cbf-9507-01a389bcb923"]
 			}]
 		},
 		"swot": {

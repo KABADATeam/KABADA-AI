@@ -88,7 +88,7 @@ def validate_wrt_texter():
             s = list(stuff.keys())[0]
             val, kind = s.split(":kind")
             if not (val == val1 and int(kind) == kind1):
-                raise ValueError( val, val1, int(kind), kind1)
+                raise ValueError(bn_name, val, val1, int(kind), kind1)
 
 
 def check_bp_flattener():

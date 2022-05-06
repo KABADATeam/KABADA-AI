@@ -2,12 +2,28 @@ import pickle
 from pprint import pprint
 from re import findall
 from BayesNetwork import MultiNetwork
-from Translator import Flattener
+from Translator import Flattener, Translator
 import json
 
-with open("../bp.pickle", "rb") as conn:
+# translator = Translator()
+# prefix = "plan::costs::fixedCosts::category::"
+# # prefix = "plan::costs::fixedCosts::subCategory::"
+# guids = []
+# for guid in translator.lookup.keys():
+#     if prefix in guid:
+#         guids.append(guid.replace(prefix, ""))
+# print(str(guids).replace("'", '"'))
+# exit()
+
+with open("../stout.pickle", "rb") as conn:
     bp = pickle.load(conn)
 
+# with open("../bp.pickle", "rb") as conn:
+#     bp = pickle.load(conn)
+
+
+# pprint(bp)
+# exit()
 with open("../stout.json", "w") as conn:
     json.dump(bp, conn)
 
@@ -27,16 +43,19 @@ with open("../stout.json", "w") as conn:
 
 # print(findall('03f70344-c4f5-456a-bbfe-94dde489b31c', str(bp)))
 # print(bp['plan'].keys())
-# print(bp['plan']['swot'].keys())
+# pprint(bp['plan']['channels'][0])
 
+# pprint(bp['plan']['custSegs']['consumer'])
+# exit()
 
-# pprint(bp['plan']['costs']['fixedCosts'][0])
+# pprint(bp['plan']['costs']['fixedCosts'])
+# pprint([a for a in bp['plan']['costs']['variableCosts'] if a['name'] == "aaa"])
 # pprint(bp['plan']['costs']['fixedCosts'])
 # pprint(bp['plan']['costs']['variableCosts'])
+# exit()
 
-
-pprint(bp['plan']['swot'].keys())
-pprint(bp['plan']['swot']['strengths'])
+# pprint(bp['plan']['swot'].keys())
+# pprint(bp['plan']['swot']['strengths'])
 
 # pprint(bp['plan']['keyPartners'].keys())
 # pprint(bp['plan']['keyPartners']['distributors'][0])
@@ -44,7 +63,7 @@ pprint(bp['plan']['swot']['strengths'])
 # pprint(bp['plan']['keyPartners']['others'][0])
 
 # pprint(bp['plan']['keyActivities'][0])
-# pprint(bp['plan']['keyResources'][2])
+pprint(bp['plan']['keyResources'][-1])
 # pprint(bp['plan']['custRelationship'])
 # pprint(bp['plan']['revenue']['consumer'][0].keys())
 # pprint(bp['plan']['revenue']['business'][0]["price"])

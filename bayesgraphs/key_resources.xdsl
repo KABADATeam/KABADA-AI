@@ -2,12 +2,6 @@
 <!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
 <smile version="1.0" id="Network3" numsamples="10000" discsamples="10000">
 	<nodes>
-		<cpt id="resource_category">
-			<state id="physical" />
-			<state id="intellectual" />
-			<state id="human" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
 		<cpt id="resource_type">
 			<state id="buildings" />
 			<state id="equipment" />
@@ -22,8 +16,7 @@
 			<state id="administrative" />
 			<state id="employees_directly_involved_in_production" />
 			<state id="other_hr" />
-			<parents>resource_category</parents>
-			<probabilities>0.2 0.2 0.2 0.2 0.2 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0.25 0.25 0.25 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0.25 0.25 0.25</probabilities>
+			<probabilities>0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307693 0.07692307692307709</probabilities>
 		</cpt>
 		<cpt id="ownership_type">
 			<state id="rent" />
@@ -32,8 +25,8 @@
 			<state id="employ" />
 			<state id="outsource" />
 			<state id="myself" />
-			<parents>resource_category</parents>
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
+			<parents>resource_type</parents>
+			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333 0 0 0 0.3333333333333333 0.3333333333333333 0.3333333333333333</probabilities>
 		</cpt>
 		<cpt id="frequency">
 			<state id="permanently" />
@@ -43,26 +36,19 @@
 	</nodes>
 	<extensions>
 		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="key_resources">
-			<node id="resource_category">
-				<name>resource_category</name>
-				<interior color="e5f6f7" />
-				<outline color="000080" />
-				<font color="000000" name="Arial" size="8" />
-				<position>77 95 315 136</position>
-			</node>
 			<node id="resource_type">
 				<name>resource_type</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>210 186 374 212</position>
+				<position>58 75 222 101</position>
 			</node>
 			<node id="ownership_type">
 				<name>ownership_type</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>22 184 188 210</position>
+				<position>140 160 306 186</position>
 			</node>
 			<node id="frequency">
 				<name>frequency</name>
