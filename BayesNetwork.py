@@ -51,6 +51,37 @@ class BayesNetwork:
         self.net.set_zero_avoidance_enabled(True)
         self.net.update_beliefs()
 
+    def _bp1_conditioned_likelihood_of_bp2(self, bp1, bp2, varnames):
+        likelihoods = []
+        for ivar, varname in enumerate(varnames):
+            if ivar == 0:
+                likelihood = float(bp1[ivar] == bp2[ivar])
+            else:
+                # values = self.net.get_outcome_ids(varname)
+                probs = self.get_node_probs(varname)
+                likelihood = probs[bp2[ivar]]
+
+            self.add_evidence(varname, bp1[ivar])
+            likelihoods.append(likelihood)
+        return likelihoods
+
+    def distance(self, bp1, bp2, targets=None):
+        """"induced distance between two business plans"""
+        nodes = list(self.get_node_iterator(targets=targets))
+        varnames = [self.net.get_node_name(node) for node in nodes]
+        bp1 = {k: v for k, v in bp1}
+        bp2 = {k: v for k, v in bp2}
+        bp1 = [self.net.get_outcome_ids(varname).index(bp1[varname]) for varname in varnames]
+        bp2 = [self.net.get_outcome_ids(varname).index(bp2[varname]) for varname in varnames]
+
+        likelihoods1 = self._bp1_conditioned_likelihood_of_bp2(bp1, bp2, nodes)
+        self.clear_evidence(nodes)
+        likelihoods2 = self._bp1_conditioned_likelihood_of_bp2(bp2, bp1, nodes)
+        # TODO why these two are the same? add_evidence doesnt work somewhere
+        print(likelihoods1)
+        print(likelihoods2)
+        exit()
+
     def learn(self, path_newdata, flag_verbose=-1):
         ds = pysmile.learning.DataSet()
         ds.read_file(path_newdata)
@@ -163,7 +194,8 @@ class BayesNetwork:
 
         return nodes
 
-    def predict_popup(self, list_evidence=None, flag_with_nos=False, flag_noisy=False, num_beams=1, targets=None):
+    def predict_popup(self, list_evidence=None, flag_with_nos=False, flag_noisy=False, num_beams=1, targets=None,
+                      flag_return_all_beams=False):
 
         if list_evidence is not None:
             for varname, value in list_evidence:
@@ -172,7 +204,7 @@ class BayesNetwork:
         nodes = self.get_node_iterator(list_evidence, targets)
         nodes = list(nodes)
         if num_beams > 1:
-            pairs = beam_search(self, nodes, flag_noisy, num_beams)
+            pairs = beam_search(self, nodes, flag_noisy, num_beams, flag_return_all_beams=flag_return_all_beams)
         else:
             # greedy approach
             pairs = []
@@ -188,7 +220,13 @@ class BayesNetwork:
                 self.net.set_evidence(node, i)
 
         if not flag_with_nos:
-            pairs = [(varname, value) for varname, value in pairs if value != "no"]
+            if flag_return_all_beams:
+                if num_beams == 1:
+                    pairs = [pairs]
+                for i, subpairs in enumerate(pairs):
+                    pairs[i] = [(varname, value) for varname, value in subpairs if value != "no"]
+            else:
+                pairs = [(varname, value) for varname, value in pairs if value != "no"]
 
         self.clear_evidence()
         return pairs
@@ -197,7 +235,10 @@ class BayesNetwork:
         if varname is None:
             self.net.clear_all_evidence()
         else:
-            self.net.clear_evidence(varname)
+            if not isinstance(varname, list):
+                varname = [varname]
+            for _ in varname:
+                self.net.clear_evidence(_)
 
     def generate_one_sample(self, flag_with_nos=False, num_beams=1):
         return self.predict_popup(flag_with_nos=flag_with_nos, flag_noisy=True, num_beams=num_beams)
@@ -309,23 +350,29 @@ class MultiNetwork:
                 i = np.digitize(np.random.uniform(), np.cumsum(probs))
                 outcome = self.bns['main'].net.get_outcome_id(num_node_name, i)
                 outcome = outcome.replace("num", "")
-                n = int(5 if outcome == "_more" else outcome)
+                n = int(np.random.randint(5, 20) if outcome == "_more" else outcome)
 
                 if bn_name in self.sub_bn_relations:
                     dict_parents_by_name = defaultdict(list)
                     for parent, _ in self.sub_bn_relations[bn_name].items():
                         for bn_name1, list_guids, id_bp in bp:
                             if bn_name1 == parent:
-                                dict_parents_by_name[parent].append(id_bp)
+                                dict_parents_by_name[parent].append((id_bp, list_guids))
 
                     bp_new = []
                     if len(dict_parents_by_name) > 0:
-                        for parent, id_bps in dict_parents_by_name.items():
+                        for parent, id_and_guids_bps in dict_parents_by_name.items():
+                            id_bps, list_guids = zip(*id_and_guids_bps)
+
                             relation_type, field_name = self.sub_bn_relations[bn_name][parent]
                             field_name = f"{self.flattener.bn2bp[bn_name]}::{field_name}"
                             if relation_type == "1_to_n":
                                 n = int(np.clip(n, 1, len(id_bps)))
                                 a = 0
+                                # TODO sagrupet parentus peec liidziibas
+                                # print(self.translator(list_guids[0], flag_assume_full=True))
+                                # pprint(list_guids)
+                                # exit()
                                 for i in range(n):
                                     b = a + (len(id_bps) // n) + int((len(id_bps) % n) > i)
                                     bp_new.append((bn_name,
@@ -340,7 +387,10 @@ class MultiNetwork:
                                 raise ValueError
                 else:
                     bp_new = [(bn_name, [], str(uuid4())) for _ in range(n)]
+
+                # TODO visus tukšos ar vienu un to pashu parenta id_bp generet ar beam search garantejot to atskiribu
                 bp_monte_carlo = self.predict_all(bp + bp_new, flag_noisy=True, target_bns=[bn_name])
+
                 for i in range(len(bp_new)):
                     bn_name, list_parent_ids, id_bp = bp_new[i]
                     _, list_guids, _ = bp_monte_carlo[i]

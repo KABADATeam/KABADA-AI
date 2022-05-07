@@ -46,7 +46,7 @@ class Beam:
         return str(self.vals) + " " + str(self.prob)
 
 
-def beam_search(self, nodes, flag_noisy, num_beams):
+def beam_search(self, nodes, flag_noisy, num_beams, flag_return_all_beams=False):
     # generating prediction
     beams = []
     for i_node, node in enumerate(nodes):
@@ -76,6 +76,14 @@ def beam_search(self, nodes, flag_noisy, num_beams):
             if i not in inds:
                 beams.pop(i)
 
+    if flag_return_all_beams:
+        beam_pairs = []
+        for beam in beams:
+            beam_pairs.append([
+                (self.net.get_node_name(node), self.net.get_outcome_id(node, val))
+                for node, val, prob in beam.vals if prob >= self.tresh_yes])
+        return beam_pairs
+
     # cleaning output
     i_opt = np.argmax([_.prob for _ in beams])
     pairs = [(self.net.get_node_name(node), self.net.get_outcome_id(node, val)) for node, val, prob in beams[i_opt].vals
@@ -84,24 +92,27 @@ def beam_search(self, nodes, flag_noisy, num_beams):
 
 
 if __name__ == "__main__":
-    import pysmile
+    from pprint import pprint
     from BayesNetwork import MultiNetwork
     from config import path_temp_data_file
     mbn = MultiNetwork(tresh_yes=0.0)
     bn = mbn.bns["consumer_segments"]
+    # bn = mbn.bns["fixed_costs"]
 
-    for node in [2, 3, 4, 5, 6, 12, 17]:
-        bn.net.set_node_type(node, int(pysmile.NodeType.CPT))
-        bn.net.update_beliefs()
-        n_vals = len(bn.net.get_node_value(node))
-        parents = bn.net.get_parents(node)
-        print(bn.net.get_node_name(node), [bn.net.get_node_name(node) for node in parents])
-        cpt = np.asarray(bn.net.get_node_definition(node)).reshape(-1, n_vals)
-    exit()
-    for node in bn.net.get_all_nodes():
-        print(node, bn.net.get_parents(node), bn.net.get_node_name(node))
+    beams = bn.predict_popup(num_beams=3, flag_with_nos=True, flag_return_all_beams=True)
+    varnames = sorted([_[0] for _ in beams[0]])
 
+    values = []
+    for beam in beams:
+        beam = {k: v for k, v in beam}
+        values.append("::".join([beam[k] for k in varnames]))
 
+    print(len(values), len(set(values)))
+    i0, i1 = 1, 2
+    print(values[i0])
+    print(values[i1])
+    dist = bn.distance(beams[i0], beams[i1])
+    print(dist)
 
 
 
