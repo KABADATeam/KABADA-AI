@@ -2,47 +2,53 @@
 <!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
 <smile version="1.0" id="Network2" numsamples="10000" discsamples="10000">
 	<nodes>
-		<cpt id="age_under_12">
+		<noisymax id="age_under_12">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0.14 0.86</probabilities>
-		</cpt>
-		<cpt id="age_12_17">
+			<parameters>0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_12_17">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_under_12</parents>
-			<probabilities>0 1 0.16 0.84</probabilities>
-		</cpt>
-		<cpt id="age_18_24">
+			<strengths>0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_18_24">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_12_17 age_under_12</parents>
-			<probabilities>0 1 0 1 0 1 0.2 0.8</probabilities>
-		</cpt>
-		<cpt id="age_25_34">
+			<strengths>0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_25_34">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_18_24 age_under_12 age_12_17</parents>
-			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.25 0.75</probabilities>
-		</cpt>
-		<cpt id="age_35_64">
+			<strengths>0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_35_64">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_25_34 age_under_12 age_18_24 age_12_17</parents>
-			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.33 0.67</probabilities>
-		</cpt>
-		<cpt id="age_65_74">
+			<strengths>0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_65_74">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_35_64 age_25_34 age_18_24 age_12_17 age_under_12</parents>
-			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.5 0.5</probabilities>
-		</cpt>
-		<cpt id="age_75_over">
+			<strengths>0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_75_over">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_65_74 age_35_64 age_25_34 age_18_24 age_12_17 age_under_12</parents>
-			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</probabilities>
-		</cpt>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
 		<cpt id="gender_male">
 			<state id="yes" />
 			<state id="no" />

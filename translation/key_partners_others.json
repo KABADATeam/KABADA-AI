@@ -2,7 +2,7 @@
 	"plan::keyPartners::others::partnerType::37c1161f-aac3-4e5e-81df-3cce00e3b25c": {"Associations:kind13": [{"other_partner_type":  "associations"}]},
 	"plan::keyPartners::others::partnerType::da250714-2420-4d57-8015-44fe1e1ff294": {"Non-governmental institutions:kind13": [{"other_partner_type":  "non_governmental_institutions"}]},
 	"plan::keyPartners::others::partnerType::1947e5da-01ea-4d22-8e37-72264d47d9b8": {"Government institutions:kind13": [{"other_partner_type":  "government_institutions"}]},
-	"plan::keyPartners::others::partnerType::fbaa6538-cedd-43f9-b739-bffcf4f00e96": {"Other:kind13": [{"other_partner_type":  "Other"}]},
+	"plan::keyPartners::others::partnerType::fbaa6538-cedd-43f9-b739-bffcf4f00e96": {"Other:kind13": [{"other_partner_type":  "other"}]},
 	"plan::keyPartners::others::partnerType::7a82656a-a993-4a54-b8e6-c69224642dd1": {"Consultants:kind13": [{"other_partner_type":  "consultants"}]},
 
 	"plan::keyPartners::others::priority::True": {"True:kind13": [{"is_other_priority":  "True"}]},

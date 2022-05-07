@@ -10,8 +10,8 @@
 		<cpt id="distributor_type">
 			<state id="self_distribution" />
 			<state id="highly_diversified_distributors" />
-			<state id="reltailers" />
-			<state id="wholesailers" />
+			<state id="retailers" />
+			<state id="wholesalers" />
 			<state id="agents" />
 			<state id="others" />
 			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>

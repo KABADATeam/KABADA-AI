@@ -9,6 +9,10 @@
 	"plan::custRelationship::getCust": "get_new_customers",
 	"plan::custRelationship::convCust": "convince_existing_to_spend_more",
 
+	"plan::revenue::consumer": "revenue_streams_consumers",
+	"plan::revenue::business": "revenue_streams_business",
+	"plan::revenue::publicNgo": "revenue_streams_ngo",
+
 	"plan::keyResources": "key_resources",
 	"plan::keyPartners::distributors": "key_partners_distributors",
 	"plan::keyPartners::suppliers": "key_partners_suppliers",

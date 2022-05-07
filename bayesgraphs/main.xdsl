@@ -85,47 +85,53 @@
 			<strengths>0 1</strengths>
 			<parameters>0.04999965009938789 0.85 0.04999965009938784 0.04999938767622431 1.312125e-06 0 0 0 0 1 0.2475000000000001 0.257498687875 0.2475 0.2475 1.312125e-06</parameters>
 		</noisymax>
-		<cpt id="age_under_12">
+		<noisymax id="age_under_12">
 			<state id="yes" />
 			<state id="no" />
-			<probabilities>0.14 0.86</probabilities>
-		</cpt>
-		<cpt id="age_12_17">
+			<parameters>0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_12_17">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_under_12</parents>
-			<probabilities>0 1 0.16 0.84</probabilities>
-		</cpt>
-		<cpt id="age_18_24">
+			<strengths>0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_18_24">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_12_17 age_under_12</parents>
-			<probabilities>0 1 0 1 0 1 0.2 0.8</probabilities>
-		</cpt>
-		<cpt id="age_25_34">
+			<strengths>0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_25_34">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_18_24 age_under_12 age_12_17</parents>
-			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.25 0.75</probabilities>
-		</cpt>
-		<cpt id="age_35_64">
+			<strengths>0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_35_64">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_25_34 age_under_12 age_18_24 age_12_17</parents>
-			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.33 0.67</probabilities>
-		</cpt>
-		<cpt id="age_65_74">
+			<strengths>0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_65_74">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_35_64 age_25_34 age_18_24 age_12_17 age_under_12</parents>
-			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0.5 0.5</probabilities>
-		</cpt>
-		<cpt id="age_75_over">
+			<strengths>0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
+		<noisymax id="age_75_over">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_65_74 age_35_64 age_25_34 age_18_24 age_12_17 age_under_12</parents>
-			<probabilities>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0</probabilities>
-		</cpt>
+			<strengths>0 1 0 1 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.05000000000000004 0.95 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.14 0.86</parameters>
+		</noisymax>
 		<noisymax id="education_primary">
 			<state id="yes" />
 			<state id="no" />
@@ -212,14 +218,14 @@
 			<state id="no" />
 			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over education_primary</parents>
 			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
-			<parameters>0 1 0 1 0.3 0.7 0 1 0.95 0.05 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
+			<parameters>0.01000000000000001 0.99 0 1 0.3 0.7 0 1 0.95 0.05 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
 		</noisymax>
 		<noisymax id="education_higher">
 			<state id="yes" />
 			<state id="no" />
 			<parents>age_under_12 age_12_17 age_18_24 age_25_34 age_35_64 age_65_74 age_75_over education_primary education_secondary</parents>
 			<strengths>0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</strengths>
-			<parameters>0 1 0 1 0 1 0 1 0.4 0.6 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
+			<parameters>0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0.4 0.6 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.7 0.3 0 1 0.01000000000000001 0.99 0 1 0.01000000000000001 0.99 0 1 0 1</parameters>
 		</noisymax>
 		<cpt id="gender_male">
 			<state id="yes" />
@@ -737,8 +743,8 @@
 		<cpt id="distributor_type">
 			<state id="self_distribution" />
 			<state id="highly_diversified_distributors" />
-			<state id="reltailers" />
-			<state id="wholesailers" />
+			<state id="retailers" />
+			<state id="wholesalers" />
 			<state id="agents" />
 			<state id="others" />
 			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
@@ -1272,7 +1278,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>996 845 1133 869</position>
+				<position>999 844 1103 868</position>
 			</node>
 			<node id="age_35_64">
 				<name>age_35_64</name>

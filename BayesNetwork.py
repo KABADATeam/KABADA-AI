@@ -27,7 +27,7 @@ class BayesNetwork:
 
         for node in self.net.get_all_nodes():
             current_node_type = self.net.get_node_type(node)
-            self.net.set_node_type(node, int(pysmile.NodeType.CPT))
+            # self.net.set_node_type(node, int(pysmile.NodeType.CPT))
 
             n_vals = self.net.get_outcome_count(node)
             cpt = np.asarray(self.net.get_node_definition(node)).reshape(-1, n_vals)
@@ -38,8 +38,15 @@ class BayesNetwork:
                     cpt[i, :] = np.ones((n_vals,)) / n_vals
                 else:
                     cpt[i, :] = cpt[i, :] / s
+            # if node == 6:
+            #     print(cpt.flatten(), len(cpt.flatten()), current_node_type)
             self.net.set_node_definition(node, list(cpt.flatten()))
-            self.net.set_node_type(node, current_node_type)
+            # self.net.set_node_type(node, current_node_type)
+
+        for node in self.net.get_all_nodes():
+            probs = np.array(self.net.get_node_definition(node)).flatten()
+            # print(node, probs, len(probs))
+            assert np.sum(probs == 0) == 0
 
         self.net.set_zero_avoidance_enabled(True)
         self.net.update_beliefs()
@@ -101,7 +108,6 @@ class BayesNetwork:
         self.learn(path_newdata, flag_verbose=flag_verbose)
 
     def add_evidence(self, varname, val, flag_verbose=-1, flag_update_beliefs=True):
-
         if isinstance(val, list):
             if len(val) > 0:
                 valnames = self.net.get_outcome_ids(varname)
@@ -214,8 +220,8 @@ class MultiNetwork:
         self.sampling_order = ["value_propositions", "consumer_segments", "business_segments", "public_bodies_and_ngo",
                                "channels", "get_new_customers", "keep_customers", "convince_existing_to_spend_more",
                                "revenue_streams_consumers", "revenue_streams_business", "revenue_streams_ngo",
-                               "key_resources", "key_partners_distributors", "key_partners_suppliers",
-                               "key_partners_others", "fixed_costs", "variable_costs", "swot"]
+                               "key_partners_distributors", "key_partners_suppliers",
+                               "key_partners_others", "fixed_costs", "variable_costs"]
 
         with open(join(repo_dir, "docs", "sub_bn_relations.json"), "r") as conn:
             self.sub_bn_relations = json.load(conn)
@@ -291,7 +297,7 @@ class MultiNetwork:
 
         elif mode == "main":
             bp = []
-            # TODO samplot nace
+            # TODO samplot nace un swot
 
             # sagjeneree guids_by_bn formaa
             for bn_name in self.sampling_order:
@@ -379,7 +385,6 @@ class MultiNetwork:
                         list_evidence = self.translator(other_guids)
                     if len(list_evidence) == 0:
                         continue
-
                     assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
 
                     for varname, value in list_evidence[other_bn_name]:
@@ -408,37 +413,32 @@ class MultiNetwork:
         return translations_by_bn
 
 
+def check_recomendation_generation():
+    from tests.body_generators import PredictBodyGen
+    np.random.seed(1)
+    gen = PredictBodyGen()
+    flattener = Flattener()
+    net = MultiNetwork()
+    np.random.seed(1)
+    for _ in range(100):
+        np.random.seed(_)
+        guids_by_bn = gen.generate_from_bn()
+        # bp = gen()
+        # guids_by_bn = flattener(bp)
+        recomendations_by_bn = net.predict_all(guids_by_bn)
+
+def generate_bn_sample():
+    mnt = MultiNetwork()
+    for _ in range(100):
+        translations_by_bn = mnt.sample_all()
+        bp = mnt.flattener.back(translations_by_bn)
+    # pprint(bp)
+    # exit()
+
+
 if __name__ == "__main__":
     from pprint import pprint
-    from tests.body_generators import PredictBodyGen
     from Translator import Flattener, BPMerger
-
-    def check_recomendation_generation():
-        np.random.seed(1)
-        gen = PredictBodyGen()
-        flattener = Flattener()
-        merger = BPMerger()
-        net = MultiNetwork()
-        np.random.seed(1)
-
-        for _ in range(100):
-            np.random.seed(_)
-            # bp = gen.generate_from_bn()
-            bp = gen()
-            guids_by_bn = flattener(bp)
-            recomendations_by_bn = net.predict_all(guids_by_bn)
-
-            # pprint(bp)
-            # exit()
-        print(recomendations_by_bn)
-
-    def generate_bn_sample():
-        mnt = MultiNetwork()
-        for _ in range(100):
-            translations_by_bn = mnt.sample_all()
-            bp = mnt.flattener.back(translations_by_bn)
-        pprint(bp)
-        exit()
 
     def single_bn_train_test():
         # np.random.seed(0)
@@ -471,6 +471,7 @@ if __name__ == "__main__":
         bn.learn_new_dependencies(path_temp_data_file)
         # bn.learn("bayesgraphs/consumer_segments.txt")
         exit()
+
 
     check_recomendation_generation()
     generate_bn_sample()

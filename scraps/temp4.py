@@ -12,7 +12,7 @@ from pprint import pprint
 
 # bn = BayesNetwork(join(net_dir, "consumer_segments.xdsl"))
 
-def just_generate(name="age_vs_edu"):
+def just_generate(name="age_vs_edu", flag_save_table=True):
     bn = BayesNetwork(join(net_dir, name + ".xdsl"), tresh_yes=0.0)
     B = 1000
     tab = defaultdict(list)
@@ -28,7 +28,7 @@ def just_generate(name="age_vs_edu"):
 
     tab = pd.DataFrame(tab)
     tab.to_csv("../bayesgraphs/consumer_segments2.txt", sep=" ", index=False)
-    print(tab.shape)
+    return tab
 
 
 def education_vs_education():
@@ -79,28 +79,29 @@ def node_vs_node():
     ages = ["Node4", "Node5"]
     edus = ["Node6"]
 
-    # tab = tab[["Node4", "Node5", "Node6"]]
-    # for k in tab.columns:
-    #     tab[k] = tab[k].apply(lambda x: 1 if x == "yes" else 0)
-    # tab = np.asarray(tab)
-    # print(np.corrcoef(tab.T))
-    # exit()
-
-    # freqs = []
-    # for age in ages:
-    #     freqs.append(np.average(tab[age] == 'yes'))
-    # print(freqs, 1 / len(ages))
-    # exit()
-
     img = np.zeros((len(ages), len(edus)))
     for i, age in enumerate(ages):
         for j, edu in enumerate(edus):
             img[i, j] = np.average(np.logical_and(tab[age] == 'yes', tab[edu] == 'yes'))  # / np.sum(tab[age] == 'yes')
-
     # img = (img.T / np.sum(img, 1)).T
     print(img)
 
 
-age_vs_education()
+def check_age_groups_at_consumer_segments():
+    tab = just_generate("consumer_segments", flag_save_table=False)
+    # tab = pd.read_csv("../bayesgraphs/age_vs_edu.txt", sep=" ")
+    ages = ['age_under_12', 'age_12_17', 'age_18_24', 'age_25_34', 'age_35_64', 'age_65_74', 'age_75_over']
+    edus = ['education_primary', 'education_secondary', 'education_higher']
+    img = np.zeros((len(ages), len(edus)))
+
+    for i, age in enumerate(ages):
+        for j, edu in enumerate(edus):
+            img[i, j] = np.average(np.logical_and(tab[age] == 'yes', tab[edu] == 'yes'))  # / np.sum(tab[age] == 'yes')
+    # img = (img.T / np.sum(img, 1)).T
+    print(img)
+
+
+# age_vs_education()
 # node_vs_node()
 # education_vs_education()
+check_age_groups_at_consumer_segments()

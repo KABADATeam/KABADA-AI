@@ -63,8 +63,8 @@ with open("../stout.json", "w") as conn:
 # pprint(bp['plan']['keyPartners']['others'][0])
 
 # pprint(bp['plan']['keyActivities'][0])
-pprint(bp['plan']['keyResources'][-1])
+# pprint(bp['plan']['keyResources'][-1])
 # pprint(bp['plan']['custRelationship'])
 # pprint(bp['plan']['revenue']['consumer'][0].keys())
 # pprint(bp['plan']['revenue']['business'][0]["price"])
-# pprint(bp['plan']['revenue'].keys())
+pprint(bp['plan']['revenue'].keys())

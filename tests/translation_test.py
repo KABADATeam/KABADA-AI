@@ -1,5 +1,5 @@
 import json
-from BayesNetwork import MultiNetwork
+from BayesNetwork import MultiNetwork, check_recomendation_generation, generate_bn_sample
 from glob import glob
 from os.path import join, basename
 from config import repo_dir
@@ -228,5 +228,7 @@ if __name__ == "__main__":
     validate_wrt_texter()
     check_if_all_nets_in_main()
     check_all_translationalble_guids_in_full_bp()
+    check_recomendation_generation()
+    generate_bn_sample()
     # check_bp_flattener()
     print("everythings OK :)")
