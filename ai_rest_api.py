@@ -28,6 +28,7 @@ logging.basicConfig(
 dict_sessions = {}
 translator = Translator()
 flattener = Flattener()
+mbn = MultiNetwork(translator=translator, flattener=flattener)
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -35,19 +36,15 @@ def predict():
     if content_type == 'application/json':
         json = request.json
 
-        # id_session = json['id_session']
-        id_session = 0
         location = json["location"]
         id_bp = json['plan']['businessPlan_id']
         logging.info(f"received business plan with id {id_bp}")
-        if id_session not in dict_sessions:
-            dict_sessions[id_session] = MultiNetwork(translator=translator, flattener=flattener)
 
         guids_by_bn = flattener(json, flag_generate_plus_one=True)
 
         logging.info('received num %s bns idetified', len(guids_by_bn))
 
-        recomendations_by_bn = dict_sessions[id_session].predict_all(guids_by_bn)
+        recomendations_by_bn = mbn.predict_all(guids_by_bn)
 
         bp = flattener.back(recomendations_by_bn)
 

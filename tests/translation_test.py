@@ -48,7 +48,7 @@ def check_variable_names():
 
 
 def parse_texter():
-    with open("../docs/Texter.txt", "r", encoding="cp866") as conn:
+    with open(repo_dir + "/docs/Texter.txt", "r", encoding="cp866") as conn:
         codes = conn.read().split("\n")
 
     dict_guid2stuff = {}
@@ -187,9 +187,9 @@ def check_correct_binary_variable_detection():
     mbn = MultiNetwork()
     set_binary_variables = set()
     for node in mbn.bns['main'].get_node_names():
-        if {*mbn.bns['main'].net.get_outcome_ids(node)} == {'no', 'yes'}:
+        if "no" in {*mbn.bns['main'].net.get_outcome_ids(node)}:
             set_binary_variables.add(node)
-    set_binary_variables_from_translator = set(chain(*(_.keys() for _ in mbn.translator.dict_binary_nodes.values())))
+    set_binary_variables_from_translator = set(chain(*(_ for _ in mbn.translator.dict_binary_nodes.values())))
     # print(set_binary_variables_from_translator.difference(set_binary_variables))
     # print(set_binary_variables.difference(set_binary_variables_from_translator))
     # print(len(set_binary_variables_from_translator), len(set_binary_variables))

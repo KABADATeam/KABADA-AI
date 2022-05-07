@@ -1,7 +1,7 @@
 import json
 from glob import glob
 from os.path import join, basename
-from config import repo_dir
+from config import repo_dir, path_generated_list_of_autocompletable_variables
 from pprint import pprint
 from collections import defaultdict
 from copy import deepcopy
@@ -208,11 +208,14 @@ class Translator:
     def __init__(self):
         fs = sorted(glob(join(repo_dir, "translation", "*.json")))
 
+        with open(path_generated_list_of_autocompletable_variables, "r") as conn:
+            self.dict_binary_nodes = json.load(conn)
+            for k in self.dict_binary_nodes.keys():
+                self.dict_binary_nodes[k] = {*self.dict_binary_nodes[k]}
+
         self.lookup = {}
-        self.dict_binary_nodes = {}
         for f in fs:
             bn_name = basename(f).replace(".json", "")
-            self.dict_binary_nodes[bn_name] = {}
             with open(f, "r") as conn:
                 translation = json.load(conn)
 
@@ -222,10 +225,6 @@ class Translator:
                     for kw_dict in kw_dicts:
                         for varname, value in kw_dict.items():
                             pairs.add((varname, value))
-                            if value in ("yes", "no") and varname not in self.dict_binary_nodes:
-                                # TODO vnk skatit vai "no" ir kads no stavoklu nosaukumiem
-                                self.dict_binary_nodes[bn_name][varname] = {"yes", "no"}
-
                     self.lookup[guid] = (bn_name, pairs)
 
         self.inverse_lookup = defaultdict(lambda: defaultdict(list))
@@ -242,7 +241,7 @@ class Translator:
 
         if flag_assume_full:
             for bn_name in translation.keys():
-                for varname in {*self.dict_binary_nodes[bn_name].keys()} - {_[0] for _ in translation[bn_name]}:
+                for varname in self.dict_binary_nodes[bn_name] - {_[0] for _ in translation[bn_name]}:
                     translation[bn_name].add((varname, 'no'))
 
         return translation
