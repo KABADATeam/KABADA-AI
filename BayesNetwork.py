@@ -60,27 +60,28 @@ class BayesNetwork:
                 # values = self.net.get_outcome_ids(varname)
                 probs = self.get_node_probs(varname)
                 likelihood = probs[bp2[ivar]]
-
+                # print(varname, bp1[ivar], probs)
             self.add_evidence(varname, bp1[ivar])
             likelihoods.append(likelihood)
         return likelihoods
 
-    def distance(self, bp1, bp2, targets=None):
+    def distance(self, bp1, bp2, targets=None, flag_simple_dist=True):
         """"induced distance between two business plans"""
         nodes = list(self.get_node_iterator(targets=targets))
         varnames = [self.net.get_node_name(node) for node in nodes]
+        # print(2222, varnames)
         bp1 = {k: v for k, v in bp1}
         bp2 = {k: v for k, v in bp2}
         bp1 = [self.net.get_outcome_ids(varname).index(bp1[varname]) for varname in varnames]
         bp2 = [self.net.get_outcome_ids(varname).index(bp2[varname]) for varname in varnames]
-
+        if flag_simple_dist:
+            return sum((a == b for a, b in zip(bp1, bp2))) / len(bp1)
         likelihoods1 = self._bp1_conditioned_likelihood_of_bp2(bp1, bp2, nodes)
         self.clear_evidence(nodes)
         likelihoods2 = self._bp1_conditioned_likelihood_of_bp2(bp2, bp1, nodes)
-        # TODO why these two are the same? add_evidence doesnt work somewhere
-        print(likelihoods1)
-        print(likelihoods2)
-        exit()
+        # print(likelihoods1)
+        # print(likelihoods2)
+        return np.average(likelihoods1 + likelihoods2)
 
     def learn(self, path_newdata, flag_verbose=-1):
         ds = pysmile.learning.DataSet()

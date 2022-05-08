@@ -94,25 +94,31 @@ def beam_search(self, nodes, flag_noisy, num_beams, flag_return_all_beams=False)
 if __name__ == "__main__":
     from pprint import pprint
     from BayesNetwork import MultiNetwork
+    from itertools import combinations
     from config import path_temp_data_file
     mbn = MultiNetwork(tresh_yes=0.0)
     bn = mbn.bns["consumer_segments"]
     # bn = mbn.bns["fixed_costs"]
 
-    beams = bn.predict_popup(num_beams=3, flag_with_nos=True, flag_return_all_beams=True)
+    beams = bn.predict_popup(num_beams=30, flag_with_nos=True, flag_return_all_beams=True)
     varnames = sorted([_[0] for _ in beams[0]])
 
     values = []
     for beam in beams:
         beam = {k: v for k, v in beam}
         values.append("::".join([beam[k] for k in varnames]))
-
     print(len(values), len(set(values)))
     i0, i1 = 1, 2
-    print(values[i0])
-    print(values[i1])
-    dist = bn.distance(beams[i0], beams[i1])
-    print(dist)
+    for i0, i1 in combinations(range(len(beams)), 2):
+
+        beam0 = [(a, 'no') for a, b in beams[i0]]
+        beam1 = [(a, 'yes') for a, b in beams[i1]]
+        # beam0 = beams[i0]
+        # beam1 = beams[i1]
+
+        dist = bn.distance(beam0, beam1, flag_simple_dist=False)
+        print(i0, i1, dist)
+        exit()
 
 
 

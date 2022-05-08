@@ -1866,7 +1866,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3877 98 4008 125</position>
+				<position>3868 98 3999 125</position>
 			</node>
 			<node id="num_key_partners_distributors">
 				<name>num_key_partners_distributors</name>

@@ -3,7 +3,8 @@ import json
 import os
 import sys
 from time import sleep
-
+import pickle
+from datetime import datetime
 from flask import Flask, request
 from collections import defaultdict
 from BayesNetwork import MultiNetwork
@@ -47,8 +48,8 @@ def worker_input_saver(bp_save_queue):
         while not bp_save_queue.empty():
             bp = bp_save_queue.get()
 
-        with open(log_dir + "/last_input.json", "w") as conn:
-            json.dump(bp, conn)
+        with open(log_dir + "/last_input.pickle", "wb") as conn:
+            pickle.dump((datetime.now(), bp), conn)
 
 bp_queue = mp.Queue()
 bp_save_queue = mp.Queue()
@@ -74,7 +75,7 @@ def predict():
                     q.get()
             processes[0].start()
             logging.info("predict process restart is successful")
-            return "predict failed, restarted process, try again"
+            return {"fail": "predict failed, restarted process, try again"}
         else:
             reco = reco_queue.get()
             reco['location'] = location
@@ -113,9 +114,9 @@ if __name__ == "__main__":
         p.daemon = True
         p.start()
     sleep(2)
-    # if os.path.exists(path_pid):
-    #     print("pid file exists, daemon already running, if not - delete pid file")
-    #     sys.exit(1)
+    if os.path.exists(path_pid):
+        print("pid file exists, daemon already running, if not - delete pid file")
+        sys.exit(1)
 
     with open(path_pid, "w") as conn:
         conn.write(str(os.getpid()))
@@ -133,6 +134,6 @@ if __name__ == "__main__":
             if "port" in ip_port:
                 args.port = int(ip_port['port'])
 
-    app.run(args.ip, args.port)
-    # http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
-    # http_server.serve_forever()
+    # app.run(args.ip, args.port)
+    http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
+    http_server.serve_forever()
