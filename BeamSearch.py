@@ -1,5 +1,6 @@
 import numpy as np
 from copy import deepcopy
+from config import epsilon
 
 
 class Beam:
@@ -65,9 +66,12 @@ def beam_search(self, nodes, flag_noisy, num_beams, flag_return_all_beams=False)
                         beam.add_element(node, val, prob)
                     else:
                         beams.append(beam.add_element_by_generating_new(node, val, prob))
-            probs = [beam.prob for beam in beams]
+            probs = np.array([beam.prob for beam in beams])
 
         if flag_noisy:
+            probs /= np.sum(probs)
+            probs[probs == 0.0] = 0.01
+            probs /= np.sum(probs)
             inds = np.random.choice(len(probs), size=min(num_beams, len(probs)), p=probs, replace=False)
         else:
             inds = np.argsort(-np.asarray(probs))[:num_beams]

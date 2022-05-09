@@ -117,14 +117,11 @@ def rec_delete_missing(bp, path, set_guids, sep="::"):
             if isinstance(bp[i], str) or isinstance(bp[i], int) or isinstance(bp[i], float) or isinstance(bp[i], bool):
                 guid_from_full_bp = sep.join(path + [str(bp[i])])
                 if guid_from_full_bp[-1] == "*":
-                    path_join = sep.join(path + [""])
+                    path_join = sep.join(path) + "::"
                     for guid in set_guids:
                         if path_join in guid:
                             elements_to_add.append(guid.replace(path_join, ""))
-                    # print(bp)
-                    # print(guid_from_full_bp)
-                    # print(elements_to_add)
-                    # exit()
+
                 if guid_from_full_bp not in set_guids:
                     inds_drop.append(i)
             else:
@@ -175,9 +172,7 @@ class Flattener:
         bp = None
 
         for bn_name, recomendations, id_bp in recomendations_by_bn:
-            # print(bn_name, id_bp, len(recomendations))
             bp_new = self.back_one_recomendation(recomendations)
-            # print(bp_new)
             if id_bp is not None:
                 id_bp = None if id_bp == "sample" else id_bp
                 add_attribute(bp_new, self.bn2bp[bn_name], attr_name="id", attr_value=id_bp)

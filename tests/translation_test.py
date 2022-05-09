@@ -140,7 +140,7 @@ def check_all_translationalble_guids_in_full_bp():
     guids_by_bn = flattener(flattener.full_bp)
     counter1 = Counter()
     for bn_name, guids, id_bp in guids_by_bn:
-        counter1.update(guids)
+        counter1.update((guid for guid in guids if guid[-1] != "*"))
 
     assert counter1.most_common()[0][1] == 1
 

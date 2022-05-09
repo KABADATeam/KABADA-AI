@@ -3,6 +3,7 @@ from config import path_generated_list_of_autocompletable_variables
 import json
 from collections import defaultdict
 import os
+from Translator import rec_delete_missing
 mbn = MultiNetwork()
 
 def generate_dict_autocompletable_variables():
@@ -38,6 +39,26 @@ def generate_dict_autocompletable_variables():
         with open(path_generated_list_of_autocompletable_variables, "w") as conn:
             json.dump(dict_autocompletable_variables, conn)
 
+
+def generate_dict_bp_relation_keys_for_training():
+
+    print(11111)
+    pprint(mbn.sub_bn_relations)
+
+    dict_childkey2parentkey = {}
+    for bn_name, kvs in mbn.sub_bn_relations.items():
+        for parent, relation in kvs.items():
+            childkey = mbn.flattener.bn2bp[bn_name] + "::" + relation[1]
+            parentkey = mbn.flattener.bn2bp[parent] + "::id"
+            dict_childkey2parentkey[childkey] = parentkey
+            break
+
+
+    pprint(dict_childkey2parentkey)
+    exit()
+
+
+# generate_dict_bp_relation_keys_for_training()
 
 generate_dict_autocompletable_variables()
 

@@ -32,17 +32,18 @@ with open("../stout.json", "w") as conn:
 #     print(s in str(bp))
 # print("Employees directly involved in production or service" in str(bp))
 
-# pprint(bp)
 # flattener = Flattener()
 # mbn = MultiNetwork()
 # guids_by_bn = flattener(bp, flag_generate_plus_one=True)
-# # pprint(guids_by_bn)
-# # exit()
+# recos = flattener.back(guids_by_bn)
+# pprint(recos)
+# exit()
 # out = mbn.predict_all(guids_by_bn)
 # pprint(out)
 
 # print(findall('03f70344-c4f5-456a-bbfe-94dde489b31c', str(bp)))
-# print(bp['plan'].keys())
+print(bp['plan']['nace'])
+exit()
 # pprint(bp['plan']['channels'][0])
 
 # pprint(bp['plan']['custSegs']['consumer'])

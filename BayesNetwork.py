@@ -5,17 +5,17 @@ from os.path import join
 import pandas as pd
 from collections import defaultdict
 import smile_licence.pysmile_license
-from config import net_dir, epsilon, path_temp_data_file
+from config import net_dir, epsilon, path_temp_data_file, repo_dir
 from collections import Counter
 import logging
 import json
 from copy import deepcopy
 from pprint import pprint
+from itertools import combinations
 from uuid import uuid4
 from itertools import chain
 from Translator import Translator, Flattener
 from BeamSearch import beam_search
-from config import repo_dir
 
 
 class BayesNetwork:
@@ -83,7 +83,7 @@ class BayesNetwork:
         # print(likelihoods2)
         return np.average(likelihoods1 + likelihoods2)
 
-    def learn(self, path_newdata, flag_verbose=-1):
+    def learn(self, path_newdata, flag_verbose=0):
         ds = pysmile.learning.DataSet()
         ds.read_file(path_newdata)
         matching = ds.match_network(self.net)
@@ -124,6 +124,7 @@ class BayesNetwork:
             if len(parents_new) > 0:
                 parents = {*self.net.get_parents(node)}
                 for parent in parents_new - parents:
+                    print(len(self.net.get_all_nodes()))
                     if node not in self.net.get_parents(parent):
                         parent_type = self.net.get_node_type(parent)
                         if parent_type != pysmile.NodeType.CPT:
@@ -258,7 +259,6 @@ class MultiNetwork:
             self.flattener = Flattener()
 
         self.bns = {}
-        self.random_variables_2_predict = {}
         self.sampling_order = ["value_propositions", "consumer_segments", "business_segments", "public_bodies_and_ngo",
                                "channels", "get_new_customers", "keep_customers", "convince_existing_to_spend_more",
                                "revenue_streams_consumers", "revenue_streams_business", "revenue_streams_ngo",
@@ -274,9 +274,6 @@ class MultiNetwork:
                         relations[parent] = relation
                 self.sub_bn_relations[child] = relations
 
-        if translator is not None:
-            self.random_variables_2_predict = {bn_name: [_ for _ in vars.keys() if _ != "is_added"] for bn_name, vars in translator.inverse_lookup.items()}
-
         for bn_name in self.translator.inverse_lookup.keys():
             self.add_net(bn_name)
 
@@ -290,8 +287,6 @@ class MultiNetwork:
                 self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + "_trained.xdsl"), tresh_yes=self.tresh_yes)
             else:
                 self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + ".xdsl"), tresh_yes=self.tresh_yes)
-            if bn_name not in self.random_variables_2_predict:
-                self.random_variables_2_predict[bn_name] = [_ for _ in self.bns[bn_name].get_node_names() if _!="is_added"]
 
     def add_evidence(self, bn_name, list_evidence):
         # if two identical evidence provided - there will be smile error
@@ -311,9 +306,17 @@ class MultiNetwork:
                 continue
 
             if bn_name in self.bns:
-                for varname in self.bns[bn_name].get_node_names():
-                    if varname not in tab.columns:
-                        tab[varname] = ['no'] * tab.shape[0]
+                # for varname in self.bns[bn_name].get_node_names():
+                #     if varname not in tab.columns:
+                #         tab[varname] = ['no'] * tab.shape[0]
+                for c in tab.columns:
+                    if len({*tab[c]}) == 1:
+                        del tab[c]
+                tab.drop_duplicates(inplace=True)
+                # for c in tab.columns:
+                #     counter = Counter(tab[c])
+                #     print(c, counter, len(counter))
+
                 tab.to_csv(path_temp_data_file, sep=" ", index=False)
                 flag_bn_search_failed = False
                 try:
@@ -338,20 +341,24 @@ class MultiNetwork:
                     bp.append((bn_name, recomendations, None))
 
         elif mode == "main":
-            bp = []
-            # TODO samplot nace un swot
+
+            bp = self.predict_all([("swot", [], None)], flag_noisy=True, target_bns=["swot"],
+                                              flag_assume_full=True, num_beams=5, flag_clear_evidence=False)
 
             # sagjeneree guids_by_bn formaa
             for bn_name in self.sampling_order:
                 num_node_name = "num_" + bn_name
+
                 if not self.bns['main'].net.is_value_valid(num_node_name):
                     self.bns['main'].net.update_beliefs()
+
                 probs = self.bns['main'].net.get_node_value(num_node_name)
 
                 i = np.digitize(np.random.uniform(), np.cumsum(probs))
                 outcome = self.bns['main'].net.get_outcome_id(num_node_name, i)
                 outcome = outcome.replace("num", "")
                 n = int(np.random.randint(5, 20) if outcome == "_more" else outcome)
+                n = 1 if n == 0 else n
 
                 if bn_name in self.sub_bn_relations:
                     dict_parents_by_name = defaultdict(list)
@@ -368,18 +375,36 @@ class MultiNetwork:
                             relation_type, field_name = self.sub_bn_relations[bn_name][parent]
                             field_name = f"{self.flattener.bn2bp[bn_name]}::{field_name}"
                             if relation_type == "1_to_n":
-                                n = int(np.clip(n, 1, len(id_bps)))
-                                a = 0
-                                # TODO sagrupet parentus peec liidziibas
-                                # print(self.translator(list_guids[0], flag_assume_full=True))
-                                # pprint(list_guids)
-                                # exit()
-                                for i in range(n):
-                                    b = a + (len(id_bps) // n) + int((len(id_bps) % n) > i)
+                                # TODO refaktorizeet so, un iztesteet mehaanismu
+                                n = int(np.clip(n, max(1, int(len(id_bps) / 2)), len(id_bps)))
+                                parent_group_dists = []
+                                num_per_group = (len(id_bps) // n)
+                                if num_per_group >= 2:
+                                    inds_bps = list(range(len(id_bps)))
+                                    for inds_bps_subset in combinations(inds_bps, num_per_group):
+                                        ds = []
+                                        for i0, i1 in combinations(inds_bps_subset, 2):
+                                            bp0 = self.translator(list_guids[i0], flag_assume_full=True)[parent]
+                                            bp1 = self.translator(list_guids[i1], flag_assume_full=True)[parent]
+                                            ds.append(self.bns[parent].distance(bp0, bp1))
+                                        if np.min(ds) > 0.8:
+                                            parent_group_dists.append((inds_bps_subset, np.min(ds)))
+
+                                    parent_group_dists = sorted(parent_group_dists, key=lambda d: -d[1])
+
+                                # parent_group_dists = parent_group_dists[:1]
+                                for inds_bps_subset, _ in parent_group_dists[:n]:
+                                    # exit()
                                     bp_new.append((bn_name,
-                                                   [f"{field_name}::{id_bp}" for id_bp in id_bps[a:b]],
+                                                   [f"{field_name}::{id_bps[ind_bp]}" for ind_bp in inds_bps_subset],
                                                    str(uuid4())))
-                                    a = b
+
+                                if len(parent_group_dists) < n:
+                                    for ind_bp in range(n - len(parent_group_dists)):
+                                        bp_new.append((bn_name,
+                                                       [f"{field_name}::{id_bps[ind_bp]}"],
+                                                       str(uuid4())))
+
                             elif self.sub_bn_relations[bn_name][parent] == "1_to_1":
                                 raise NotImplemented
                             elif self.sub_bn_relations[bn_name][parent] == "n_to_1":
@@ -390,18 +415,22 @@ class MultiNetwork:
                     bp_new = [(bn_name, [], str(uuid4())) for _ in range(n)]
 
                 # TODO visus tukšos ar vienu un to pashu parenta id_bp generet ar beam search garantejot to atskiribu
-                bp_monte_carlo = self.predict_all(bp + bp_new, flag_noisy=True, target_bns=[bn_name])
+                bp_monte_carlo = self.predict_all(bp + bp_new, flag_noisy=True, target_bns=[bn_name],
+                                                  flag_assume_full=True, num_beams=5, flag_clear_evidence=False)
 
                 for i in range(len(bp_new)):
                     bn_name, list_parent_ids, id_bp = bp_new[i]
                     _, list_guids, _ = bp_monte_carlo[i]
                     bp_new[i] = bn_name, list_parent_ids + list_guids, id_bp
+
                 bp.extend((_ for _ in bp_new if len(_[1]) > 0))
-                # bp.extend(bp_new)
+        # print(1111, sorted({*self.bns.keys()}.difference(set((_[0] for _ in bp)))))
+        self.bns['main'].clear_evidence()
         return bp
 
     def predict_all(self, guids_by_bn, flag_noisy=False, target_bns=None, target_variables=None,
-                    flag_translate_output=True, flag_with_nos=False, flag_assume_full=False):
+                    flag_translate_output=True, flag_with_nos=False, flag_assume_full=False,
+                    num_beams=1, flag_clear_evidence=True):
         bp = []
         other_guids_by_id = {}
         other_guids_by_bn = defaultdict(set)
@@ -454,9 +483,11 @@ class MultiNetwork:
             list_evidence = {_ for _ in list_evidence if _[0] not in target_names}
             # print(bn_name, len(list_evidence), len(self.bns[bn_name].get_node_names()))
             recomendations = {*self.bns["main"].predict_popup(list_evidence, targets=target_names,
-                                                              flag_noisy=flag_noisy, flag_with_nos=flag_with_nos)}
+                                                              flag_noisy=flag_noisy, flag_with_nos=flag_with_nos,
+                                                              num_beams=num_beams)}
             bp.append((bn_name, recomendations, id_bp))
-            self.bns["main"].clear_evidence()
+            if flag_clear_evidence:
+                self.bns["main"].clear_evidence()
 
         if not flag_translate_output:
             return bp
