@@ -27,7 +27,7 @@ logging.basicConfig(
 def worker_predictor(bp_queue, reco_queue):
     translator = Translator()
     flattener = Flattener()
-    mbn = MultiNetwork(translator=translator, flattener=flattener)
+    mbn = MultiNetwork(translator=translator, flattener=flattener, tresh_yes=0.0)
     logging.info('MultiNetwork initialized')
     while True:
         bp = bp_queue.get()
@@ -114,6 +114,7 @@ if __name__ == "__main__":
         p.daemon = True
         p.start()
     sleep(2)
+
     if os.path.exists(path_pid):
         print("pid file exists, daemon already running, if not - delete pid file")
         sys.exit(1)
