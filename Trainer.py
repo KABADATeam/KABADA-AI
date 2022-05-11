@@ -9,33 +9,9 @@ from itertools import product, chain
 import pysmile
 import pickle
 from config import path_temp_data_file
-np.random.seed(3)
-
-flattener = Flattener()
-translator = Translator()
-mbn = MultiNetwork(tresh_yes=0.0)
-all_variables = sorted(mbn.bns["main"].get_node_names())
-
-bps_for_training = []
-for _ in range(1):
-    translations_by_bn = mbn.sample_all()
-    # pprint(translations_by_bn)
-    # exit()
-    bp = mbn.flattener.back(translations_by_bn)
-    bps_for_training.append(bp)
-    # pprint(bp)
-    # exit()
 
 
-
-class Trainer:
-    def __init__(self, mbn=None):
-        if mbn is None:
-            self.mbn = MultiNetwork()
-        self.flattener = Flattener()
-        self.translator = Translator()
-
-def sample_permutations(bp):
+def sample_permutations(guids_by_bn, mbn):
     autocompletable = set(chain(*mbn.translator.dict_binary_nodes.values()))
 
     childkey2parentkey = []
@@ -49,7 +25,7 @@ def sample_permutations(bp):
             ))
             break
     set_childkey2parentkey = set(chain(*childkey2parentkey))
-    guids_by_bn = flattener(bp)
+    # guids_by_bn = flattener(guids_by_bn)
     # print(guids_by_bn)
     # print(sorted({*mbn.bns.keys()}.difference(set((_[0] for _ in guids_by_bn)))))
     # exit()
@@ -62,6 +38,7 @@ def sample_permutations(bp):
 
     max_per_bn_name = 2
     max_perms_generate = 10000
+    # pprint(guids_by_bn)
 
     for bn_name, guids, id_bp in guids_by_bn:
         if len(bnname2bns[bn_name]) < max_per_bn_name:
@@ -87,6 +64,9 @@ def sample_permutations(bp):
                     break
 
             # xor
+            # pprint(guids)
+            # print(childkey, parentkey)
+            # print(parent, child)
             assert (parent is not None and child is not None) or (parent is None and child is None)
             flag_subbn_associations_are_correct = parent == child
             if not flag_subbn_associations_are_correct:
@@ -117,12 +97,38 @@ def sample_permutations(bp):
 
     return data_entries
 
-data_entries = []
-for bp in bps_for_training:
-    subdata_entries = sample_permutations(bp)
-    data_entries.extend(subdata_entries)
 
-bn_datas = {"main": pd.DataFrame(data_entries)}
+class Trainer:
+    def __init__(self, mbn=None):
+        if mbn is None:
+            self.mbn = MultiNetwork()
+        self.flattener = Flattener()
+        self.translator = Translator()
+        self.bps_for_training = []
 
-mbn.learn_all(bn_datas)
+    def add_bp(self, bp):
+        self.bps_for_training.append(bp)
 
+    def train(self):
+
+        data_entries = []
+        for bp in self.bps_for_training:
+            subdata_entries = sample_permutations(bp, self.mbn)
+            data_entries.extend(subdata_entries)
+        bn_datas = {"main": pd.DataFrame(data_entries)}
+
+        self.mbn.learn_all(bn_datas)
+
+
+if __name__ == "__main__":
+    np.random.seed(3)
+
+    flattener = Flattener()
+    translator = Translator()
+    mbn = MultiNetwork(tresh_yes=0.0)
+
+    trainer = Trainer()
+    for _ in range(2):
+        guids_by_bn = mbn.sample_all()
+        trainer.add_bp(guids_by_bn)
+    trainer.train()

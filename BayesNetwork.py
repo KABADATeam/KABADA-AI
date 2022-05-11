@@ -407,18 +407,20 @@ class MultiNetwork:
 
                                     parent_group_dists = sorted(parent_group_dists, key=lambda d: -d[1])
 
+                                uuid = str(uuid4())
                                 # parent_group_dists = parent_group_dists[:1]
                                 for inds_bps_subset, _ in parent_group_dists[:n]:
-                                    # exit()
                                     bp_new.append((bn_name,
-                                                   [f"{field_name}::{id_bps[ind_bp]}" for ind_bp in inds_bps_subset],
-                                                   str(uuid4())))
+                                                   [f"{field_name}::{id_bps[ind_bp]}" for ind_bp in inds_bps_subset]
+                                                   + [f"{self.flattener.bn2bp[bn_name]}::id::{uuid}"],
+                                                   uuid))
 
                                 if len(parent_group_dists) < n:
                                     for ind_bp in range(n - len(parent_group_dists)):
                                         bp_new.append((bn_name,
-                                                       [f"{field_name}::{id_bps[ind_bp]}"],
-                                                       str(uuid4())))
+                                                       [f"{field_name}::{id_bps[ind_bp]}",
+                                                        f"{self.flattener.bn2bp[bn_name]}::id::{uuid}"],
+                                                       uuid))
 
                             elif self.sub_bn_relations[bn_name][parent] == "1_to_1":
                                 raise NotImplemented
@@ -427,7 +429,12 @@ class MultiNetwork:
                             else:
                                 raise ValueError
                 else:
-                    bp_new = [(bn_name, [], str(uuid4())) for _ in range(n)]
+                    bp_new = []
+                    for _ in range(n):
+                        uuid = str(uuid4())
+                        bp_new.append((bn_name,
+                                       [f"{self.flattener.bn2bp[bn_name]}::id::{uuid}"],
+                                       uuid))
 
                 # TODO visus tukšos ar vienu un to pashu parenta id_bp generet ar beam search garantejot to atskiribu
                 bp_monte_carlo = self.predict_all(bp + bp_new, flag_noisy=True, target_bns=[bn_name],
@@ -439,6 +446,7 @@ class MultiNetwork:
                     bp_new[i] = bn_name, list_parent_ids + list_guids, id_bp
 
                 bp.extend((_ for _ in bp_new if len(_[1]) > 0))
+
         # print(1111, sorted({*self.bns.keys()}.difference(set((_[0] for _ in bp)))))
         self.bns['main'].clear_evidence()
         return bp
