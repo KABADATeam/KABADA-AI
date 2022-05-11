@@ -115,22 +115,32 @@ class BayesNetwork:
         # net_new.write_file("temp.xdsl")
         # net_new.read_file("temp.xdsl")
 
-        for node in self.net.get_all_nodes():
+        dict_node2name_new = {node: net_new.get_node_name(node) for node in net_new.get_all_nodes()}
+        dict_name2node_old = {self.net.get_node_name(node): node for node in self.net.get_all_nodes()}
+
+        for node_new in net_new.get_all_nodes():
+            node = dict_name2node_old[dict_node2name_new[node_new]]
             node_type = self.net.get_node_type(node)
             if node_type != pysmile.NodeType.CPT:
                 self.net.set_node_type(node, int(pysmile.NodeType.CPT))
 
-            parents_new = {*net_new.get_parents(node)}
+            parents_new = {dict_name2node_old[dict_node2name_new[node]] for node in net_new.get_parents(node_new)}
             if len(parents_new) > 0:
                 parents = {*self.net.get_parents(node)}
                 for parent in parents_new - parents:
-                    print(len(self.net.get_all_nodes()))
                     if node not in self.net.get_parents(parent):
                         parent_type = self.net.get_node_type(parent)
                         if parent_type != pysmile.NodeType.CPT:
                             self.net.set_node_type(parent, int(pysmile.NodeType.CPT))
 
-                        self.net.add_arc(parent, node)
+                        try:
+                            self.net.add_arc(parent, node)
+                        except pysmile.SMILEException as e:
+                            if "ErrNo=-11" in str(e):
+                                if flag_verbose == 0:
+                                    print(f"Warning: not adding arc, becaause of cycle")
+                            else:
+                                raise e
 
                         if parent_type != pysmile.NodeType.CPT:
                             self.net.set_node_type(parent, parent_type)
@@ -317,6 +327,10 @@ class MultiNetwork:
                 #     counter = Counter(tab[c])
                 #     print(c, counter, len(counter))
 
+                if tab.shape[0] < 4 or tab.shape[1] < 2:
+                    print("no data")
+                    return
+
                 tab.to_csv(path_temp_data_file, sep=" ", index=False)
                 flag_bn_search_failed = False
                 try:
@@ -328,6 +342,7 @@ class MultiNetwork:
                             print(e)
                     else:
                         raise e
+
                 if flag_bn_search_failed:
                     self.bns[bn_name].learn(path_temp_data_file)
                 self.bns[bn_name].net.write_file(f"{net_dir}/trained_graphs/{bn_name}_trained.xdsl")

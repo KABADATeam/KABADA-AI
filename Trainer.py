@@ -17,15 +17,25 @@ mbn = MultiNetwork(tresh_yes=0.0)
 all_variables = sorted(mbn.bns["main"].get_node_names())
 
 bps_for_training = []
-for _ in range(2):
+for _ in range(1):
     translations_by_bn = mbn.sample_all()
+    # pprint(translations_by_bn)
+    # exit()
     bp = mbn.flattener.back(translations_by_bn)
     bps_for_training.append(bp)
     # pprint(bp)
     # exit()
 
-def sample_permutations(bp):
 
+
+class Trainer:
+    def __init__(self, mbn=None):
+        if mbn is None:
+            self.mbn = MultiNetwork()
+        self.flattener = Flattener()
+        self.translator = Translator()
+
+def sample_permutations(bp):
     autocompletable = set(chain(*mbn.translator.dict_binary_nodes.values()))
 
     childkey2parentkey = []
@@ -58,7 +68,6 @@ def sample_permutations(bp):
             bnname2bns[bn_name].append(guids)
 
     n_perms = np.prod([len(v) for v in bnname2bns.values()])
-    # print(n_perms)
 
     data_entries = []
     for iperm, guids in enumerate(product(*bnname2bns.values())):
@@ -104,24 +113,16 @@ def sample_permutations(bp):
 
             for varname in autocompletable.difference(row.keys()):
                 row[varname] = 'no'
-            # print(sorted(set(all_variables).difference(row.keys()).difference(autocompletable)))
-            # exit()
             data_entries.append(row)
 
     return data_entries
-
-
 
 data_entries = []
 for bp in bps_for_training:
     subdata_entries = sample_permutations(bp)
     data_entries.extend(subdata_entries)
-    # print(subdata_entries)
-    # print(Counter([len(_) for _ in subdata_entries]))
-    # print(len(mbn.bns['main'].get_node_names()))
 
 bn_datas = {"main": pd.DataFrame(data_entries)}
 
 mbn.learn_all(bn_datas)
-print(111111)
 
