@@ -284,17 +284,20 @@ class MultiNetwork:
                         relations[parent] = relation
                 self.sub_bn_relations[child] = relations
 
-        for bn_name in self.translator.inverse_lookup.keys():
-            self.add_net(bn_name)
+        self.reload()
 
-        self.add_net("main")
+    def reload(self, flag_use_trained=True):
+        for bn_name in self.translator.inverse_lookup.keys():
+            self.add_net(bn_name, flag_use_trained=flag_use_trained)
+        self.add_net("main", flag_use_trained=flag_use_trained)
         self.set_only_main_variables = {*self.bns['main'].get_node_names()}.difference(
             chain(*(bn.get_node_names() for bn_name, bn in self.bns.items() if bn_name != 'main')))
 
-    def add_net(self, bn_name):
+    def add_net(self, bn_name, flag_use_trained=True):
         if bn_name not in self.bns:
-            if os.path.exists(join(net_dir, bn_name + "_trained.xdsl")):
-                self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + "_trained.xdsl"), tresh_yes=self.tresh_yes)
+            path_trained_graph = join(net_dir, "trained_graphs", bn_name + "_trained.xdsl")
+            if os.path.exists(path_trained_graph) and flag_use_trained:
+                self.bns[bn_name] = BayesNetwork(path_trained_graph, tresh_yes=self.tresh_yes)
             else:
                 self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + ".xdsl"), tresh_yes=self.tresh_yes)
 
@@ -309,25 +312,29 @@ class MultiNetwork:
             for varname, value in evidence.items():
                 self.bns[bn_name].clear_evidence(varname)
 
-    def learn_all(self, tabs_by_bn, min_size_training_set=10, flag_verbose=0):
+    def learn_all(self, tabs_by_bn, min_size_training_set=5, flag_verbose=0):
         for bn_name, tab in tabs_by_bn.items():
 
-            if tab.shape[0] < min_size_training_set:
-                continue
-
-            if bn_name in self.bns:
+            if bn_name == "main":
                 # for varname in self.bns[bn_name].get_node_names():
                 #     if varname not in tab.columns:
                 #         tab[varname] = ['no'] * tab.shape[0]
                 for c in tab.columns:
-                    if len({*tab[c]}) == 1:
+                    uni_vals = {*tab[c]}
+                    if np.nan in uni_vals:
                         del tab[c]
+                        logging.warning(f"dropping {c} because of missing values")
+
+                    if len(uni_vals) == 1:
+                        del tab[c]
+                        logging.warning(f"dropping {c} because have just one value")
+
                 tab.drop_duplicates(inplace=True)
                 # for c in tab.columns:
                 #     counter = Counter(tab[c])
                 #     print(c, counter, len(counter))
 
-                if tab.shape[0] < 4 or tab.shape[1] < 2:
+                if tab.shape[0] < min_size_training_set or tab.shape[1] < 2:
                     print("no data")
                     return
 

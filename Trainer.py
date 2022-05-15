@@ -8,7 +8,8 @@ import pandas as pd
 from itertools import product, chain
 import pysmile
 import pickle
-from config import path_temp_data_file
+import logging
+from config import path_temp_data_file, net_dir
 
 
 def sample_permutations(guids_by_bn, mbn):
@@ -86,7 +87,7 @@ def sample_permutations(guids_by_bn, mbn):
                     clean_guids.append(guid)
 
             row = {}
-            for bn_name, pairs in translator(clean_guids).items():
+            for bn_name, pairs in mbn.translator(clean_guids).items():
                 for varname, value in pairs:
                     row[varname] = value
             row.update(row_common_only_in_bn)
@@ -101,7 +102,8 @@ def sample_permutations(guids_by_bn, mbn):
 class Trainer:
     def __init__(self, mbn=None):
         if mbn is None:
-            self.mbn = MultiNetwork()
+            mbn = MultiNetwork()
+        self.mbn = mbn
         self.flattener = Flattener()
         self.translator = Translator()
         self.bps_for_training = []
@@ -109,15 +111,125 @@ class Trainer:
     def add_bp(self, bp):
         self.bps_for_training.append(bp)
 
-    def train(self):
+    def search_new_arcs(self, path_newdata, flag_verbose=-1):
+        flag_successfull = True
+        ds = pysmile.learning.DataSet()
+        ds.read_file(path_newdata)
+        net_new = pysmile.learning.BayesianSearch().learn(ds)
+        # net_new = pysmile.learning.TAN().learn(ds)
+        # net_new.write_file("temp.xdsl")
+        # net_new.read_file("temp.xdsl")
+        bn = self.mbn.bns["main"]
+        dict_node2name_new = {node: net_new.get_node_name(node) for node in net_new.get_all_nodes()}
+        dict_name2node_old = {bn.net.get_node_name(node): node for node in bn.net.get_all_nodes()}
+
+        for node_new in net_new.get_all_nodes():
+            node = dict_name2node_old[dict_node2name_new[node_new]]
+            node_type = bn.net.get_node_type(node)
+            if node_type != pysmile.NodeType.CPT:
+                bn.net.set_node_type(node, int(pysmile.NodeType.CPT))
+
+            parents_new = {dict_name2node_old[dict_node2name_new[node]] for node in net_new.get_parents(node_new)}
+            if len(parents_new) > 0:
+                parents = {*bn.net.get_parents(node)}
+                for parent in parents_new - parents:
+                    if node not in bn.net.get_parents(parent):
+                        parent_type = bn.net.get_node_type(parent)
+                        if parent_type != pysmile.NodeType.CPT:
+                            bn.net.set_node_type(parent, int(pysmile.NodeType.CPT))
+
+                        try:
+                            bn.net.add_arc(parent, node)
+                        except pysmile.SMILEException as e:
+                            flag_successfull = False
+                            if "ErrNo=-11" in str(e):
+                                if flag_verbose == 0:
+                                    print(f"Warning: not adding arc, becaause of cycle")
+                            elif "ErrNo=-1" in str(e):
+                                if flag_verbose == 0:
+                                    print(e)
+                            else:
+                                raise e
+
+                        if parent_type != pysmile.NodeType.CPT:
+                            bn.net.set_node_type(parent, parent_type)
+
+            if node_type != pysmile.NodeType.CPT:
+                bn.net.set_node_type(node, node_type)
+        return flag_successfull
+
+    def learn_parameters(self, path_newdata, flag_verbose=-1):
+        flag_successfull = True
+        bn = self.mbn.bns["main"]
+
+        ds = pysmile.learning.DataSet()
+        ds.read_file(path_newdata)
+        matching = ds.match_network(bn.net)
+        em = pysmile.learning.EM()
+
+        list_noisy_max = [(node, bn.net.get_node_type(node)) for node in bn.net.get_all_nodes()
+                          if bn.net.get_node_type(node) != pysmile.NodeType.CPT]
+
+        for node, _ in list_noisy_max:
+            bn.net.set_node_type(node, int(pysmile.NodeType.CPT))
+
+        try:
+            em.learn(ds, bn.net, matching)
+        except pysmile.SMILEException as e:
+            flag_successfull = False
+            if "ErrNo=-43" in str(e):
+                if flag_verbose == 0:
+                    print(f"Warning: somewhere in the net is singularities, zeros")
+            else:
+                raise e
+
+        for node, node_type in list_noisy_max:
+            bn.net.set_node_type(node, node_type)
+        return flag_successfull
+
+    def train(self, min_size_training_set=5, flag_verbose=0):
 
         data_entries = []
         for bp in self.bps_for_training:
             subdata_entries = sample_permutations(bp, self.mbn)
             data_entries.extend(subdata_entries)
-        bn_datas = {"main": pd.DataFrame(data_entries)}
+        tab = pd.DataFrame(data_entries)
 
-        self.mbn.learn_all(bn_datas)
+        # for varname in self.bns[bn_name].get_node_names():
+        #     if varname not in tab.columns:
+        #         tab[varname] = ['no'] * tab.shape[0]
+        for c in tab.columns:
+            uni_vals = {*tab[c]}
+
+            if len(uni_vals) == 1:
+                del tab[c]
+                logging.warning(f"dropping {c} because have just one value")
+
+            if np.nan in uni_vals:
+                if c in self.mbn.translator.dict_binary_nodes:
+                    tab[c][pd.isna(tab[c])] = "no"
+                    logging.warning(f"autocompleting {c} because of missing values")
+                else:
+                    del tab[c]
+                    logging.warning(f"dropping {c} because of missing values")
+
+        tab.drop_duplicates(inplace=True)
+        # for c in tab.columns:
+        #     counter = Counter(tab[c])
+        #     print(c, counter, len(counter))
+
+        if tab.shape[0] < min_size_training_set or tab.shape[1] < 2:
+            print("no data")
+            return
+
+        tab.to_csv(path_temp_data_file, sep=" ", index=False)
+
+        flag_arc_search_ok = self.search_new_arcs(path_temp_data_file)
+
+        flag_parameter_estim_ok = self.learn_parameters(path_temp_data_file)
+
+        if flag_parameter_estim_ok:
+            self.mbn.bns["main"].net.write_file(f"{net_dir}/trained_graphs/main_trained.xdsl")
 
 
 if __name__ == "__main__":
@@ -128,7 +240,10 @@ if __name__ == "__main__":
     mbn = MultiNetwork(tresh_yes=0.0)
 
     trainer = Trainer()
-    for _ in range(2):
+    for _ in range(4):
         guids_by_bn = mbn.sample_all()
+        bp = flattener.back(guids_by_bn)
+        guids_by_bn = flattener(bp)
         trainer.add_bp(guids_by_bn)
+    mbn.reload(flag_use_trained=False)
     trainer.train()

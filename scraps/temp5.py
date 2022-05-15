@@ -42,8 +42,8 @@ with open("../stout.json", "w") as conn:
 # pprint(out)
 
 # print(findall('03f70344-c4f5-456a-bbfe-94dde489b31c', str(bp)))
-print(bp['plan']['nace'])
-exit()
+# print(bp['plan']['nace'])
+# exit()
 # pprint(bp['plan']['channels'][0])
 
 # pprint(bp['plan']['custSegs']['consumer'])
@@ -64,8 +64,8 @@ exit()
 # pprint(bp['plan']['keyPartners']['others'][0])
 
 # pprint(bp['plan']['keyActivities'][0])
-# pprint(bp['plan']['keyResources'][-1])
+pprint(bp['plan']['keyResources'][-1])
 # pprint(bp['plan']['custRelationship'])
 # pprint(bp['plan']['revenue']['consumer'][0].keys())
 # pprint(bp['plan']['revenue']['business'][0]["price"])
-pprint(bp['plan']['revenue'].keys())
+# pprint(bp['plan']['revenue'].keys())

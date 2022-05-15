@@ -9,6 +9,7 @@ from flask import Flask, request
 from collections import defaultdict
 from BayesNetwork import MultiNetwork
 from Translator import Translator, Flattener
+from Trainer import Trainer
 from gevent.pywsgi import WSGIServer
 import multiprocessing as mp
 from config import repo_dir, log_dir, path_pid, path_ip_port_json
@@ -23,65 +24,50 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 
+tresh_yes = 0.0
 
-def worker_predictor(bp_queue, reco_queue):
-    translator = Translator()
-    flattener = Flattener()
-    mbn = MultiNetwork(translator=translator, flattener=flattener, tresh_yes=0.0)
-    logging.info('MultiNetwork initialized')
+translator = Translator()
+flattener = Flattener()
+mbn = MultiNetwork(translator=translator, flattener=flattener, tresh_yes=tresh_yes)
+trainer = Trainer(mbn=mbn)
+logging.info('MultiNetwork initialized')
+
+
+def worker_trainer(bp_queue):
+    trainer = Trainer()
     while True:
         bp = bp_queue.get()
-        guids_by_bn = flattener(bp, flag_generate_plus_one=True)
-        logging.info('received num %s bns idetified', len(guids_by_bn))
-        recomendations_by_bn = mbn.predict_all(guids_by_bn)
-        reco = flattener.back(recomendations_by_bn)
-        reco_queue.put(reco)
+        if bp is None:
+            trainer.train()
+            return
+        guids_by_bn = trainer.flattener(bp)
+        trainer.add_bp(guids_by_bn)
 
-
-def worker_input_saver(bp_save_queue):
-    while True:
-        if bp_save_queue.empty():
-            sleep(0.1)
-            continue
-
-        # takes last input
-        while not bp_save_queue.empty():
-            bp = bp_save_queue.get()
-
-        with open(log_dir + "/last_input.pickle", "wb") as conn:
-            pickle.dump((datetime.now(), bp), conn)
-
-bp_queue = mp.Queue()
-bp_save_queue = mp.Queue()
-reco_queue = mp.Queue()
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    global processes
     content_type = request.headers.get('Content-Type')
     if content_type == 'application/json':
         bp = request.json
 
-        location = bp["location"]
-        id_bp = bp['plan']['businessPlan_id']
-        logging.info(f"received business plan with id {id_bp}")
+        try:
+            location = bp["location"]
+            id_bp = bp['plan']['businessPlan_id']
+            logging.info(f"received business plan with id {id_bp}")
 
-        bp_queue.put(bp)
-        bp_save_queue.put(bp)
-        if not processes[0].is_alive():
-            logging.error("predict process has crashed")
-            for q in [reco_queue, bp_queue, bp_save_queue]:
-                while not q.empty():
-                    q.get()
-            processes[0].start()
-            logging.info("predict process restart is successful")
-            return {"fail": "predict failed, restarted process, try again"}
-        else:
-            reco = reco_queue.get()
-            reco['location'] = location
-            reco['plan']['businessPlan_id'] = id_bp
-            logging.info(f"processing successful of business plan with id {id_bp}")
+            guids_by_bn = flattener(bp, flag_generate_plus_one=True)
+            logging.info('received num %s bns idetified', len(guids_by_bn))
+            recomendations_by_bn = mbn.predict_all(guids_by_bn)
+            reco = flattener.back(recomendations_by_bn)
             return reco
+
+        except Exception as e:
+            with open(log_dir + "/last_input.pickle", "wb") as conn:
+                pickle.dump((datetime.now(), bp), conn)
+            logging.error(str(e))
+            mbn.__init__(translator=translator, flattener=flattener, tresh_yes=tresh_yes)
+
+            return {f"error: {str(e)}"}
 
     else:
         return 'Content-Type not supported!'
@@ -89,15 +75,35 @@ def predict():
 
 @app.route('/learn', methods=['POST'])
 def learn():
+
     content_type = request.headers.get('Content-Type')
     if content_type == 'application/json':
-        logging.info('receive_status == success')
-        json = request.json
+        bp = request.json
+        is_first = bp['isFirst']
+        is_last = bp['isLast']
+        logging.info(f"is_first={is_first}, is_last={is_last}")
 
-        # id_session = json['plan']['learningSessionId']
-        # is_first = json['plan']['isFirst']
-        # is_last = json['plan']['isLast']
-        # logging.info(f"id_session={id_session}, is_first={is_first}, is_last={is_last}")
+        id_bp = bp['plan']['businessPlan_id']
+        logging.info(f"received business plan with id {id_bp}")
+
+        guids_by_bn = flattener(bp)
+        trainer.add_bp(guids_by_bn)
+
+        if is_last:
+            try:
+                logging.info("starting training")
+                mbn.reload(flag_use_trained=False)
+                trainer.train()
+                trainer.bps_for_training.clear()
+                logging.info("training succesful")
+            except Exception as e:
+                with open(log_dir + "/last_input.pickle", "wb") as conn:
+                    pickle.dump((datetime.now(), trainer.bps_for_training), conn)
+                logging.error(e)
+                mbn.__init__(translator=translator, flattener=flattener, tresh_yes=tresh_yes)
+
+                return {"error": str(e)}
+
         return {'receive_status': 'success'}
     else:
         logging.info('receive_status == failed')
@@ -106,18 +112,10 @@ def learn():
 
 if __name__ == "__main__":
 
-    processes = [
-        mp.Process(target=worker_predictor, args=(bp_queue, reco_queue)),
-        mp.Process(target=worker_input_saver, args=(bp_save_queue,)),
-    ]
-    for p in processes:
-        p.daemon = True
-        p.start()
-    sleep(2)
 
-    if os.path.exists(path_pid):
-        print("pid file exists, daemon already running, if not - delete pid file")
-        sys.exit(1)
+    # if os.path.exists(path_pid):
+    #     print("pid file exists, daemon already running, if not - delete pid file")
+    #     sys.exit(1)
 
     with open(path_pid, "w") as conn:
         conn.write(str(os.getpid()))
@@ -135,6 +133,6 @@ if __name__ == "__main__":
             if "port" in ip_port:
                 args.port = int(ip_port['port'])
 
-    # app.run(args.ip, args.port)
-    http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
-    http_server.serve_forever()
+    app.run(args.ip, args.port, debug=True)
+    # http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
+    # http_server.serve_forever()

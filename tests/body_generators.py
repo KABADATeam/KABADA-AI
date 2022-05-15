@@ -28,12 +28,13 @@ class PredictBodyGen:
             # bn_name = basename(f).replace(".json", "")
             with open(f, "r") as conn:
                 translation = json.load(conn)
-                self.guids.extend(translation.keys())
+                self.guids.append(list(translation.keys()))
 
         if self.flag_fake_guids:
-            for i in range(len(self.guids)):
-                if np.random.uniform() > 0.5:
-                    self.guids[i] = ''.join(random.sample(self.guids[i],len(self.guids[i])))
+            for j, guids in enumerate(self.guids):
+                for i in range(len(guids)):
+                    if np.random.uniform() > 0.5:
+                        self.guids[j][i] = ''.join(random.sample(self.guids[i],len(self.guids[i])))
 
         with open(join(repo_dir, "docs", "bp_flatten_names_to_bns.json"), "r") as conn:
             self.bp2bn = json.load(conn)
@@ -59,23 +60,13 @@ class PredictBodyGen:
         return self.mbn.sample_all()
 
     def __call__(self, *args, **kwargs):
-        n_sample = int(len(self.guids) * 0.3)
-        guids = list(np.random.choice(self.guids, n_sample, replace=False))
+
+        guids = []
+        for gs in self.guids:
+            n_sample = int(np.clip(int(len(gs) * 0.3), 1, np.inf))
+            guids.extend(list(np.random.choice(gs, n_sample, replace=False)))
         self.impose_one_value_per_bn_variable(guids)
         bp = flattener.back_one_recomendation(guids)
-        # guids_by_bn = defaultdict(list)
-        # for guid in guids:
-        #     for bp_name, bn_name in self.bp2bn.items():
-        #         if bp_name in guid:
-        #             guids_by_bn
-        #
-        #     print(self.bp2bn.keys())
-        #     print(guid)
-        #     exit()
-        #
-        # print(guids)
-        # exit()
-        # bp = flattener.back(guids_by_bn)
         bp['location'] = "some_location"
         if 'plan' not in bp:
             bp['plan'] = {}
