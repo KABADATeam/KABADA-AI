@@ -72,83 +72,21 @@ class BayesNetwork:
         # print(2222, varnames)
         bp1 = {k: v for k, v in bp1}
         bp2 = {k: v for k, v in bp2}
+
+        if flag_simple_dist:
+            num_same = 0
+            for k in bp1.keys() & bp2.keys():
+                num_same += bp1[k] == bp2[k]
+            return num_same / len(varnames)
+
         bp1 = [self.net.get_outcome_ids(varname).index(bp1[varname]) for varname in varnames]
         bp2 = [self.net.get_outcome_ids(varname).index(bp2[varname]) for varname in varnames]
-        if flag_simple_dist:
-            return sum((a == b for a, b in zip(bp1, bp2))) / len(bp1)
         likelihoods1 = self._bp1_conditioned_likelihood_of_bp2(bp1, bp2, nodes)
         self.clear_evidence(nodes)
         likelihoods2 = self._bp1_conditioned_likelihood_of_bp2(bp2, bp1, nodes)
         # print(likelihoods1)
         # print(likelihoods2)
         return np.average(likelihoods1 + likelihoods2)
-
-    def learn(self, path_newdata, flag_verbose=0):
-        ds = pysmile.learning.DataSet()
-        ds.read_file(path_newdata)
-        matching = ds.match_network(self.net)
-        em = pysmile.learning.EM()
-
-        list_noisy_max = [(node, self.net.get_node_type(node)) for node in self.net.get_all_nodes()
-                          if self.net.get_node_type(node) != pysmile.NodeType.CPT]
-
-        for node, _ in list_noisy_max:
-            self.net.set_node_type(node, int(pysmile.NodeType.CPT))
-
-        try:
-            em.learn(ds, self.net, matching)
-        except pysmile.SMILEException as e:
-            if "ErrNo=-43" in str(e):
-                if flag_verbose==0:
-                    print(f"Warning: somewhere in the net is singularities, zeros")
-            else:
-                raise e
-
-        for node, node_type in list_noisy_max:
-            self.net.set_node_type(node, node_type)
-
-    def learn_new_dependencies(self, path_newdata, flag_verbose=-1):
-        ds = pysmile.learning.DataSet()
-        ds.read_file(path_newdata)
-        net_new = pysmile.learning.BayesianSearch().learn(ds)
-        # net_new = pysmile.learning.TAN().learn(ds)
-        # net_new.write_file("temp.xdsl")
-        # net_new.read_file("temp.xdsl")
-
-        dict_node2name_new = {node: net_new.get_node_name(node) for node in net_new.get_all_nodes()}
-        dict_name2node_old = {self.net.get_node_name(node): node for node in self.net.get_all_nodes()}
-
-        for node_new in net_new.get_all_nodes():
-            node = dict_name2node_old[dict_node2name_new[node_new]]
-            node_type = self.net.get_node_type(node)
-            if node_type != pysmile.NodeType.CPT:
-                self.net.set_node_type(node, int(pysmile.NodeType.CPT))
-
-            parents_new = {dict_name2node_old[dict_node2name_new[node]] for node in net_new.get_parents(node_new)}
-            if len(parents_new) > 0:
-                parents = {*self.net.get_parents(node)}
-                for parent in parents_new - parents:
-                    if node not in self.net.get_parents(parent):
-                        parent_type = self.net.get_node_type(parent)
-                        if parent_type != pysmile.NodeType.CPT:
-                            self.net.set_node_type(parent, int(pysmile.NodeType.CPT))
-
-                        try:
-                            self.net.add_arc(parent, node)
-                        except pysmile.SMILEException as e:
-                            if "ErrNo=-11" in str(e):
-                                if flag_verbose == 0:
-                                    print(f"Warning: not adding arc, becaause of cycle")
-                            else:
-                                raise e
-
-                        if parent_type != pysmile.NodeType.CPT:
-                            self.net.set_node_type(parent, parent_type)
-
-            if node_type != pysmile.NodeType.CPT:
-                self.net.set_node_type(node, node_type)
-
-        self.learn(path_newdata, flag_verbose=flag_verbose)
 
     def add_evidence(self, varname, val, flag_verbose=-1, flag_update_beliefs=True):
         if isinstance(val, list):
@@ -312,47 +250,6 @@ class MultiNetwork:
             for varname, value in evidence.items():
                 self.bns[bn_name].clear_evidence(varname)
 
-    def learn_all(self, tabs_by_bn, min_size_training_set=5, flag_verbose=0):
-        for bn_name, tab in tabs_by_bn.items():
-
-            if bn_name == "main":
-                # for varname in self.bns[bn_name].get_node_names():
-                #     if varname not in tab.columns:
-                #         tab[varname] = ['no'] * tab.shape[0]
-                for c in tab.columns:
-                    uni_vals = {*tab[c]}
-                    if np.nan in uni_vals:
-                        del tab[c]
-                        logging.warning(f"dropping {c} because of missing values")
-
-                    if len(uni_vals) == 1:
-                        del tab[c]
-                        logging.warning(f"dropping {c} because have just one value")
-
-                tab.drop_duplicates(inplace=True)
-                # for c in tab.columns:
-                #     counter = Counter(tab[c])
-                #     print(c, counter, len(counter))
-
-                if tab.shape[0] < min_size_training_set or tab.shape[1] < 2:
-                    print("no data")
-                    return
-
-                tab.to_csv(path_temp_data_file, sep=" ", index=False)
-                flag_bn_search_failed = False
-                try:
-                    self.bns[bn_name].learn_new_dependencies(path_temp_data_file)
-                except pysmile.SMILEException as e:
-                    flag_bn_search_failed = True
-                    if "ErrNo=-1" in str(e):
-                        if flag_verbose == 0:
-                            print(e)
-                    else:
-                        raise e
-
-                if flag_bn_search_failed:
-                    self.bns[bn_name].learn(path_temp_data_file)
-                self.bns[bn_name].net.write_file(f"{net_dir}/trained_graphs/{bn_name}_trained.xdsl")
 
     def sample_all(self, mode="main"):
         if mode == "seperately":
@@ -450,9 +347,8 @@ class MultiNetwork:
                 for i in range(len(bp_new)):
                     bn_name, list_parent_ids, id_bp = bp_new[i]
                     _, list_guids, _ = bp_monte_carlo[i]
-                    bp_new[i] = bn_name, list_parent_ids + list_guids, id_bp
-
-                bp.extend((_ for _ in bp_new if len(_[1]) > 0))
+                    if len(list_guids) > 0:
+                        bp.append((bn_name, list_parent_ids + list_guids, id_bp))
 
         # print(1111, sorted({*self.bns.keys()}.difference(set((_[0] for _ in bp)))))
         self.bns['main'].clear_evidence()
@@ -551,40 +447,7 @@ def generate_bn_sample():
 if __name__ == "__main__":
     from pprint import pprint
     from Translator import Flattener, BPMerger
-
-    def single_bn_train_test():
-        # np.random.seed(0)
-        from config import path_temp_data_file
-        mbn = MultiNetwork(tresh_yes=0.0)
-        # bn = mbn.bns["consumer_segments"]
-        bn = mbn.bns["value_propositions"]
-        # bn = BayesNetwork("bayesgraphs/business_plan.xdsl", tresh_yes=0.0)
-        # bn = BayesNetwork("bayesgraphs/age_vs_edu.xdsl", tresh_yes=0.0)
-        # bn = BayesNetwork("bayesgraphs/business_plan_with_noisy_max.xdsl")
-        bps = defaultdict(list)
-        B = 100
-        all_varnames = bn.get_node_names()
-        for _ in range(B):
-            for varname, value in bn.generate_one_sample(flag_with_nos=True):
-                bps[varname].append(value)
-
-        # deleting some columns
-        # for i, c in enumerate(list(bps.keys())):
-        #     del bps[c]
-        #     if i > 0:
-        #         break
-
-        for node in bn.get_node_names():
-            if node not in bps:
-                bps[node] = ["no"] * B
-
-        pd.DataFrame(bps).to_csv(path_temp_data_file, sep=" ", index=False)
-        # bn.learn(path_temp_data_file)
-        bn.learn_new_dependencies(path_temp_data_file)
-        # bn.learn("bayesgraphs/consumer_segments.txt")
-        exit()
-
+    from Trainer import Trainer
 
     check_recomendation_generation()
     generate_bn_sample()
-    # single_bn_train_test()

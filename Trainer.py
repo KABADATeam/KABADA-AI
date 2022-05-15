@@ -68,7 +68,8 @@ def sample_permutations(guids_by_bn, mbn):
             # pprint(guids)
             # print(childkey, parentkey)
             # print(parent, child)
-            assert (parent is not None and child is not None) or (parent is None and child is None)
+            assert not (child is not None and parent is None)
+            # assert (parent is not None and child is not None) or (parent is None and child is None)
             flag_subbn_associations_are_correct = parent == child
             if not flag_subbn_associations_are_correct:
                 break
@@ -195,9 +196,6 @@ class Trainer:
             data_entries.extend(subdata_entries)
         tab = pd.DataFrame(data_entries)
 
-        # for varname in self.bns[bn_name].get_node_names():
-        #     if varname not in tab.columns:
-        #         tab[varname] = ['no'] * tab.shape[0]
         for c in tab.columns:
             uni_vals = {*tab[c]}
 
@@ -225,25 +223,49 @@ class Trainer:
         tab.to_csv(path_temp_data_file, sep=" ", index=False)
 
         flag_arc_search_ok = self.search_new_arcs(path_temp_data_file)
-
+        logging.info(f"flag_arc_search_ok = {flag_arc_search_ok}")
         flag_parameter_estim_ok = self.learn_parameters(path_temp_data_file)
-
+        logging.info(f"flag_parameter_estim_ok = {flag_parameter_estim_ok}")
         if flag_parameter_estim_ok:
             self.mbn.bns["main"].net.write_file(f"{net_dir}/trained_graphs/main_trained.xdsl")
+        else:
+            self.mbn.reload()
+
+
+def check_training():
+    from Translator import is_bps_identical
+    from itertools import combinations
+    from tests.body_generators import PredictBodyGen
+    flattener = Flattener()
+    mbn = MultiNetwork(tresh_yes=0.5)
+
+    trainer = Trainer()
+    generator = PredictBodyGen()
+    bps = []
+    for seed in range(30):
+        np.random.seed(seed)
+        # guids_by_bn = mbn.sample_all()
+        guids_by_bn = generator.generate_from_bn()
+        bp = flattener.back(guids_by_bn)
+        bps.append(bp)
+        guids_by_bn = flattener(bp)
+        trainer.add_bp(guids_by_bn)
+    # with open("temp.pickle", "wb") as conn:
+    #     pickle.dump(bps, conn)
+
+    # with open("temp.pickle", "rb") as conn:
+    #     bps = pickle.load(conn)
+    # for bp in bps:
+    #     guids_by_bn = flattener(bp)
+    #     trainer.add_bp(guids_by_bn)
+
+    # exit()
+    for bp1, bp2 in combinations(bps, 2):
+        assert not is_bps_identical(bp1, bp2, mbn.flattener)
+
+    mbn.reload(flag_use_trained=False)
+    trainer.train()
 
 
 if __name__ == "__main__":
-    np.random.seed(3)
-
-    flattener = Flattener()
-    translator = Translator()
-    mbn = MultiNetwork(tresh_yes=0.0)
-
-    trainer = Trainer()
-    for _ in range(4):
-        guids_by_bn = mbn.sample_all()
-        bp = flattener.back(guids_by_bn)
-        guids_by_bn = flattener(bp)
-        trainer.add_bp(guids_by_bn)
-    mbn.reload(flag_use_trained=False)
-    trainer.train()
+    check_training()

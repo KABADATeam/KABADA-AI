@@ -54,10 +54,14 @@ class PredictBodyGen:
             i += 1
             set_prefixes.add(prefix)
 
-    def generate_from_bn(self):
+    def generate_from_bn(self, flag_bp_structure=False):
         if self.mbn is None:
             self.mbn = MultiNetwork()
-        return self.mbn.sample_all()
+
+        guids_by_bn = self.mbn.sample_all()
+        if flag_bp_structure:
+            return self.mbn.flattener.back(guids_by_bn)
+        return guids_by_bn
 
     def __call__(self, *args, **kwargs):
 

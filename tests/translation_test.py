@@ -10,6 +10,7 @@ from ast import literal_eval
 from collections import defaultdict, Counter
 import os
 from Translator import Flattener
+from Trainer import check_training
 
 def traverse_leafs(translation):
     translation_flat = deepcopy(translation)
@@ -240,5 +241,6 @@ if __name__ == "__main__":
     check_all_translationalble_guids_in_full_bp()
     check_recomendation_generation()
     generate_bn_sample()
+    check_training()
     # check_bp_flattener()
     print("everythings OK :)")
