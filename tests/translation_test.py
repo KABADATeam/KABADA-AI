@@ -217,7 +217,17 @@ def check_variable_names_in_translations():
             assert {*bn.get_node_names()} == dict_bn2varnames[bn_name]
 
 
+def check_translation_variable_name_value_pairs_are_ok():
+    mbn = MultiNetwork()
+
+    for bn_name, pairs in mbn.translator.lookup.values():
+        for varname, value in pairs:
+            assert value in mbn.bns[bn_name].net.get_outcome_ids(varname), (bn_name, varname, value)
+            assert value in mbn.bns["main"].net.get_outcome_ids(varname), ("main", varname, value)
+
+
 if __name__ == "__main__":
+    check_translation_variable_name_value_pairs_are_ok()
     check_variable_names_in_translations()
     check_correct_binary_variable_detection()
     check_sub_bn_cnts()
