@@ -62,13 +62,13 @@ class LearnAll(Action):
 mode_predict_testing = 0
 mode_train_testing = 1
 
-# mode = mode_predict_testing
-mode = mode_train_testing
+mode = mode_predict_testing
+# mode = mode_train_testing
 
 pred_body_gen = PredictBodyGen()
 flag_gen_from_bn = False
 actions = []
-for _ in range(1000 if mode == mode_predict_testing else 100):
+for _ in range(100 if mode == mode_predict_testing else 100):
     if mode == mode_predict_testing:
         if flag_gen_from_bn:
             actions.append(PredictAll(**pred_body_gen.generate_from_bn(flag_bp_structure=True)))

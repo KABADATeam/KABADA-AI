@@ -63,6 +63,7 @@ def generate_dict_bp_relation_keys_for_training():
 generate_dict_autocompletable_variables()
 
 ###### TESTS
+check_predict_endpoint()
 check_variable_names_in_translations()
 check_correct_binary_variable_detection()
 check_sub_bn_cnts()

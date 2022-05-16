@@ -356,7 +356,7 @@ class MultiNetwork:
 
     def predict_all(self, guids_by_bn, flag_noisy=False, target_bns=None, target_variables=None,
                     flag_translate_output=True, flag_with_nos=False, flag_assume_full=False,
-                    num_beams=1, flag_clear_evidence=True):
+                    num_beams=1, flag_clear_evidence=True, id_target=None):
         bp = []
         other_guids_by_id = {}
         other_guids_by_bn = defaultdict(set)
@@ -366,11 +366,18 @@ class MultiNetwork:
                     other_guids_by_id[id_bp] = (bn_name, {*list_guids})
                 other_guids_by_bn[bn_name].update(list_guids)
 
+        flag_assume_full_evidence = id_target is not None
+
         for bn_name, list_guids, id_bp in guids_by_bn:
             if bn_name not in self.bns:
                 continue
+
             if target_bns is not None:
                 if bn_name not in target_bns:
+                    continue
+
+            if id_target is not None:
+                if id_bp != id_target:
                     continue
 
             # looking for some BFF
@@ -386,9 +393,11 @@ class MultiNetwork:
 
                     # if any BFF found it gets special care
                     if other_bn_name in dict_guids_bffs:
-                        list_evidence = self.translator(dict_guids_bffs[other_bn_name])
+                        list_evidence = self.translator(dict_guids_bffs[other_bn_name],
+                                                        flag_assume_full=flag_assume_full_evidence)
                     else:
-                        list_evidence = self.translator(other_guids)
+                        list_evidence = self.translator(other_guids, flag_assume_full=flag_assume_full_evidence)
+
                     if len(list_evidence) == 0:
                         continue
                     assert len(list_evidence) == 1, "pa tiikliem tika sadaliits ar flattener"
@@ -398,7 +407,8 @@ class MultiNetwork:
 
             for varname, values in dict_evidence.items():
                 values = values[0] if len(values) == 1 else values
-                self.bns["main"].add_evidence(varname, values, flag_update_beliefs=False)
+                self.bns["main"].add_evidence(varname, values,
+                                              flag_update_beliefs=False)
 
             list_evidence = self.translator(list_guids, flag_assume_full=flag_assume_full)
             assert len(list_evidence) <= 1, "pa tiikliem tika sadaliits ar flattener"
@@ -430,9 +440,9 @@ def check_recomendation_generation():
     np.random.seed(1)
     for _ in range(100):
         np.random.seed(_)
-        guids_by_bn = gen.generate_from_bn()
-        # bp = gen()
-        # guids_by_bn = flattener(bp)
+        # guids_by_bn = gen.generate_from_bn()
+        bp = gen()
+        guids_by_bn = flattener(bp)
         recomendations_by_bn = net.predict_all(guids_by_bn)
 
 def generate_bn_sample():
@@ -450,4 +460,4 @@ if __name__ == "__main__":
     from Trainer import Trainer
 
     check_recomendation_generation()
-    generate_bn_sample()
+    # generate_bn_sample()

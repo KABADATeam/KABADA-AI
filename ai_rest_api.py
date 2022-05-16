@@ -33,40 +33,44 @@ trainer = Trainer(mbn=mbn)
 logging.info('MultiNetwork initialized')
 
 
-def worker_trainer(bp_queue):
-    trainer = Trainer()
-    while True:
-        bp = bp_queue.get()
-        if bp is None:
-            trainer.train()
-            return
-        guids_by_bn = trainer.flattener(bp)
-        trainer.add_bp(guids_by_bn)
-
-
 @app.route('/predict', methods=['POST'])
-def predict():
-    content_type = request.headers.get('Content-Type')
+def predict(bp=None):
+    if bp is None:
+        content_type = request.headers.get('Content-Type')
+    else:
+        content_type = 'application/json'
+
     if content_type == 'application/json':
-        bp = request.json
 
         try:
+            if bp is None:
+                bp = request.json
+
             location = bp["location"]
+
             id_bp = bp['plan']['businessPlan_id']
-            logging.info(f"received business plan with id {id_bp}")
+            logging.info(f"received business plan with id {id_bp}, location = {location}")
+
+            if location == "plan::swot":
+                id_target = id_bp
+            else:
+                id_target = location.split("::")[-1]
+                location = "::".join(location.split("::")[:-1])
 
             guids_by_bn = flattener(bp, flag_generate_plus_one=True)
             logging.info('received num %s bns idetified', len(guids_by_bn))
-            recomendations_by_bn = mbn.predict_all(guids_by_bn)
+            recomendations_by_bn = mbn.predict_all(guids_by_bn, id_target=id_target)
             reco = flattener.back(recomendations_by_bn)
+            if reco is None or len(reco) == 0:
+                reco = {"plan": {}}
             return reco
 
         except Exception as e:
-            with open(log_dir + "/last_input.pickle", "wb") as conn:
-                pickle.dump((datetime.now(), bp), conn)
+            now = datetime.now()
+            with open(f"{log_dir}/last_input_{now}.pickle", "wb") as conn:
+                pickle.dump((now, bp), conn)
             logging.error(str(e))
             mbn.__init__(translator=translator, flattener=flattener, tresh_yes=tresh_yes)
-
             return {f"error: {str(e)}"}
 
     else:
@@ -112,10 +116,9 @@ def learn():
 
 if __name__ == "__main__":
 
-
-    # if os.path.exists(path_pid):
-    #     print("pid file exists, daemon already running, if not - delete pid file")
-    #     sys.exit(1)
+    if os.path.exists(path_pid):
+        print("pid file exists, daemon already running, if not - delete pid file")
+        sys.exit(1)
 
     with open(path_pid, "w") as conn:
         conn.write(str(os.getpid()))
@@ -133,6 +136,6 @@ if __name__ == "__main__":
             if "port" in ip_port:
                 args.port = int(ip_port['port'])
 
-    app.run(args.ip, args.port, debug=True)
-    # http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
-    # http_server.serve_forever()
+    # app.run(args.ip, args.port, debug=True)
+    http_server = WSGIServer((args.ip, args.port), app, log=None, error_log=None)
+    http_server.serve_forever()

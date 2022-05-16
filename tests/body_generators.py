@@ -11,6 +11,7 @@ import random
 from collections import defaultdict
 from Translator import Flattener
 from BayesNetwork import MultiNetwork
+from uuid import uuid4
 
 # seed = 3
 # np.random.seed(seed)
@@ -71,10 +72,21 @@ class PredictBodyGen:
             guids.extend(list(np.random.choice(gs, n_sample, replace=False)))
         self.impose_one_value_per_bn_variable(guids)
         bp = flattener.back_one_recomendation(guids)
-        bp['location'] = "some_location"
+        guids_by_bn = flattener(bp)
+
+        i0 = np.random.choice(len(guids_by_bn), size=(1,))[0]
+        if guids_by_bn[i0][0] == "plan":
+            location = "plan::swot"
+        else:
+            uuid = str(uuid4())
+            guids_by_bn[i0] = guids_by_bn[i0][0], guids_by_bn[i0][1], uuid
+            location = f"{flattener.bn2bp[guids_by_bn[i0][0]]}::{uuid}"
+
+        bp = flattener.back(guids_by_bn)
+        bp['location'] = location
         if 'plan' not in bp:
             bp['plan'] = {}
-        bp['plan']['businessPlan_id'] = "some_id"
+        bp['plan']['businessPlan_id'] = str(uuid4())
         return bp
 
 

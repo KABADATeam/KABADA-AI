@@ -227,7 +227,23 @@ def check_translation_variable_name_value_pairs_are_ok():
             assert value in mbn.bns["main"].net.get_outcome_ids(varname), ("main", varname, value)
 
 
+def check_predict_endpoint():
+    from ai_rest_api import predict
+    from tests.body_generators import PredictBodyGen
+
+    B = 1000
+    pred_body_gen = PredictBodyGen()
+    lens = []
+    for _ in range(B):
+        bp = pred_body_gen()
+        reco = predict(bp)
+        lens.append(len(reco['plan']))
+    print(Counter(lens))
+    # exit()
+
+
 if __name__ == "__main__":
+    check_predict_endpoint()
     check_translation_variable_name_value_pairs_are_ok()
     check_variable_names_in_translations()
     check_correct_binary_variable_detection()
