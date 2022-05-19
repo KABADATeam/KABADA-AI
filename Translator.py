@@ -156,7 +156,7 @@ class Flattener:
             else:
                 default.append(guid)
         if flag_generate_plus_one:
-            for bn_name in {_[0] for _ in output}:
+            for bn_name in self.bn2bp.keys():
                 output.append((bn_name, [], "sample"))
 
         if id_bp is None:
