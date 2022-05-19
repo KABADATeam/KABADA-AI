@@ -366,7 +366,7 @@ class MultiNetwork:
                     other_guids_by_id[id_bp] = (bn_name, {*list_guids})
                 other_guids_by_bn[bn_name].update(list_guids)
 
-        flag_assume_full_evidence = id_target is not None
+        flag_assume_full_evidence = id_target is not None or flag_assume_full
 
         for bn_name, list_guids, id_bp in guids_by_bn:
             if bn_name not in self.bns:
@@ -412,15 +412,19 @@ class MultiNetwork:
 
             list_evidence = self.translator(list_guids, flag_assume_full=flag_assume_full)
             assert len(list_evidence) <= 1, "pa tiikliem tika sadaliits ar flattener"
+
             list_evidence = list_evidence[bn_name]
             target_names = {*self.bns[bn_name].get_node_names()}
+
             if target_variables is not None:
                 target_names = (target_names | self.set_only_main_variables) & target_variables
+
             list_evidence = {_ for _ in list_evidence if _[0] not in target_names}
-            # print(bn_name, len(list_evidence), len(self.bns[bn_name].get_node_names()))
+
             recomendations = {*self.bns["main"].predict_popup(list_evidence, targets=target_names,
                                                               flag_noisy=flag_noisy, flag_with_nos=flag_with_nos,
                                                               num_beams=num_beams)}
+
             bp.append((bn_name, recomendations, id_bp))
             if flag_clear_evidence:
                 self.bns["main"].clear_evidence()
