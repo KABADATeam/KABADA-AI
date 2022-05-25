@@ -48,15 +48,8 @@ class LearnAll(Action):
     def __init__(self, *args, **kwargs):
         Action.__init__(self, *args, **kwargs)
         self.name = "learn"
-        self.is_first = False
-        self.is_last = False
-
-    def get_json(self):
-        json_body = {k: v for k, v in self.__dict__.items() if k not in ("args", "name")}
-        json_body["isFirst"] = self.is_first
-        json_body["isLast"] = self.is_last
-        print(json_body)
-        return json_body
+        self.isFirst = False
+        self.isLast = False
 
 
 mode_predict_testing = 0
@@ -83,8 +76,10 @@ for _ in range(100 if mode == mode_predict_testing else 100):
         raise ValueError
 
 if mode == mode_train_testing:
-    actions[0].is_first = True
-    actions[-1].is_last = True
+    # with open("AI_learning.json", "r") as conn:
+    #     actions[0] = json.load(conn)
+    actions[0].isFirst = True
+    actions[-1].isLast = True
 
 for action in actions:
     print("----------------------- " + action.name)

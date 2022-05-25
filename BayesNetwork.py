@@ -448,14 +448,14 @@ def check_recomendation_generation():
         bp = gen()
         guids_by_bn = flattener(bp)
         recomendations_by_bn = net.predict_all(guids_by_bn)
+    print("check_recomendation_generation Done !")
 
 def generate_bn_sample():
     mnt = MultiNetwork()
-    for _ in range(100):
+    for _ in range(1):
         translations_by_bn = mnt.sample_all()
         bp = mnt.flattener.back(translations_by_bn)
-    # pprint(bp)
-    # exit()
+    print("generate_bn_sample Done !")
 
 
 if __name__ == "__main__":

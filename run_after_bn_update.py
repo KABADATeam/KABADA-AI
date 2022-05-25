@@ -42,9 +42,6 @@ def generate_dict_autocompletable_variables():
 
 def generate_dict_bp_relation_keys_for_training():
 
-    print(11111)
-    pprint(mbn.sub_bn_relations)
-
     dict_childkey2parentkey = {}
     for bn_name, kvs in mbn.sub_bn_relations.items():
         for parent, relation in kvs.items():
