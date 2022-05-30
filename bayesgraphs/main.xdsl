@@ -782,23 +782,35 @@
 			<state id="num_more" />
 			<probabilities>0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667 0.1666666666666667</probabilities>
 		</cpt>
-		<cpt id="advertising_pr_and_sales_promotion">
+		<noisymax id="patents">
 			<state id="strength" />
 			<state id="weakness" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
+			<parents>price_level product_features_aims_to_set_a_trend</parents>
+			<strengths>0 1 2 3 4 0 1</strengths>
+			<parameters>0.5 0.5 0 0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0.5 0.5 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<noisymax id="copyrights">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<parents>patents</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.4999999999999999 0.5000000000000001 0</parameters>
+		</noisymax>
+		<noisymax id="advertising_pr_and_sales_promotion">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<parents>copyrights</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.3333333333333333 0.3333333333333333 0.3333333333333334</parameters>
+		</noisymax>
 		<cpt id="complementary_and_aftersales_service">
 			<state id="strength" />
 			<state id="weakness" />
 			<state id="no" />
 			<probabilities>0.5 0.5 0</probabilities>
-		</cpt>
-		<cpt id="copyrights">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
 		<cpt id="corporate_image">
 			<state id="strength" />
@@ -812,24 +824,28 @@
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="discounts">
+		<noisymax id="discounts">
 			<state id="strength" />
 			<state id="weakness" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
+			<parents>advertising_pr_and_sales_promotion</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5 0.5 0 0.5833333333333333 0.4166666666666667 0 0 0 1 0.4999999999999999 0.5000000000000001 0</parameters>
+		</noisymax>
 		<cpt id="facilities_and_equipment">
 			<state id="strength" />
 			<state id="weakness" />
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="guarantees_and_warranties">
+		<noisymax id="guarantees_and_warranties">
 			<state id="strength" />
 			<state id="weakness" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
+			<parents>corporate_image complementary_and_aftersales_service</parents>
+			<strengths>0 1 2 0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.3333333333333333 0.3333333333333333 0.3333333333333334</parameters>
+		</noisymax>
 		<cpt id="inventory">
 			<state id="strength" />
 			<state id="weakness" />
@@ -842,108 +858,152 @@
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="management_processes">
+		<noisymax id="management_processes">
 			<state id="strength" />
 			<state id="weakness" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="operational_processes">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="packaging_and_labeling">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="patents">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="payment_terms">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="price">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="product_assortment">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="product_design">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="return_of_goods">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="skills_and_experience_of_employees">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="supporting_processes">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="trademarks">
-			<state id="strength" />
-			<state id="weakness" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
+			<parents>corporate_image</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.3333333333333333 0.3333333333333333 0.3333333333333334</parameters>
+		</noisymax>
 		<cpt id="vehicles">
 			<state id="strength" />
 			<state id="weakness" />
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="accessibility_of_financial_resources">
+		<noisymax id="skills_and_experience_of_employees">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<parents>product_features_is_the_result_of_r_d product_features_is_a_fundamentally_new_product_or_serivce</parents>
+			<strengths>0 1 0 1</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<cpt id="supporting_processes">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
+		</cpt>
+		<noisymax id="operational_processes">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<parents>vehicles skills_and_experience_of_employees customer_convenient_access_to_products supporting_processes product_type</parents>
+			<strengths>0 1 2 0 1 2 0 1 2 0 1 2 0 1 2</strengths>
+			<parameters>0.4999999999999999 0.5000000000000001 0 0.5833333333333333 0.4166666666666667 0 0 0 1 0.4999999999999999 0.5000000000000001 0 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5 0.5 0 0.5833333333333333 0.4166666666666667 0 0 0 1 0.4999999999999999 0.5000000000000001 0</parameters>
+		</noisymax>
+		<noisymax id="packaging_and_labeling">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<parents>operational_processes</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.3333333333333333 0.3333333333333333 0.3333333333333334</parameters>
+		</noisymax>
+		<cpt id="payment_terms">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
+		</cpt>
+		<noisymax id="product_design">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<parents>advertising_pr_and_sales_promotion product_features_has_a_different_visual_design</parents>
+			<strengths>0 1 2 0 1</strengths>
+			<parameters>0.5 0.5 0 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<cpt id="product_assortment">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
+		</cpt>
+		<noisymax id="price">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<parents>discounts product_design product_assortment price_level</parents>
+			<strengths>0 1 2 0 1 2 0 1 2 0 1 2 3 4</strengths>
+			<parameters>0.4166666666666666 0.5833333333333334 0 0.5 0.5 0 0 0 1 0.4166666666666666 0.5833333333333334 0 0.5 0.5 0 0 0 1 0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<noisymax id="return_of_goods">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<parents>guarantees_and_warranties</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.3333333333333333 0.3333333333333333 0.3333333333333334</parameters>
+		</noisymax>
+		<noisymax id="trademarks">
+			<state id="strength" />
+			<state id="weakness" />
+			<state id="no" />
+			<parents>corporate_image</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.3333333333333333 0.3333333333333333 0.3333333333333334</parameters>
+		</noisymax>
+		<cpt id="competition">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
+		<noisymax id="economic_growth">
+			<state id="opportunity" />
+			<state id="threat" />
+			<state id="no" />
+			<parents>price_level</parents>
+			<strengths>0 1 2 3 4</strengths>
+			<parameters>0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<noisymax id="accessibility_of_financial_resources">
+			<state id="opportunity" />
+			<state id="threat" />
+			<state id="no" />
+			<parents>competition economic_growth</parents>
+			<strengths>0 1 2 0 1 2</strengths>
+			<parameters>0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
 		<cpt id="accessibility_of_human_resources">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="accessibility_of_tangible_resources">
+		<noisymax id="accessibility_of_tangible_resources">
+			<state id="opportunity" />
+			<state id="threat" />
+			<state id="no" />
+			<parents>economic_growth</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<cpt id="substitution_possibilities">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="bargaining_power_of_buyers">
+		<noisymax id="income_and_wealth">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
+			<parents>price_level</parents>
+			<strengths>0 1 2 3 4</strengths>
+			<parameters>0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<noisymax id="bargaining_power_of_buyers">
+			<state id="opportunity" />
+			<state id="threat" />
+			<state id="no" />
+			<parents>substitution_possibilities income_and_wealth</parents>
+			<strengths>0 1 2 0 1 2</strengths>
+			<parameters>0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
 		<cpt id="bargaining_power_of_suppliers">
 			<state id="opportunity" />
 			<state id="threat" />
@@ -956,36 +1016,34 @@
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="competition">
-			<state id="opportunity" />
-			<state id="threat" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
 		<cpt id="cultural_norms_and_values">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="cybersecurity">
+		<cpt id="technological_change">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="demographic_trends">
+		<noisymax id="cybersecurity">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="economic_growth">
+			<parents>technological_change</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.4166666666666666 0.5833333333333334 0 0.5 0.5 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<noisymax id="demographic_trends">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
+			<parents>accessibility_of_human_resources</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
 		<cpt id="exchange_rate">
 			<state id="opportunity" />
 			<state id="threat" />
@@ -998,78 +1056,76 @@
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="income_and_wealth">
+		<noisymax id="inflation">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="inflation">
-			<state id="opportunity" />
-			<state id="threat" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
+			<parents>price_level</parents>
+			<strengths>0 1 2 3 4</strengths>
+			<parameters>0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
 		<cpt id="infrastructure">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
 			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
 		</cpt>
-		<cpt id="interest_rate">
+		<noisymax id="interest_rate">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="lifestyle_trends">
+			<parents>accessibility_of_financial_resources</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<noisymax id="lifestyle_trends">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="market_size">
+			<parents>cultural_norms_and_values product_features_aims_to_set_a_trend product_features_is_more_user_friendly product_features_is_more_eco_friendly product_features_is_the_result_of_r_d</parents>
+			<strengths>0 1 2 0 1 0 1 0 1 0 1</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<noisymax id="market_size">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="natural_disasters">
+			<parents>demographic_trends price_level</parents>
+			<strengths>0 1 2 0 1 2 3 4</strengths>
+			<parameters>0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5 0.5 0 0.5 0.5 0 0.5 0.5 0 0.5833333333333333 0.4166666666666667 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<noisymax id="natural_disasters">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="new_markets">
+			<parents>climate_and_its_change</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
+		<noisymax id="new_markets">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="political_stability">
+			<parents>demographic_trends market_size</parents>
+			<strengths>0 1 2 0 1 2</strengths>
+			<parameters>0.5833333333333333 0.4166666666666667 0 0.5 0.5 0 0 0 1 0.5 0.5 0 0.5833333333333333 0.4166666666666667 0 0 0 1 0.4999999999999999 0.5000000000000001 0</parameters>
+		</noisymax>
+		<noisymax id="political_stability">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="potential_future_competition">
+			<parents>government_regulation</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.4999999999999999 0.5000000000000001 0</parameters>
+		</noisymax>
+		<noisymax id="potential_future_competition">
 			<state id="opportunity" />
 			<state id="threat" />
 			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="substitution_possibilities">
-			<state id="opportunity" />
-			<state id="threat" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
-		<cpt id="technological_change">
-			<state id="opportunity" />
-			<state id="threat" />
-			<state id="no" />
-			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
-		</cpt>
+			<parents>competition</parents>
+			<strengths>0 1 2</strengths>
+			<parameters>0.5 0.5 0 0.4166666666666666 0.5833333333333334 0 0 0 1 0.5 0.5 0</parameters>
+		</noisymax>
 	</nodes>
 	<extensions>
 		<genie version="1.0" app="GeNIe 3.0.6518.0 ACADEMIC" name="main">
@@ -1393,14 +1449,14 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1376 842 1477 883</position>
+				<position>1254 912 1355 953</position>
 			</node>
 			<node id="price_level">
 				<name>price_level</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1853 753 1939 793</position>
+				<position>1130 731 1216 771</position>
 			</node>
 			<node id="income_source_non_time_limited_usage">
 				<name>income_source_non_time_limited_usage</name>
@@ -1456,7 +1512,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1911 596 2292 634</position>
+				<position>1971 584 2352 622</position>
 			</node>
 			<node id="product_features_is_an_improvement_of_an_existing_product_or_service">
 				<name>product_features_is_an_improvement_of_an_existing_product_or_service</name>
@@ -1470,14 +1526,14 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2407 946 2727 974</position>
+				<position>2376 925 2696 953</position>
 			</node>
 			<node id="product_features_is_the_result_of_r_d">
 				<name>product_features_is_the_result_of_r_d</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2031 753 2317 790</position>
+				<position>2077 709 2363 746</position>
 			</node>
 			<node id="product_features_has_a_new_set_of_features">
 				<name>product_features_has_a_new_set_of_features</name>
@@ -1491,7 +1547,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>2125 868 2438 898</position>
+				<position>1972 815 2285 845</position>
 			</node>
 			<node id="product_features_has_an_improved_poduction_delivery_process">
 				<name>product_features_has_an_improved_poduction_delivery_process</name>
@@ -1519,7 +1575,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1924 1034 2198 1067</position>
+				<position>1938 1041 2212 1074</position>
 			</node>
 			<node id="product_features_is_safer_to_use">
 				<name>product_features_is_safer_to_use</name>
@@ -1547,7 +1603,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>1700 451 2032 482</position>
+				<position>1745 764 2077 795</position>
 			</node>
 			<node id="product_features_is_more_adaptive_versatile">
 				<name>product_features_is_more_adaptive_versatile</name>
@@ -1659,21 +1715,21 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3165 472 3327 501</position>
+				<position>2931 575 3093 604</position>
 			</node>
 			<node id="consumer_prices">
 				<name>consumer_prices</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3115 517 3192 541</position>
+				<position>2881 620 2958 644</position>
 			</node>
 			<node id="consumer_types_of_pricing">
 				<name>consumer_types_of_pricing</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3268 520 3457 556</position>
+				<position>3034 623 3223 659</position>
 			</node>
 			<node id="num_revenue_streams_consumers">
 				<name>num_revenue_streams_consumers</name>
@@ -1687,21 +1743,21 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3502 720 3664 749</position>
+				<position>3176 697 3338 726</position>
 			</node>
 			<node id="business_prices">
 				<name>business_prices</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3466 755 3543 779</position>
+				<position>3140 732 3217 756</position>
 			</node>
 			<node id="business_types_of_pricing">
 				<name>business_types_of_pricing</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3646 751 3835 787</position>
+				<position>3320 728 3509 764</position>
 			</node>
 			<node id="num_revenue_streams_business">
 				<name>num_revenue_streams_business</name>
@@ -1722,21 +1778,21 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3632 481 3794 510</position>
+				<position>3283 513 3445 542</position>
 			</node>
 			<node id="ngo_prices">
 				<name>ngo_prices</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3581 525 3658 549</position>
+				<position>3232 557 3309 581</position>
 			</node>
 			<node id="ngo_types_of_pricing">
 				<name>ngo_types_of_pricing</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3735 529 3924 565</position>
+				<position>3386 561 3575 597</position>
 			</node>
 			<node id="fixed_cost_subtype">
 				<name>fixed_cost_subtype</name>
@@ -1771,14 +1827,14 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4012 96 4205 129</position>
+				<position>3273 197 3466 230</position>
 			</node>
 			<node id="distributor_type">
 				<name>distributor_type</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3868 98 3999 125</position>
+				<position>3129 199 3260 226</position>
 			</node>
 			<node id="num_key_partners_distributors">
 				<name>num_key_partners_distributors</name>
@@ -1792,14 +1848,14 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4006 174 4153 199</position>
+				<position>3267 275 3414 300</position>
 			</node>
 			<node id="supplier_type">
 				<name>supplier_type</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3899 176 4006 200</position>
+				<position>3160 277 3267 301</position>
 			</node>
 			<node id="num_key_partners_suppliers">
 				<name>num_key_partners_suppliers</name>
@@ -1813,14 +1869,14 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4056 252 4218 278</position>
+				<position>3317 353 3479 379</position>
 			</node>
 			<node id="other_partner_type">
 				<name>other_partner_type</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>3870 246 4055 280</position>
+				<position>3131 347 3316 381</position>
 			</node>
 			<node id="num_key_partners_others">
 				<name>num_key_partners_others</name>
@@ -1834,336 +1890,336 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4378 100 4634 124</position>
+				<position>2208 1212 2464 1236</position>
 			</node>
 			<node id="complementary_and_aftersales_service">
 				<name>complementary_and_aftersales_service</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4378 131 4647 163</position>
+				<position>2422 1289 2691 1321</position>
 			</node>
 			<node id="copyrights">
 				<name>copyrights</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4375 169 4650 196</position>
+				<position>2314 1329 2589 1356</position>
 			</node>
 			<node id="corporate_image">
 				<name>corporate_image</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4380 202 4647 235</position>
+				<position>2322 1362 2589 1395</position>
 			</node>
 			<node id="customer_convenient_access_to_products">
 				<name>customer_convenient_access_to_products</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4390 240 4656 279</position>
+				<position>2434 1398 2700 1437</position>
 			</node>
 			<node id="discounts">
 				<name>discounts</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4397 282 4660 316</position>
+				<position>2352 1526 2615 1560</position>
 			</node>
 			<node id="facilities_and_equipment">
 				<name>facilities_and_equipment</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4395 314 4661 358</position>
+				<position>2439 1472 2705 1516</position>
 			</node>
 			<node id="guarantees_and_warranties">
 				<name>guarantees_and_warranties</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4389 355 4656 402</position>
+				<position>2153 1553 2420 1600</position>
 			</node>
 			<node id="inventory">
 				<name>inventory</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4398 409 4657 442</position>
+				<position>2442 1567 2701 1600</position>
 			</node>
 			<node id="land">
 				<name>land</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4413 442 4656 471</position>
+				<position>2457 1600 2700 1629</position>
 			</node>
 			<node id="management_processes">
 				<name>management_processes</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4400 471 4664 507</position>
+				<position>2285 1630 2549 1666</position>
 			</node>
 			<node id="operational_processes">
 				<name>operational_processes</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4402 507 4659 537</position>
+				<position>2446 1665 2703 1695</position>
 			</node>
 			<node id="packaging_and_labeling">
 				<name>packaging_and_labeling</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4401 538 4663 572</position>
+				<position>2152 1695 2414 1729</position>
 			</node>
 			<node id="patents">
 				<name>patents</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4400 572 4659 603</position>
+				<position>2444 1730 2703 1761</position>
 			</node>
 			<node id="payment_terms">
 				<name>payment_terms</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4400 604 4652 637</position>
+				<position>2444 1762 2696 1795</position>
 			</node>
 			<node id="price">
 				<name>price</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4402 636 4649 661</position>
+				<position>2256 1803 2503 1828</position>
 			</node>
 			<node id="product_assortment">
 				<name>product_assortment</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4394 668 4641 693</position>
+				<position>2548 1821 2795 1846</position>
 			</node>
 			<node id="product_design">
 				<name>product_design</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4405 696 4652 721</position>
+				<position>2449 1854 2696 1879</position>
 			</node>
 			<node id="return_of_goods">
 				<name>return_of_goods</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4410 724 4657 749</position>
+				<position>2454 1882 2701 1907</position>
 			</node>
 			<node id="skills_and_experience_of_employees">
 				<name>skills_and_experience_of_employees</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4405 754 4652 779</position>
+				<position>2533 1914 2780 1939</position>
 			</node>
 			<node id="supporting_processes">
 				<name>supporting_processes</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4412 780 4659 805</position>
+				<position>2456 1938 2703 1963</position>
 			</node>
 			<node id="trademarks">
 				<name>trademarks</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4414 810 4661 835</position>
+				<position>2080 1833 2327 1858</position>
 			</node>
 			<node id="vehicles">
 				<name>vehicles</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4412 839 4659 864</position>
+				<position>2226 1909 2473 1934</position>
 			</node>
 			<node id="accessibility_of_financial_resources">
 				<name>accessibility_of_financial_resources</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4761 94 4989 124</position>
+				<position>3000 1257 3228 1287</position>
 			</node>
 			<node id="accessibility_of_human_resources">
 				<name>accessibility_of_human_resources</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4756 126 4984 156</position>
+				<position>2800 1284 3028 1314</position>
 			</node>
 			<node id="accessibility_of_tangible_resources">
 				<name>accessibility_of_tangible_resources</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4756 158 4984 188</position>
+				<position>2800 1316 3028 1346</position>
 			</node>
 			<node id="bargaining_power_of_buyers">
 				<name>bargaining_power_of_buyers</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4759 189 4987 219</position>
+				<position>2680 1347 2908 1377</position>
 			</node>
 			<node id="bargaining_power_of_suppliers">
 				<name>bargaining_power_of_suppliers</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4762 221 4990 251</position>
+				<position>2806 1379 3034 1409</position>
 			</node>
 			<node id="climate_and_its_change">
 				<name>climate_and_its_change</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4769 252 4997 282</position>
+				<position>2916 1411 3144 1441</position>
 			</node>
 			<node id="competition">
 				<name>competition</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4761 285 4989 315</position>
+				<position>3007 1440 3235 1470</position>
 			</node>
 			<node id="cultural_norms_and_values">
 				<name>cultural_norms_and_values</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4761 319 4989 349</position>
+				<position>2805 1477 3033 1507</position>
 			</node>
 			<node id="cybersecurity">
 				<name>cybersecurity</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4766 350 4994 380</position>
+				<position>2810 1508 3038 1538</position>
 			</node>
 			<node id="demographic_trends">
 				<name>demographic_trends</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4774 383 5002 413</position>
+				<position>2818 1541 3046 1571</position>
 			</node>
 			<node id="economic_growth">
 				<name>economic_growth</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4773 420 5001 450</position>
+				<position>3115 1579 3343 1609</position>
 			</node>
 			<node id="exchange_rate">
 				<name>exchange_rate</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4772 449 5000 479</position>
+				<position>2816 1607 3044 1637</position>
 			</node>
 			<node id="government_regulation">
 				<name>government_regulation</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4763 482 4991 512</position>
+				<position>2807 1640 3035 1670</position>
 			</node>
 			<node id="income_and_wealth">
 				<name>income_and_wealth</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4768 515 4996 545</position>
+				<position>2812 1673 3040 1703</position>
 			</node>
 			<node id="inflation">
 				<name>inflation</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4767 546 4995 576</position>
+				<position>2811 1704 3039 1734</position>
 			</node>
 			<node id="infrastructure">
 				<name>infrastructure</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4769 578 4997 608</position>
+				<position>2813 1736 3041 1766</position>
 			</node>
 			<node id="interest_rate">
 				<name>interest_rate</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4767 609 4995 639</position>
+				<position>2811 1767 3039 1797</position>
 			</node>
 			<node id="lifestyle_trends">
 				<name>lifestyle_trends</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4763 639 4991 669</position>
+				<position>2807 1797 3035 1827</position>
 			</node>
 			<node id="market_size">
 				<name>market_size</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4769 671 4997 701</position>
+				<position>3025 1828 3253 1858</position>
 			</node>
 			<node id="natural_disasters">
 				<name>natural_disasters</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4775 705 5003 735</position>
+				<position>3028 1871 3256 1901</position>
 			</node>
 			<node id="new_markets">
 				<name>new_markets</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4776 736 5004 766</position>
+				<position>2820 1894 3048 1924</position>
 			</node>
 			<node id="political_stability">
 				<name>political_stability</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4777 768 5005 798</position>
+				<position>3023 1925 3251 1955</position>
 			</node>
 			<node id="potential_future_competition">
 				<name>potential_future_competition</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4776 799 5004 829</position>
+				<position>2820 1957 3048 1987</position>
 			</node>
 			<node id="substitution_possibilities">
 				<name>substitution_possibilities</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4778 833 5006 863</position>
+				<position>2822 1991 3050 2021</position>
 			</node>
 			<node id="technological_change">
 				<name>technological_change</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>4787 870 5015 900</position>
+				<position>3085 1670 3313 1700</position>
 			</node>
 		</genie>
 	</extensions>
