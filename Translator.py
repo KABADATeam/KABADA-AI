@@ -133,6 +133,7 @@ def rec_delete_missing(bp, path, set_guids, sep="::"):
             bp.pop(i)
         bp.extend(elements_to_add)
 
+
 class Flattener:
     def __init__(self, sep="::"):
         self.sep = sep
@@ -155,12 +156,13 @@ class Flattener:
                 output.append(guid)
             else:
                 default.append(guid)
+
         if flag_generate_plus_one:
             for bn_name in self.bn2bp.keys():
                 output.append((bn_name, [], "sample"))
 
         if id_bp is None:
-            output.append(("plan", default, bp.get('id', None)))
+            output.append(("plan", default, bp['plan'].get('businessPlan_id', None)))
         else:
             output.append(("plan", default, id_bp))
         return output
@@ -177,7 +179,8 @@ class Flattener:
             bp_new = self.back_one_recomendation(recomendations)
             if id_bp is not None:
                 id_bp = None if id_bp == "sample" else id_bp
-                add_attribute(bp_new, self.bn2bp[bn_name], attr_name="id", attr_value=id_bp)
+                bp_name_where = self.bn2bp.get(bn_name, "plan")
+                add_attribute(bp_new, bp_name_where, attr_name="id", attr_value=id_bp)
 
             if bp is None:
                 bp = bp_new

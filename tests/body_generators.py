@@ -73,13 +73,14 @@ class PredictBodyGen:
         self.impose_one_value_per_bn_variable(guids)
         bp = flattener.back_one_recomendation(guids)
         guids_by_bn = flattener(bp)
+        for i in range(len(guids_by_bn)):
+            guids_by_bn[i] = *guids_by_bn[i][:2], str(uuid4())
 
         i0 = np.random.choice(len(guids_by_bn), size=(1,))[0]
         if guids_by_bn[i0][0] == "plan":
             location = "plan::swot"
         else:
-            uuid = str(uuid4())
-            guids_by_bn[i0] = guids_by_bn[i0][0], guids_by_bn[i0][1], uuid
+            uuid = guids_by_bn[i0][2]
             location = f"{flattener.bn2bp[guids_by_bn[i0][0]]}::{uuid}"
 
         bp = flattener.back(guids_by_bn)

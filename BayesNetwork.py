@@ -369,6 +369,10 @@ class MultiNetwork:
         flag_assume_full_evidence = id_target is not None or flag_assume_full
 
         for bn_name, list_guids, id_bp in guids_by_bn:
+
+            if bn_name == 'plan':
+                bn_name = "swot"
+
             if bn_name not in self.bns:
                 continue
 
@@ -446,8 +450,20 @@ def check_recomendation_generation():
         np.random.seed(_)
         # guids_by_bn = gen.generate_from_bn()
         bp = gen()
-        guids_by_bn = flattener(bp)
-        recomendations_by_bn = net.predict_all(guids_by_bn)
+        location = bp['location']
+        id_bp = bp['plan']['businessPlan_id']
+        if location == "plan::swot":
+            id_target = id_bp
+        else:
+            id_target = location.split("::")[-1]
+            location = "::".join(location.split("::")[:-1])
+
+        guids_by_bn = flattener(bp, flag_generate_plus_one=True)
+        recomendations_by_bn = net.predict_all(guids_by_bn, id_target=id_target)
+
+        # print(location, len(recomendations_by_bn))
+        # pprint(recomendations_by_bn)
+        # exit()
     print("check_recomendation_generation Done !")
 
 def generate_bn_sample():
