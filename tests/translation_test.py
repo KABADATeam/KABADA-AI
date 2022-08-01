@@ -9,7 +9,7 @@ from re import findall
 from ast import literal_eval
 from collections import defaultdict, Counter
 import os
-from Translator import Flattener
+from Translator import Flattener, load_forbidden_combinations
 from Trainer import check_training
 
 def traverse_leafs(translation):
@@ -242,7 +242,22 @@ def check_predict_endpoint():
     # exit()
 
 
+def check_forbidden_combinations():
+    mbn = MultiNetwork()
+    main_net = mbn.bns["main"].net
+    forbs = mbn.dict_forbidden_combinations
+    for (child_name, child_value), parent_pairs in forbs.items():
+        cnode = main_net.get_node(child_name)
+        assert child_value in main_net.get_outcome_ids(cnode), (child_name, child_value)
+
+        for parent_name, parent_value in parent_pairs:
+            pnode = main_net.get_node(parent_name)
+            assert parent_value in main_net.get_outcome_ids(pnode), (parent_name, parent_value)
+            assert pnode in main_net.get_parents(cnode)
+
+
 if __name__ == "__main__":
+    check_forbidden_combinations()
     check_predict_endpoint()
     check_translation_variable_name_value_pairs_are_ok()
     check_variable_names_in_translations()

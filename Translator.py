@@ -1,7 +1,7 @@
 import json
 from glob import glob
 from os.path import join, basename
-from config import repo_dir, path_generated_list_of_autocompletable_variables
+from config import repo_dir, path_generated_list_of_autocompletable_variables, path_forbidden_combinations
 from pprint import pprint
 from collections import defaultdict
 from copy import deepcopy
@@ -270,6 +270,24 @@ class Translator:
                         guids.append(guid)
             guids_by_bn.append((bn_name0, guids, id_bp))
         return guids_by_bn
+
+
+def load_forbidden_combinations():
+    with open(path_forbidden_combinations, "r") as conn:
+        forcomb = json.load(conn)
+
+    dict_forbidden_pairs = defaultdict(set)
+
+    for child, parent in forcomb:
+        child, child_vals = zip(*child.items())
+        parent, parent_vals = zip(*parent.items())
+
+        child, child_vals, parent, parent_vals = map(lambda x: x[0], (child, child_vals, parent, parent_vals))
+
+        for cv in child_vals:
+            for pv in parent_vals:
+                dict_forbidden_pairs[(child, cv)].add((parent, pv))
+    return dict_forbidden_pairs
 
 
 if __name__ == "__main__":

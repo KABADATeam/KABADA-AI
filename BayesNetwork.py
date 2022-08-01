@@ -5,7 +5,7 @@ from os.path import join
 import pandas as pd
 from collections import defaultdict
 import smile_licence.pysmile_license
-from config import net_dir, epsilon, path_temp_data_file, repo_dir
+from config import net_dir, epsilon, path_temp_data_file, repo_dir, path_forbidden_combinations
 from collections import Counter
 import logging
 import json
@@ -14,13 +14,14 @@ from pprint import pprint
 from itertools import combinations
 from uuid import uuid4
 from itertools import chain
-from Translator import Translator, Flattener
+from Translator import Translator, Flattener, load_forbidden_combinations
 from BeamSearch import beam_search
 
 
 class BayesNetwork:
-    def __init__(self, path, tresh_yes=0.5):
+    def __init__(self, path, tresh_yes=0.5, dict_forbidden_combinations=None):
         self.tresh_yes = tresh_yes
+        self.dict_forbidden_combinations = dict_forbidden_combinations
         self.net = pysmile.Network()
         logging.info("Importing net: " + path)
         self.net.read_file(path)
@@ -152,12 +153,13 @@ class BayesNetwork:
                 self.add_evidence(varname, value, flag_update_beliefs=False)
 
         nodes = self.get_node_iterator(list_evidence, targets)
+        list_evidence = {*list_evidence}
         nodes = list(nodes)
         if num_beams > 1:
             pairs = beam_search(self, nodes, flag_noisy, num_beams, flag_return_all_beams=flag_return_all_beams)
         else:
             # greedy approach
-            pairs = []
+            pairs = set()
             for i_node, node in enumerate(nodes):
                 probs = self.get_node_probs(node)
                 if flag_noisy:
@@ -166,7 +168,11 @@ class BayesNetwork:
                     i = np.argmax(probs)
                 val = self.net.get_outcome_id(node, i)
                 if probs[i] > self.tresh_yes:
-                    pairs.append((self.net.get_node_name(node), val))
+                    pair = self.net.get_node_name(node), val
+                    if self.dict_forbidden_combinations is None or \
+                            (self.dict_forbidden_combinations[pair].isdisjoint(pairs)
+                             and self.dict_forbidden_combinations[pair].isdisjoint(list_evidence)):
+                        pairs.add(pair)
                 self.net.set_evidence(node, i)
 
         if not flag_with_nos:
@@ -174,9 +180,9 @@ class BayesNetwork:
                 if num_beams == 1:
                     pairs = [pairs]
                 for i, subpairs in enumerate(pairs):
-                    pairs[i] = [(varname, value) for varname, value in subpairs if value != "no"]
+                    pairs[i] = {(varname, value) for varname, value in subpairs if value != "no"}
             else:
-                pairs = [(varname, value) for varname, value in pairs if value != "no"]
+                pairs = {(varname, value) for varname, value in pairs if value != "no"}
 
         self.clear_evidence()
         return pairs
@@ -206,6 +212,8 @@ class MultiNetwork:
         if flattener is None:
             self.flattener = Flattener()
 
+        self.dict_forbidden_combinations = load_forbidden_combinations()
+
         self.bns = {}
         self.sampling_order = ["value_propositions", "consumer_segments", "business_segments", "public_bodies_and_ngo",
                                "channels", "get_new_customers", "keep_customers", "convince_existing_to_spend_more",
@@ -232,12 +240,16 @@ class MultiNetwork:
             chain(*(bn.get_node_names() for bn_name, bn in self.bns.items() if bn_name != 'main')))
 
     def add_net(self, bn_name, flag_use_trained=True):
+        kwargs = dict(
+            tresh_yes=self.tresh_yes,
+            dict_forbidden_combinations=self.dict_forbidden_combinations
+        )
         if bn_name not in self.bns:
             path_trained_graph = join(net_dir, "trained_graphs", bn_name + "_trained.xdsl")
             if os.path.exists(path_trained_graph) and flag_use_trained:
-                self.bns[bn_name] = BayesNetwork(path_trained_graph, tresh_yes=self.tresh_yes)
+                self.bns[bn_name] = BayesNetwork(path_trained_graph, **kwargs)
             else:
-                self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + ".xdsl"), tresh_yes=self.tresh_yes)
+                self.bns[bn_name] = BayesNetwork(join(net_dir, bn_name + ".xdsl"), **kwargs)
 
     def add_evidence(self, bn_name, list_evidence):
         # if two identical evidence provided - there will be smile error
@@ -446,7 +458,7 @@ def check_recomendation_generation():
     flattener = Flattener()
     net = MultiNetwork()
     np.random.seed(1)
-    for _ in range(100):
+    for _ in range(200):
         np.random.seed(_)
         # guids_by_bn = gen.generate_from_bn()
         bp = gen()
@@ -460,8 +472,9 @@ def check_recomendation_generation():
 
         guids_by_bn = flattener(bp, flag_generate_plus_one=True)
         recomendations_by_bn = net.predict_all(guids_by_bn, id_target=id_target)
-
-        # print(location, len(recomendations_by_bn))
+        if "::costs::fixedCosts" in location:
+            print(location, len(recomendations_by_bn))
+            print(recomendations_by_bn)
         # pprint(recomendations_by_bn)
         # exit()
     print("check_recomendation_generation Done !")
