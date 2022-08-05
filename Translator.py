@@ -263,6 +263,9 @@ class Translator:
     def back(self, bp, flag_dont_check_bn_name=False):
         guids_by_bn = []
         for bn_name0, values0, id_bp in bp:
+            if bn_name0 == 'plan':
+                bn_name0 = "swot"
+
             guids = []
             for guid, (bn_name, necessary_condition) in self.lookup.items():
                 if bn_name == bn_name0 or flag_dont_check_bn_name:
