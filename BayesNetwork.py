@@ -153,8 +153,9 @@ class BayesNetwork:
                 self.add_evidence(varname, value, flag_update_beliefs=False)
 
         nodes = self.get_node_iterator(list_evidence, targets)
-        list_evidence = {*list_evidence}
+        list_evidence = set() if list_evidence is None else {*list_evidence}
         nodes = list(nodes)
+        print(nodes)
         if num_beams > 1:
             pairs = beam_search(self, nodes, flag_noisy, num_beams, flag_return_all_beams=flag_return_all_beams)
         else:
@@ -167,11 +168,11 @@ class BayesNetwork:
                 else:
                     i = np.argmax(probs)
                 val = self.net.get_outcome_id(node, i)
-                if probs[i] > self.tresh_yes:
+                if probs[i] > self.tresh_yes or (flag_noisy and np.random.uniform() < probs[i]):
                     pair = self.net.get_node_name(node), val
                     if self.dict_forbidden_combinations is None or \
                             (self.dict_forbidden_combinations[pair].isdisjoint(pairs)
-                             and self.dict_forbidden_combinations[pair].isdisjoint(list_evidence)):
+                             and self.dict_forbidden_combinations[pair].isdisjoint({*list_evidence})):
                         pairs.add(pair)
                 self.net.set_evidence(node, i)
 
