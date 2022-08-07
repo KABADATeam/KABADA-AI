@@ -157,14 +157,14 @@ class BayesNetwork:
 
         if self.dict_drop_parent is not None:
             if newpair in self.dict_drop_parent:
-                parent_pair = self.dict_drop_parent[newpair]
-                if parent_pair in pairs or parent_pair in list_evidence:
+                parent_pairs = self.dict_drop_parent[newpair]
+                if not parent_pairs.isdisjoint(pairs) or not parent_pairs.isdisjoint(list_evidence):
                     return False
 
         if self.dict_add_parent is not None:
             if newpair in self.dict_add_parent:
-                parent_pair = self.dict_add_parent[newpair]
-                if parent_pair not in pairs and parent_pair not in list_evidence:
+                parent_pairs = self.dict_add_parent[newpair]
+                for parent_pair in parent_pairs.difference(list_evidence).difference(pairs):
                     pairs.add(parent_pair)
 
         return True

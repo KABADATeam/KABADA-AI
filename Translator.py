@@ -295,20 +295,19 @@ def load_forbidden_combinations():
 def load_hierarchical_combinations(main_net):
     with open(path_hierarchical_combinations, "r") as conn:
         hiercomb = json.load(conn)
-    dict_add_parent = {}
-    dict_drop_parent = {}
+    dict_add_parent = defaultdict(set)
+    dict_drop_parent = defaultdict(set)
 
     for parent, v in hiercomb.items():
         for parent_value, good_childs in v.items():
             for child, child_values in good_childs.items():
-
                 for child_value in child_values:
-                    dict_add_parent[(child, child_value)] = parent, parent_value
+                    dict_add_parent[(child, child_value)].add((parent, parent_value))
 
                 bad_child_values = {*main_net.net.get_outcome_ids(child)}.difference(child_values)
 
                 for child_value in bad_child_values:
-                    dict_drop_parent[(child, child_value)] = parent, parent_value
+                    dict_drop_parent[(child, child_value)].add((parent, parent_value))
 
     main_net.dict_add_parent = dict_add_parent
     main_net.dict_drop_parent = dict_drop_parent

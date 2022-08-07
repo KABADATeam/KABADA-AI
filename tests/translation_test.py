@@ -265,19 +265,21 @@ def check_hierarchical_combinations():
     dict_parent2values = defaultdict(set)
     dict_child2values = defaultdict(set)
     # integrity
-    for (child, cv), (parent, pv) in chain(dict_add_parent.items(), dict_drop_parent.items()):
-        cnode = main_net.get_node(child)
-        pnode = main_net.get_node(parent)
-        assert cv in main_net.get_outcome_ids(cnode), (child, cv)
-        assert pv in main_net.get_outcome_ids(pnode), (parent, pv)
-        assert pnode in main_net.get_parents(cnode), (parent, child)
-        dict_parent2values[parent].add(pv)
-        dict_child2values[child].add(cv)
+    for (child, cv), vs in chain(dict_add_parent.items(), dict_drop_parent.items()):
+        for (parent, pv) in vs:
+            cnode = main_net.get_node(child)
+            pnode = main_net.get_node(parent)
+            assert cv in main_net.get_outcome_ids(cnode), (child, cv)
+            assert pv in main_net.get_outcome_ids(pnode), (parent, pv)
+            assert pnode in main_net.get_parents(cnode), (parent, child)
+            dict_parent2values[parent].add(pv)
+            dict_child2values[child].add(cv)
 
-    for parent, pvs in chain(dict_parent2values.items(), dict_parent2values.items()):
+    for parent, pvs in chain(dict_parent2values.items(), dict_child2values.items()):
         pvs_orig = {*main_net.get_outcome_ids(main_net.get_node(parent))}
-        pvs_orig.remove('no')
-        assert pvs == pvs_orig, (pvs, pvs_orig)
+        if 'no' in pvs_orig:
+            pvs_orig.remove('no')
+        assert pvs == pvs_orig, (parent, pvs, pvs_orig)
 
     # cases
     pairs = mbn.bns['main'].predict_popup(
