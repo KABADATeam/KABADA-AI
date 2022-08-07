@@ -1,20 +1,20 @@
 // License issued by BayesFusion Licensing Server
 // This code must be executed before any other jSMILE object is created
 new smile.License(
-	"SMILE LICENSE ad7e89d6 f258f01d 7c70933a " +
+	"SMILE LICENSE 521d0be0 0da68cee 0083110c " +
 	"THIS IS AN ACADEMIC LICENSE AND CAN BE USED " +
 	"SOLELY FOR ACADEMIC RESEARCH AND TEACHING, " +
 	"AS DEFINED IN THE BAYESFUSION ACADEMIC " +
 	"SOFTWARE LICENSING AGREEMENT. " +
-	"Serial #: 3dx5dzk55mqcxtscf3vbheyhq " +
+	"Serial #: 2dcblzeouowcaioskx49yz1bk " +
 	"Issued for: Bruno Opermanis (bruno.opermanis@gmail.com) " +
 	"Academic institution: Banku Augstskola " +
-	"Valid until: 2022-08-05 " +
+	"Valid until: 2023-02-08 " +
 	"Issued by BayesFusion activation server",
 	new byte[] {
-	-65,-55,91,-46,106,-112,-37,-124,38,-26,-101,29,38,69,31,-2,
-	103,87,-74,68,-10,-21,36,-87,-118,108,5,-47,15,-10,-124,112,
-	117,58,49,112,-9,102,28,85,-110,-99,-118,-123,107,-58,0,-85,
-	18,-34,-27,-53,-43,40,-8,95,-3,-74,-112,-93,61,36,-81,85
+	124,-11,-56,18,127,-98,18,77,44,124,73,53,98,91,43,89,
+	-121,9,97,96,-91,1,-115,-53,-3,25,-17,67,11,83,44,20,
+	-38,70,43,72,70,87,33,90,120,28,38,-61,11,-68,47,76,
+	-101,122,103,92,-51,-122,95,-18,22,-90,124,44,123,-67,89,35
 	}
 );
