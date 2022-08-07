@@ -18,4 +18,6 @@ path_temp_data_file = join(net_dir, "bn_data_temporary.csv")
 
 path_forbidden_combinations = join(repo_dir, "forbidden_value_combinations.json")
 
+path_hierarchical_combinations = join(repo_dir, "hierarchical_value_combinations.json")
+
 os.makedirs(log_dir, exist_ok=True)

@@ -4,7 +4,7 @@ import os
 from os.path import join
 import pandas as pd
 from collections import defaultdict
-import smile_licence.pysmile_license
+import smile_license.pysmile_license
 from config import net_dir, epsilon, path_temp_data_file, repo_dir, path_forbidden_combinations
 from collections import Counter
 import logging
@@ -14,14 +14,16 @@ from pprint import pprint
 from itertools import combinations
 from uuid import uuid4
 from itertools import chain
-from Translator import Translator, Flattener, load_forbidden_combinations
+from Translator import Translator, Flattener, load_forbidden_combinations, load_hierarchical_combinations
 from BeamSearch import beam_search
 
 
 class BayesNetwork:
-    def __init__(self, path, tresh_yes=0.5, dict_forbidden_combinations=None):
+    def __init__(self, path, tresh_yes=0.5, dict_forbidden_combinations=None, dict_add_parent=None, dict_drop_parent=None):
         self.tresh_yes = tresh_yes
         self.dict_forbidden_combinations = dict_forbidden_combinations
+        self.dict_add_parent = dict_add_parent
+        self.dict_drop_parent = dict_drop_parent
         self.net = pysmile.Network()
         logging.info("Importing net: " + path)
         self.net.read_file(path)
@@ -145,6 +147,28 @@ class BayesNetwork:
 
         return nodes
 
+    def is_ok_according_to_hard_corrections_with_sideeffect(self, newpair, pairs, list_evidence):
+
+        if self.dict_forbidden_combinations is not None:
+            if not self.dict_forbidden_combinations[newpair].isdisjoint(pairs):
+                return False
+            if not self.dict_forbidden_combinations[newpair].isdisjoint(list_evidence):
+                return False
+
+        if self.dict_drop_parent is not None:
+            if newpair in self.dict_drop_parent:
+                parent_pair = self.dict_drop_parent[newpair]
+                if parent_pair in pairs or parent_pair in list_evidence:
+                    return False
+
+        if self.dict_add_parent is not None:
+            if newpair in self.dict_add_parent:
+                parent_pair = self.dict_add_parent[newpair]
+                if parent_pair not in pairs and parent_pair not in list_evidence:
+                    pairs.add(parent_pair)
+
+        return True
+
     def predict_popup(self, list_evidence=None, flag_with_nos=False, flag_noisy=False, num_beams=1, targets=None,
                       flag_return_all_beams=False):
 
@@ -155,7 +179,6 @@ class BayesNetwork:
         nodes = self.get_node_iterator(list_evidence, targets)
         list_evidence = set() if list_evidence is None else {*list_evidence}
         nodes = list(nodes)
-        print(nodes)
         if num_beams > 1:
             pairs = beam_search(self, nodes, flag_noisy, num_beams, flag_return_all_beams=flag_return_all_beams)
         else:
@@ -168,13 +191,14 @@ class BayesNetwork:
                 else:
                     i = np.argmax(probs)
                 val = self.net.get_outcome_id(node, i)
+                flag_add_pair = True
                 if probs[i] > self.tresh_yes or (flag_noisy and np.random.uniform() < probs[i]):
                     pair = self.net.get_node_name(node), val
-                    if self.dict_forbidden_combinations is None or \
-                            (self.dict_forbidden_combinations[pair].isdisjoint(pairs)
-                             and self.dict_forbidden_combinations[pair].isdisjoint({*list_evidence})):
+                    flag_add_pair = self.is_ok_according_to_hard_corrections_with_sideeffect(pair, pairs, list_evidence)
+                    if flag_add_pair:
                         pairs.add(pair)
-                self.net.set_evidence(node, i)
+                if flag_add_pair:
+                    self.net.set_evidence(node, i)
 
         if not flag_with_nos:
             if flag_return_all_beams:
@@ -239,6 +263,8 @@ class MultiNetwork:
         self.add_net("main", flag_use_trained=flag_use_trained)
         self.set_only_main_variables = {*self.bns['main'].get_node_names()}.difference(
             chain(*(bn.get_node_names() for bn_name, bn in self.bns.items() if bn_name != 'main')))
+        load_hierarchical_combinations(self.bns["main"])
+
 
     def add_net(self, bn_name, flag_use_trained=True):
         kwargs = dict(
@@ -262,7 +288,6 @@ class MultiNetwork:
         for evidence in list_evidence:
             for varname, value in evidence.items():
                 self.bns[bn_name].clear_evidence(varname)
-
 
     def sample_all(self, mode="main"):
         if mode == "seperately":

@@ -60,6 +60,8 @@ def generate_dict_bp_relation_keys_for_training():
 generate_dict_autocompletable_variables()
 
 ###### TESTS
+check_hierarchical_combinations()
+check_forbidden_combinations()
 check_predict_endpoint()
 check_variable_names_in_translations()
 check_correct_binary_variable_detection()
@@ -72,7 +74,7 @@ validate_wrt_texter()
 check_if_all_nets_in_main()
 check_all_translationalble_guids_in_full_bp()
 check_recomendation_generation()
-generate_bn_sample()
+# generate_bn_sample()
 # check_bp_flattener()
 print("tests passed - everythings OK :)")
 

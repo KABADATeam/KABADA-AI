@@ -1,7 +1,7 @@
 import json
 from glob import glob
 from os.path import join, basename
-from config import repo_dir, path_generated_list_of_autocompletable_variables, path_forbidden_combinations
+from config import repo_dir, path_generated_list_of_autocompletable_variables, path_forbidden_combinations, path_hierarchical_combinations
 from pprint import pprint
 from collections import defaultdict
 from copy import deepcopy
@@ -291,6 +291,27 @@ def load_forbidden_combinations():
             for pv in parent_vals:
                 dict_forbidden_pairs[(child, cv)].add((parent, pv))
     return dict_forbidden_pairs
+
+def load_hierarchical_combinations(main_net):
+    with open(path_hierarchical_combinations, "r") as conn:
+        hiercomb = json.load(conn)
+    dict_add_parent = {}
+    dict_drop_parent = {}
+
+    for parent, v in hiercomb.items():
+        for parent_value, good_childs in v.items():
+            for child, child_values in good_childs.items():
+
+                for child_value in child_values:
+                    dict_add_parent[(child, child_value)] = parent, parent_value
+
+                bad_child_values = {*main_net.net.get_outcome_ids(child)}.difference(child_values)
+
+                for child_value in bad_child_values:
+                    dict_drop_parent[(child, child_value)] = parent, parent_value
+
+    main_net.dict_add_parent = dict_add_parent
+    main_net.dict_drop_parent = dict_drop_parent
 
 
 if __name__ == "__main__":

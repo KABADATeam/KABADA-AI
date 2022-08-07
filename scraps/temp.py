@@ -7,11 +7,11 @@ from collections import defaultdict
 
 mnet = MultiNetwork()
 
-mnet.bns['main'].add_evidence('consumer_prices', 'fixed_pricing')
+# mnet.bns['main'].add_evidence('consumer_prices', 'fixed_pricing')
 
 pairs = mnet.bns['main'].predict_popup(
     # list_evidence=[('consumer_prices', 'fixed_pricing')],
-    list_evidence=[('consumer_prices', 'dynamic_pricing')],
+    # list_evidence=[('consumer_prices', 'dynamic_pricing')],
     targets={'consumer_types_of_pricing'}
 )
 

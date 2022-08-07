@@ -8,6 +8,7 @@ from pprint import pprint
 from re import findall
 from ast import literal_eval
 from collections import defaultdict, Counter
+from itertools import chain
 import os
 from Translator import Flattener, load_forbidden_combinations
 from Trainer import check_training
@@ -256,7 +257,44 @@ def check_forbidden_combinations():
             assert pnode in main_net.get_parents(cnode)
 
 
+def check_hierarchical_combinations():
+    mbn = MultiNetwork()
+    main_net = mbn.bns['main'].net
+    dict_add_parent, dict_drop_parent = mbn.bns['main'].dict_drop_parent, mbn.bns['main'].dict_drop_parent
+
+    dict_parent2values = defaultdict(set)
+    dict_child2values = defaultdict(set)
+    # integrity
+    for (child, cv), (parent, pv) in chain(dict_add_parent.items(), dict_drop_parent.items()):
+        cnode = main_net.get_node(child)
+        pnode = main_net.get_node(parent)
+        assert cv in main_net.get_outcome_ids(cnode), (child, cv)
+        assert pv in main_net.get_outcome_ids(pnode), (parent, pv)
+        assert pnode in main_net.get_parents(cnode), (parent, child)
+        dict_parent2values[parent].add(pv)
+        dict_child2values[child].add(cv)
+
+    for parent, pvs in chain(dict_parent2values.items(), dict_parent2values.items()):
+        pvs_orig = {*main_net.get_outcome_ids(main_net.get_node(parent))}
+        pvs_orig.remove('no')
+        assert pvs == pvs_orig, (pvs, pvs_orig)
+
+    # cases
+    pairs = mbn.bns['main'].predict_popup(
+        targets={'consumer_types_of_pricing'}
+    )
+    assert pairs == {('consumer_prices', 'dynamic_pricing'), ('consumer_types_of_pricing', 'negotiation')}, pairs
+
+    pairs = mbn.bns['main'].predict_popup(
+        list_evidence=[('consumer_prices', 'fixed_pricing')],
+        targets={'consumer_types_of_pricing'}
+    )
+    assert len(pairs) == 0, pairs
+
+
+
 if __name__ == "__main__":
+    check_hierarchical_combinations()
     check_forbidden_combinations()
     check_predict_endpoint()
     check_translation_variable_name_value_pairs_are_ok()
