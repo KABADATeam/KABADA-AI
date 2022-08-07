@@ -1,0 +1,10 @@
+{
+  "consumer_prices": {
+    "dynamic_pricing": {
+      "consumer_types_of_pricing": ["negotiation", "yield_management", "real_time_market", "auctions"]
+    },
+    "fixed_pricing": {
+      "consumer_types_of_pricing": ["list_price", "product_feature_dependent", "volume_dependent"]
+    }
+  }
+}
