@@ -6,5 +6,104 @@
     "fixed_pricing": {
       "consumer_types_of_pricing": ["list_price", "product_feature_dependent", "volume_dependent"]
     }
+  },
+  "business_prices": {
+    "dynamic_pricing": {
+      "business_types_of_pricing": ["negotiation", "yield_management", "real_time_market", "auctions"]
+    },
+    "fixed_pricing": {
+      "business_types_of_pricing": ["list_price", "product_feature_dependent", "volume_dependent"]
+    }
+  },
+  "ngo_prices": {
+    "dynamic_pricing": {
+      "ngo_types_of_pricing": ["negotiation", "yield_management", "real_time_market", "auctions"]
+    },
+    "fixed_pricing": {
+      "ngo_types_of_pricing": ["list_price", "product_feature_dependent", "volume_dependent"]
+    }
+  },
+
+  "fixed_cost_type": {
+    "rent_of_office": {"fixed_cost_subtype":  ["rent_of_office_default"]},
+    "rent_of_buildings": {
+      "fixed_cost_subtype": [
+        "rent_of_buildings_manufacturing_buildings",
+        "rent_of_buildings_inventory_buildings",
+        "rent_of_buildings_sales_buildings_shops",
+        "rent_of_buildings_other"
+      ]
+    },
+    "rent_of_equipment": {
+      "fixed_cost_subtype": [
+        "rent_of_equipment_other",
+        "rent_of_equipment_transport",
+        "rent_of_equipment_it_office_equipment",
+        "rent_of_equipment_production_equipment_and_machinery"
+      ]
+    },
+    "utilities": {
+      "fixed_cost_subtype": [
+        "utilities_other", "utilities_electricity", "utilities_water",
+        "utilities_gas", "utilities_heat", "utilities_maintenance",
+        "utilities_communication"
+      ]
+    },
+    "outsourcing_of_services": {
+      "fixed_cost_subtype": [
+        "outsourcing_of_services_other",
+        "outsourcing_of_services_accountant",
+        "outsourcing_of_services_it_support"
+      ]
+    },
+    "outsourcing_of_specified_services": {
+      "fixed_cost_subtype": ["outsourcing_of_specified_services_default"]
+    },
+    "salaries": {
+      "fixed_cost_subtype": [
+        "salaries_other", "salaries_management",
+        "salaries_factory_workers_service", "salaries_finance_management",
+        "salaries_marketing"
+      ]
+    },
+    "permits_and_licences": {
+      "fixed_cost_subtype":  ["permits_and_licences_default"]
+    },
+    "marketing": {
+      "fixed_cost_subtype":  ["marketing_default"]
+    },
+    "other": {
+      "fixed_cost_subtype":  ["other_default"]
+    }
+  },
+
+  "variable_cost_type": {
+    "resources": {"variable_cost_subtype":  ["resources_default"]},
+    "rent_short_term": {
+      "variable_cost_subtype":  [
+        "rent_short_term_manufacturing_building", "rent_short_term_office",
+        "rent_short_term_equipment", "rent_short_term_other"
+      ]
+    },
+    "packaging": {"variable_cost_subtype":  ["packaging_default"]},
+    "salaries": {
+      "variable_cost_subtype":  [
+        "salaries_employees_directly_involved_in_production_service",
+        "salaries_other"
+      ]
+    },
+    "oursourcing_of_specified_services": {
+      "variable_cost_subtype":  ["oursourcing_of_specified_services_default"]
+    },
+    "permits_and_licenses": {"variable_cost_subtype":  ["permits_and_licenses_default"]},
+    "marketing": {"variable_cost_subtype":  ["marketing_default"]},
+    "distribution": {"variable_cost_subtype":  [
+      "distribution_cost_of_warehouse", "distribution_fees_to_distributors",
+      "distribution_transport", "distribution_other"
+    ]},
+    "other": {"variable_cost_subtype":["other_default"]}
   }
+
+
+
 }

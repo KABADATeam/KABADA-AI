@@ -2,6 +2,18 @@
 <!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
 <smile version="1.0" id="Network6" numsamples="10000" discsamples="10000">
 	<nodes>
+		<cpt id="variable_cost_type">
+			<state id="resources" />
+			<state id="rent_short_term" />
+			<state id="packaging" />
+			<state id="salaries" />
+			<state id="oursourcing_of_specified_services" />
+			<state id="permits_and_licenses" />
+			<state id="marketing" />
+			<state id="distribution" />
+			<state id="other" />
+			<probabilities>0.1111111111111111 0.1111111111111111 0.1111111111111111 0.1111111111111111 0.1111111111111111 0.1111111111111111 0.1111111111111111 0.1111111111111111 0.1111111111111109</probabilities>
+		</cpt>
 		<cpt id="variable_cost_subtype">
 			<state id="rent_short_term_manufacturing_building" />
 			<state id="rent_short_term_office" />
@@ -19,7 +31,8 @@
 			<state id="distribution_fees_to_distributors" />
 			<state id="distribution_other" />
 			<state id="other_default" />
-			<probabilities>0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625</probabilities>
+			<parents>variable_cost_type</parents>
+			<probabilities>0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625 0.0625</probabilities>
 		</cpt>
 	</nodes>
 	<extensions>
@@ -30,6 +43,13 @@
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
 				<position>23 34 199 64</position>
+			</node>
+			<node id="variable_cost_type">
+				<name>variable_cost_type</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>119 113 253 140</position>
 			</node>
 		</genie>
 	</extensions>
