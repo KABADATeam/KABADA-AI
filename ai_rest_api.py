@@ -57,9 +57,15 @@ def predict(bp=None):
                 id_target = location.split("::")[-1]
                 location = "::".join(location.split("::")[:-1])
 
+            target_bns = None
+            if id_target == "sample" and location in flattener.bp2bn:
+                target_bns = {flattener.bp2bn[location]}
+
             guids_by_bn = flattener(bp, flag_generate_plus_one=True)
             logging.info('received num %s bns idetified', len(guids_by_bn))
-            recomendations_by_bn = mbn.predict_all(guids_by_bn, id_target=id_target)
+            recomendations_by_bn = mbn.predict_all(guids_by_bn,
+                                                   id_target=id_target,
+                                                   target_bns=target_bns)
             reco = flattener.back(recomendations_by_bn)
             if reco is None or len(reco) == 0:
                 reco = {"plan": {}}
